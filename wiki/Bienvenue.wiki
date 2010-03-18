@@ -1,4 +1,3 @@
-
 #Sujet proposé dans le cadre d'une initiation à la recherche.
 
 = Problematique de recherche =
@@ -12,7 +11,7 @@ de recherche heuristique avec une application dans le cadre des jeux.
 
 Le but du stage est de realiser une Intelligence Articielle pour resoudre les problemes des "Robots Voyageurs" (voir http://www.ricochetrobots.com/RR.html pour y "jouer" en ligne).
 Dans un premier temps, il s'agira d'implementer une methode de recherche de type A étoile. La premiere diculte sera alors de valider la ou les heuristiques utilisees.
-Dans un deuxieme temps, l'environnement sera complique par l'ajout d'elements apportant des incertitudes sur l'etat du monde. Les algorithmes de planications "classiques" et deterministes seront alors compares a d'autres methodes comme par exemple : planication probabilistes, algorithmes genetiques, methodes de monte-carlo. Chaque membre du b^nome pourra s'attacher a la mise en oeuvre d'une de ces methodes.
+Dans un deuxieme temps, l'environnement sera complique par l'ajout d'elements apportant des incertitudes sur l'etat du monde. Les algorithmes de planications "classiques" et deterministes seront alors compares a d'autres methodes comme par exemple : planication probabilistes, algorithmes genetiques, methodes de monte-carlo. Chaque membre du bînome pourra s'attacher a la mise en oeuvre d'une de ces methodes.
 
 = Bibliographie =
 
