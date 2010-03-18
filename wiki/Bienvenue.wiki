@@ -2,7 +2,7 @@
 
 = Problematique de recherche =
 
-Planication de trajectoires complexes dans un environnement qui peut n'^etre
+Planication de trajectoires complexes dans un environnement qui peut n'être
 que partiellement connu. Ce sujet est aussi une initiation a l'utilisation d'algorithme
 de recherche heuristique avec une application dans le cadre des jeux.
 
