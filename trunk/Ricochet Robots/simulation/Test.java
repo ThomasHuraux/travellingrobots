@@ -12,7 +12,7 @@ public class Test {
 	public static void main(String[] args){
 		
 		Environment env = new Environment();
-		RandomMover rm = new RandomMover(1000,env);
+		//RandomMover rm = new RandomMover(1000,env);
 		Simple view = new Simple(env);
 		view.setPreferredSize(new Dimension(40*view.getTabSize(),40*view.getTabSize()));
 		JFrame frame = new JFrame("-Test-");		
