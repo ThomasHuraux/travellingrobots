@@ -13,9 +13,9 @@
 
 *Documentation :*
 
-  [LogBook#Bibliographie] [2] Article étudiant certains algorithmes de resolution (parcours en largeur et en profondeur). Le problème est vu d'un point de vue cognition (étude sur une population).
+  [LogBook#Bibliographie] `[2]` Article étudiant certains algorithmes de resolution (parcours en largeur et en profondeur). Le problème est vu d'un point de vue cognition (étude sur une population).
 
-  [LogBook#Bibliographie] [3] Article analysant la complexité du probleme ! NP-Complet.
+  [LogBook#Bibliographie] `[3]` Article analysant la complexité du probleme ! NP-Complet.
 
 *Recherche*
   * A`*` n'est pas bon: utilise une ponderation des distances -> pas de sens ici.
@@ -28,8 +28,7 @@
 
 == Rencontre ==
 
-  * A`*`: la pondération pourrait se faire par rapport au nombre de coût.
-longueur = g + h(s) ou h est l'heuristique : quelle heuristique ?
+  * A`*`: la pondération pourrait se faire par rapport au nombre de coût. longueur = g + h(s) ou h est l'heuristique : quelle heuristique ?
   * Algorithme génétique: "fitness function" : attribuer une valeur a chaque solution pour pouvoir les comparer.
   * Apprentissage: quelles bases au départ, et comment généraliser ?
   * Recherche dirigée (ou heuristique) ! propriétés de l'heuristique pour qu'elle soit utile ?
@@ -43,9 +42,8 @@ Pour la prochaine fois:
 
 
 = Bibliographie =
-  [1] Stuart & Russel. Articial Intelligence: A Modern Approach. Prentice Hall, 1995. http://aima.cs.berkeley.edu/index.html
+  `[1]` Stuart & Russel. Articial Intelligence: A Modern Approach. Prentice Hall, 1995. http://aima.cs.berkeley.edu/index.html
 
-  [2] Nicolas Butko, Katharina A. Lehmann, and Veronica Ramenzoni. Ricochet robots - a case study for human complex problem.
-http://www-pr.informatik.uni-tuebingen.de/mitarbeiter/katharinazweig/downloads/ButkoLehmannRamenzoni.pdf
+  `[2]` Nicolas Butko, Katharina A. Lehmann, and Veronica Ramenzoni. Ricochet robots - a case study for human complex problem. http://www-pr.informatik.uni-tuebingen.de/mitarbeiter/katharinazweig/downloads/ButkoLehmannRamenzoni.pdf
 
-  [3] Birgit Engels and Tom Kamphans. On the complexity of randolph's robot game. http://web.informatik.uni-bonn.de/I/publications/ek-rrgin-05.pdf
+  `[3]` Birgit Engels and Tom Kamphans. On the complexity of randolph's robot game. http://web.informatik.uni-bonn.de/I/publications/ek-rrgin-05.pdf
