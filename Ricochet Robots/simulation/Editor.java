@@ -30,21 +30,21 @@ public class Editor extends JPanel implements MouseListener{
 		table = new int[h][h];
 		
 		table[0][0] = 5;
-		table[h-1][0] = 6;
-		table[0][h-1] = 8;
+		table[h-1][0] = 8;
+		table[0][h-1] = 6;
 		table[h-1][h-1] = 7;
 		
 		for(int l=1; l<h-1; l++){
-			table[l][0] = 1;
-			table[0][l] = 4;
-			table[h-1][l] = 2;
-			table[l][h-1] = 3;
+			table[l][0] = 4;
+			table[0][l] = 1;
+			table[h-1][l] = 3;
+			table[l][h-1] = 2;
 		}
 		
 		table[h/2][h/2] =
 		table[h/2-1][h/2-1] = 
 		table[h/2][h/2-1] =
-		table[h/2-1][h/2] = 9;
+		table[h/2-1][h/2] = 11;
 	}
 	
 	public void paint(Graphics g){
@@ -56,7 +56,7 @@ public class Editor extends JPanel implements MouseListener{
 	public static void refresh(){
 		for(int i=0; i<h; i++){
 			for(int j=0; j<h; j++){
-				buttons[i][j].setIcon(new ImageIcon(IMGPATH+table[j][i]+".jpg"));
+				buttons[i][j].setIcon(new ImageIcon(IMGPATH+table[i][j]+".jpg"));
 			}
 		}	
 	} 
@@ -85,10 +85,10 @@ public class Editor extends JPanel implements MouseListener{
 					public void mouseClicked(MouseEvent e) {
 						if(e.getButton()== 1)table[X][Y]++;
 						if(e.getButton()== 3)table[X][Y]--;
-						if(table[X][Y] == 10 || e.getButton()==2)
+						if(table[X][Y] == 12 || e.getButton()==2)
 							table[X][Y] = 0;
 						if(table[X][Y] == -1)
-							table[X][Y] = 9;
+							table[X][Y] = 11;
 						buttons[X][Y].setIcon(new ImageIcon(IMGPATH+table[X][Y]+".jpg"));
 						ed.repaint();
 					}
@@ -177,9 +177,9 @@ public class Editor extends JPanel implements MouseListener{
             f.createNewFile();
             FileWriter fw = new FileWriter(f);
             fw.write(h+"\n");
-            for(int y=0;y<h;y++){
-    			for(int x=0;x<h;x++){
-    				fw.write(table[y][x]+"");
+            for(int x=0;x<h;x++){
+    			for(int y=0;y<h;y++){
+    				fw.write(table[x][y]+"\t");
     			}
     			fw.write("\n");
     		}

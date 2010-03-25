@@ -8,6 +8,8 @@ import java.io.IOException;
 
 public class Grid {
 	
+	public final static boolean DEBUG = false;
+	
 	private int size;
 	private Cell[][] tab;
 	
@@ -24,45 +26,48 @@ public class Grid {
 		try {
 			FileReader fr = new FileReader(filename);
 			BufferedReader br = new BufferedReader(fr);
-			
 			String current = br.readLine();
 			size = Integer.parseInt(current); 
 			Cell[][] ret = new Cell[size][size];
 			int y = 0;
 			current = br.readLine();
 			do{
+					String[] tabChar = current.split("\t");
 	    			for(int x=0;x<size;x++){
-	    				char[] tabChar = current.toCharArray();
-	    				Cell c;
-						switch(tabChar[x]){
-							case '0': c = new Cell(true);
+	    				Cell c = new Cell(true);
+						switch(Integer.parseInt(String.valueOf(tabChar[x]))){
+							case 0: c = new Cell(true);
 								break;
-							case '1': c = new Cell(true,false,false,false);
+							case 1: c = new Cell(false,true,true,true);
 								break;
-							case '2': c = new Cell(false,true,false,false);
+							case 2: c = new Cell(true,false,true,true);
 								break;
-							case '3': c = new Cell(false,false,true,false);
+							case 3: c = new Cell(true,true,false,true);
 								break;
-							case '4': c = new Cell(false,false,false,true);
+							case 4: c = new Cell(true,true,true,false);
 								break;
-							case '5': c = new Cell(true,false,false,true);
+							case 5: c = new Cell(false,true,true,false);
 								break;
-							case '6': c = new Cell(true,true,false,false);								
+							case 6: c = new Cell(false,false,true,true);								
 								break;
-							case '7': c = new Cell(false,true,true,false);
+							case 7: c = new Cell(true,false,false,true);
 								break;
-							case '8': c = new Cell(false,false,true,true);
+							case 8: c = new Cell(true,true,false,false);
 								break;
-							case '9': c = new Cell(false);
+							case 9: c = new Cell(false,true,false,true);
 								break;
-							default: c = new Cell(true);
+							case 10: c = new Cell(true,false,true,false);
+								break;
+							case 11: c = new Cell(false);
 								break;
 						}
 						c.setType(Integer.parseInt(String.valueOf(tabChar[x])));
+						if(DEBUG) System.out.print(c.getType()+"\t");
 						ret[x][y] = c;
 	    			}
 	    			current = br.readLine();
 	    			y++;
+	    			if(DEBUG)System.out.println();
 			 }while(current != null);
 			 br.close();
 			 return ret;
