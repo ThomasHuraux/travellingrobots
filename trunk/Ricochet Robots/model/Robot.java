@@ -13,27 +13,28 @@ public class Robot implements Movable{
 	
 	public Robot(Color color){
 		this.color = color;
-		id = nextId++;
+		id = nextId;
+		nextId++;
 	}
 		
 	public void moveNorth(Environment env){
 		Cell c = env.modify(this,Movement.NORTH);
-		if(c.north)moveNorth(env);
+		if(c!=null && c.north)moveNorth(env);
 	}
 	
 	public void moveEast(Environment env){
 		Cell c = env.modify(this,Movement.EAST);
-		if(c.east)moveEast(env);
+		if(c!=null && c.east)moveEast(env);
 	}
 	
 	public void moveSouth(Environment env){
 		Cell c = env.modify(this,Movement.SOUTH);
-		if(c != null && c.south)moveSouth(env);
+		if(c!=null && c.south)moveSouth(env);
 	}
 	
 	public void moveWest(Environment env){
 		Cell c = env.modify(this,Movement.WEST);
-		if(c.west)moveWest(env);
+		if(c!=null && c.west)moveWest(env);
 	}
 
 	public Color getColor() {

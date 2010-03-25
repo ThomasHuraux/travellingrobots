@@ -29,7 +29,6 @@ public class Cell {
 	}
 	
 	public void fill(Robot robot){
-		accessible(false);
 		this.robot = robot;
 	}
 	
@@ -38,7 +37,6 @@ public class Cell {
 	}
 	
 	public void clean(){
-		accessible(true);
 		this.robot = null;
 	}
 	
@@ -56,4 +54,18 @@ public class Cell {
 	public void setType(int type) {
 		this.type = type;
 	}
+	
+	public Robot getRobot(){
+		return robot;
+	}
+
+	@Override
+	public String toString() {
+		return "Cell [east=" + east + ", mark=" + mark + ", north=" + north
+				+ ", robot=" + robot + ", south=" + south + ", type=" + type
+				+ ", west=" + west + "]";
+	}
+	
+	
+	
 }

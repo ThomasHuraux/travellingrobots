@@ -24,10 +24,12 @@ public class Environment {
 	
 	public Cell modify(Robot r, int move){
 		Position pos = getPosition(r);
+		Position previous = pos;
+
 		Cell c = getGrid().getCell(pos);
 		switch(move){
 			case Movement.NORTH:
-				if(c.north) pos= new Position(pos.x,pos.y-1);
+				if(c.north) pos = new Position(pos.x,pos.y-1);
 				break;
 			case Movement.EAST:
 				if(c.east) pos = new Position(pos.x+1,pos.y);
@@ -39,7 +41,13 @@ public class Environment {
 				if(c.west) pos = new Position(pos.x-1,pos.y);
 				break;
 		}
+		
+		if(getGrid().getCell(pos).getRobot() != null)
+			return null;
+		
+		getGrid().getCell(previous).clean();
 		getGrid().getCell(pos).fill(r);
+		
 		positions.set(r.getId(),pos);
 		return getGrid().getCell(pos);
 	}
@@ -53,9 +61,8 @@ public class Environment {
 	
 	public boolean addRobot(Robot r, Position p){
 		Cell c = getGrid().getCell(p);
-		if( c.isEmpty()){
-			c.fill(r);
-			positions.add(p);
+		if( c.isEmpty() && c.getType()!=11){
+			positions.add(r.getId(),p);
 			return true;
 		}else
 			return false;

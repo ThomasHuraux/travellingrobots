@@ -3,8 +3,9 @@ package simulation;
 import java.awt.Dimension;
 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
-import view.Simple;
+import view.*;
 import model.Environment;
 
 public class Test {
@@ -12,16 +13,25 @@ public class Test {
 	public static void main(String[] args){
 		
 		Environment env = new Environment();
-		//RandomMover rm = new RandomMover(1000,env);
+		RandomMover rm = new RandomMover(100000,env);
+		
 		Simple view = new Simple(env);
-		view.setPreferredSize(new Dimension(40*view.getTabSize(),40*view.getTabSize()));
+		Count count = new Count(env);
+		
+		JPanel all = new JPanel();
+		all.add(view);
+		all.add(count);
+		
+		view.setPreferredSize(new Dimension(40*env.getGrid().getSize(),40*env.getGrid().getSize()));
+		count.setPreferredSize(new Dimension(42*env.getGrid().getSize(),40*env.getGrid().getSize()));
+		
 		JFrame frame = new JFrame("-Test-");		
-		frame.setContentPane(view);
+		frame.setContentPane(all);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 		frame.pack();
-		
-		//rm.start();
+
+		rm.start(view,count);
 	}
 	
 }
