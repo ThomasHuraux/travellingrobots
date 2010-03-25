@@ -53,7 +53,7 @@ public class Count extends JPanel{
         	}
         // Legende :
         g.setColor(Color.BLACK);
-        g.drawString("Legende (du moins visité jusqu'au plus visité) :", 40,39*size+2);
+        g.drawString("Legende (du moins visite au plus visite) :", 40,39*size+2);
         for(int i=0;i<765;i+=2){
         	if(i<255) g.setColor(new Color(0,0,i));
         	else if(i<510) g.setColor(new Color(0,i-255,255));
