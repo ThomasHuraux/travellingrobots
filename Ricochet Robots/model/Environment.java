@@ -62,6 +62,7 @@ public class Environment {
 	public boolean addRobot(Robot r, Position p){
 		Cell c = getGrid().getCell(p);
 		if( c.isEmpty() && c.getType()!=11){
+			c.fill(r);
 			positions.add(r.getId(),p);
 			return true;
 		}else

@@ -13,7 +13,7 @@ public class Test {
 	public static void main(String[] args){
 		
 		Environment env = new Environment();
-		RandomMover rm = new RandomMover(100000,env);
+		RandomMover rm = new RandomMover(10000000,env);
 		
 		Simple view = new Simple(env);
 		Count count = new Count(env);

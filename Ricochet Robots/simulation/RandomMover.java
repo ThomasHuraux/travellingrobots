@@ -22,10 +22,7 @@ public class RandomMover {
 		
 		robots = new ArrayList<Robot>();
 		
-		robots.add( new Robot(Color.RED));
-		robots.add( new Robot(Color.GREEN));
-		robots.add( new Robot(Color.YELLOW));
-		robots.add( new Robot(Color.BLUE));
+		init(4);
 		
 		last = new int[robots.size()];
 	
@@ -33,6 +30,18 @@ public class RandomMover {
 
 		for(Robot r : robots)
 			while(! env.addRobotArbitrarly(r));
+	}
+	
+	public void init(int nbRobots) {
+		if (nbRobots == 4) {
+			robots.add( new Robot(Color.RED));
+			robots.add( new Robot(Color.GREEN));
+			robots.add( new Robot(Color.YELLOW));
+			robots.add( new Robot(Color.BLUE));
+		}
+		else
+			for (int i = 0; i < nbRobots; i++)
+				robots.add(new Robot(Color.BLACK));
 	}
 	
 	public void start(Simple view, Count count){
@@ -56,10 +65,10 @@ public class RandomMover {
 	}
 	
 	private Robot step(){
-		int robot = random(0,4);
-		int movement = random(0,4);
+		int robot = random(0,robots.size());
+		int movement = random(0,robots.size());
 		while(noReturn && movement==last[robot]){
-			movement = random(0,4);
+			movement = random(0,robots.size());
 		}
 		switch(movement){
 				case Movement.NORTH:
