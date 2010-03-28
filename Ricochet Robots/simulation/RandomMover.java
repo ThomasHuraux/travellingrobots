@@ -44,9 +44,10 @@ public class RandomMover {
 				robots.add(new Robot(Color.BLACK));
 	}
 	
-	public void start(Simple view, Count count){
+	public void start(Simple view, FrequenceColor count){
 		final Simple v = view;
-		final Count c = count;
+//		final Count c = count;
+		final FrequenceColor c = count;
 		Thread t = new Thread(){
 			public void run(){
 				for(int i = 0; i<nbStep; i++){
