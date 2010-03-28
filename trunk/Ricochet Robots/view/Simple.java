@@ -8,6 +8,7 @@ import java.awt.Toolkit;
 import javax.swing.JPanel;
 
 import model.Environment;
+import model.Ghost;
 import model.Position;
 import model.Robot;
 
@@ -45,6 +46,9 @@ public class Simple extends JPanel{
         	if(r!=null){
         		Color color = r.getColor();
         		g.setColor(color);
+        		g.fillOval(p.getX()*40+10, p.getY()*40+10, 20, 20);
+        	} else {
+        		g.setColor(Color.LIGHT_GRAY);
         		g.fillOval(p.getX()*40+10, p.getY()*40+10, 20, 20);
         	}
         }

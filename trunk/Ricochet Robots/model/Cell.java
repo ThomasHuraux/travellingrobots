@@ -29,7 +29,8 @@ public class Cell {
 	}
 	
 	public void fill(Robot robot){
-		this.robot = robot;
+		if (!(robot instanceof Ghost))
+			this.robot = robot;
 	}
 	
 	public void mark(int mark){

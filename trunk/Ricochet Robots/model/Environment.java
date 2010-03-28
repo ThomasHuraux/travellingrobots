@@ -42,11 +42,13 @@ public class Environment {
 				break;
 		}
 		
-		if(getGrid().getCell(pos).getRobot() != null)
+		if(!getGrid().getCell(pos).isEmpty())
 			return null;
 		
-		getGrid().getCell(previous).clean();
-		getGrid().getCell(pos).fill(r);
+		if(!(r instanceof Ghost)) {
+			getGrid().getCell(previous).clean();
+			getGrid().getCell(pos).fill(r);
+		}
 		
 		positions.set(r.getId(),pos);
 		return getGrid().getCell(pos);
@@ -61,9 +63,10 @@ public class Environment {
 	
 	public boolean addRobot(Robot r, Position p){
 		Cell c = getGrid().getCell(p);
-		if( c.isEmpty() && c.getType()!=11){
-			c.fill(r);
+		if( c.isEmpty() || r instanceof Ghost && c.getType()!=11){
+			r.setId(positions.size());
 			positions.add(r.getId(),p);
+			c.fill(r);
 			return true;
 		}else
 			return false;
