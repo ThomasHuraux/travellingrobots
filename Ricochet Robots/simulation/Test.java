@@ -1,7 +1,6 @@
 package simulation;
 
 import java.awt.Dimension;
-import java.awt.Color;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -14,7 +13,7 @@ public class Test {
 	public static void main(String[] args){
 		
 		Environment env = new Environment();
-		RandomMover rm = new RandomMover(10000000,env);
+//		RandomMover rm = new RandomMover(10000000,env);
 		
 		Position target = new Position(9,2);
 		CountBot bot = new CountBot(env, target);
