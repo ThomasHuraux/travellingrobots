@@ -8,7 +8,6 @@ import java.awt.Toolkit;
 import javax.swing.JPanel;
 
 import model.Environment;
-import model.Ghost;
 import model.Position;
 import model.Robot;
 
