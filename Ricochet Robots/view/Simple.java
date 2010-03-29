@@ -40,6 +40,7 @@ public class Simple extends JPanel{
         for(int x = 0; x<size; x++)
         	for(int y = 0; y<size; y++)
         		g.drawImage(cells[x][y],x*40,y*40,null);
+//        boolean firstGhost = true;
         for(Position p : env.getPositions()){
         	Robot r = env.getGrid().getCell(p).getRobot();
         	if(r!=null){
@@ -51,6 +52,9 @@ public class Simple extends JPanel{
         		g.fillOval(p.getX()*40+10, p.getY()*40+10, 20, 20);
         	}
         }
+        g.setColor(Color.DARK_GRAY);
+        g.fillRect(env.getTarget().getX()*40+5, env.getTarget().getY()*40+15, 25, 5);
+        g.fillRect(env.getTarget().getX()*40+15, env.getTarget().getY()*40+5, 5, 25);
 	}
 
 	public void setSize(int size) {

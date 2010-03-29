@@ -75,7 +75,8 @@ public class Environment {
 	public void addTarget(Robot r, Position p){
 		this.target = p;
 		Cell c = getGrid().getCell(p);
-		c.mark(r.getId());		
+		if (r != null)
+			c.mark(r.getId());
 	}
 	
 	public Position getTarget(){
