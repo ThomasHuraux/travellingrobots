@@ -4,7 +4,7 @@ import java.awt.Color;
 
 public class CountBot extends Robot implements Ghost{
 	
-	// The ghost robot who count proximity to target !
+	// The ghost robot who count proximity to target
 	
 	private static final int MAXPROXIMITY = Integer.MAX_VALUE;
 	private static final int MAXGENERATION = 10;
