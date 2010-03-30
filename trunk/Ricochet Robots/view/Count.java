@@ -22,6 +22,6 @@ public class Count extends Simple{
 		for(int x = 0;x<size;x++)	
 			for(int y = 0;y<size;y++)
 				if(number[x][y] != Integer.MAX_VALUE)
-					g.drawString(number[x][y]+"", x*40+15, y*40+22);
+					g.drawString(number[x][y]+"", x*CELLSIZE+15, y*CELLSIZE+22);
 	}
 }
