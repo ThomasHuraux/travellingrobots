@@ -13,7 +13,7 @@
 
 *Documentation :*
 
-  [LogBook#Bibliographie] `[2]` Article étudiant certains algorithmes de résolution (parcours en largeur et en profondeur). Le problème est vu d'un point de vue cognition (étude sur une population).
+  [LogBook#Bibliographie] `[2]` Article étudiant certains algorithmes de résolution (parcours en largeur et en profondeur). Le problème est vu d'un point de vue cognition (étude sur une population).
 
   [LogBook#Bibliographie] `[3]` Article analysant la complexité du problème ! NP-Complet.
 
