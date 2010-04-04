@@ -1,0 +1,133 @@
+\documentclass{beamer}
+\usetheme{Hannover}
+\usepackage[utf8x]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{default}
+\hypersetup{pdftitle=RicochetRobots}
+\hypersetup{pdfpagemode=FullScreen}
+\usepackage{color}
+\definecolor{light-gray}{gray}{0.55}
+\definecolor{blue-gray}{RGB}{214, 214, 240}
+\usepackage[footheight=1em]{beamerthemeboxes}
+\addfootboxtemplate{\color{blue-gray}}{\color{white}
+     \hfill\insertframenumber/\inserttotalframenumber\hspace{2em}\null}
+
+
+
+\title{
+\centering{\includegraphics[width=\linewidth]{img/Ricochet_Robots.png}}
+\raggedleft{Ricochet Robots}
+}
+
+
+\begin{document}
+
+\begin{frame}[plain]
+\vspace{3em}
+\titlepage
+\end{frame}
+
+\begin{frame}[plain]
+\frametitle{Plan}
+\tableofcontents
+\end{frame}
+
+
+\section{Pr\'esentation}
+
+\begin{frame}
+\setcounter{framenumber}{1}
+  \vfill
+  \begin{center}
+    \Large{Construction des chemins possibles pour \'evaluer l'atteignabilit\'e de la cible.}\vfill
+\pause 
+\normalsize{\textit{id\'ee :} en construisant la carte des d\'eplacements possibles de chacun des robots, est-il possible d'\'evaluer le plus court chemin vers la cible ?}
+  \end{center}
+  \vfill
+\end{frame}
+
+\section{Construction de la carte routi\`ere}
+
+\subsection{Initialisation}
+
+\begin{frame}
+  \begin{tabular}{l}
+  \hspace{-.1cm}g\'en\'eration $\leftarrow 0$\\
+  \\
+  \hspace{-.1cm}Pour i de 1 \`a (nombre de robots) faire\\
+    \begin{tabular*}{\textwidth}{|p{.5\textwidth}}
+    \hspace{-.1cm}Pour chaque direction autoris\'ee pour le robot faire\\
+      \begin{tabular}{|l}
+      Cr\'eer un clone\\
+      Propager(clone, g\'en\'eration)\\
+      \end{tabular}
+      \\Masquer robot \color{light-gray}{\textit{// Pour que le robot r\'eel ne soit pas consid\'er\'e comme un obstacle pendant l'exploration}}
+    \end{tabular*}
+  \end{tabular}
+\end{frame}
+
+
+\subsection{Propagation}
+
+\begin{frame}
+  \textbf{Propager(clone, g\'en\'eration)}\\
+  \begin{tabular}{l}
+    \hspace{-.1cm}Tant que le clone n'est pas bloqu\'e faire\\
+    \begin{tabular}{|l}
+      $case_{i,j} \leftarrow min(generation,case_{i,j})$
+    \end{tabular}
+    \\ \hspace{-.1cm}FinTq \color{light-gray}{\textit{// le robot est arr\^et\'e}}\\
+    \color{black}\\
+    \hspace{-.1cm}Si $case_{i,j} >$ g\'en\'eration\\
+    \hspace{-.1cm}Alors\\
+      \begin{tabular}{|l}
+        $case_{i,j} \leftarrow$ g\'en\'eration\\
+        D\'etruire le clone\\
+        g\'en\'eration $\leftarrow$ g\'en\'eration + 1\\
+        \\
+        \hspace{-.1cm}Pour chaque direction autoris\'ee pour le clone faire\\
+        \begin{tabular}{|l}
+          Cr\'eer clone\\
+          Propager(clone, g\'en\'eration)\\
+        \end{tabular}
+      \end{tabular}
+    \\ \hspace{-.1cm}\color{light-gray}{\textit{// Sinon ne rien faire}}\\\color{black}
+  \end{tabular}
+\end{frame}
+
+\subsection{Co\^ut}
+
+\begin{frame}
+  \vfill
+  \begin{center}
+    temps : $O(3^n)$
+    \vfill
+    m\'emoire : $O(l^2)$
+  \end{center}
+  \vfill
+\end{frame}
+
+\subsection{Alternative}
+
+\begin{frame}
+  \vfill
+  \centering{Faut-il considérer tous les chemins, ou bien se limiter à ceux qui n'ont pas été parcourus ?}
+  \vfill
+\end{frame}
+
+\begin{frame}
+ \begin{description}
+  \item[Lemme : ] lorsqu'un robot s'arrête sur une case atteignable \footnote{case où un robot peut s'arrêter} par un autre robot, il peut parcourir toute la carte de l'autre robot.
+ \end{description}
+\end{frame}
+
+\begin{frame}
+  \begin{figure}[htbp]
+    \centering
+    \includegraphics[width=.7\linewidth]{img/chemins_initiaux.png}
+    \caption{Cartographie simplifi\'ee}
+  \end{figure}
+\end{frame}
+
+
+\end{document}
