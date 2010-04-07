@@ -4,6 +4,8 @@
 \usepackage{url} % \url{http://}
 \usepackage{color}
 \usepackage{amsmath} % tabular
+\usepackage{amsfonts}
+\usepackage{amssymb}
 \usepackage[pdftex,                %
     bookmarks         = true,%     % Signets
     bookmarksnumbered = true,%     % Signets num\'erot\'es
@@ -26,6 +28,8 @@ pdfproducer = {PDFLaTeX}
 }
 
 \definecolor{light-gray}{gray}{0.55}
+\newcommand{\comment}[1]{\color{light-gray}{\textit{// #1}}\color{black}}
+\newcommand{\Abstract}[1]{\begin{abstract}\textit{#1}\end{abstract}\vspace{-1cm}}
 
 \author{Christophe Labedan}
 \title{Ricochet Robots\\Parcours par atteignabilit\'e}
@@ -34,20 +38,26 @@ pdfproducer = {PDFLaTeX}
 \begin{document}
 
 \maketitle
+\thispagestyle{empty}
+\pagenumbering{}
 \vfill
-\begin{abstract}
+\Abstract{
  L'algorithme qui sera d\'ecrit ici consiste \`a rep\'erer le coup minimal d'atteignabilit\'e de chacune des cases du plateau, \`a partir de la position initial d'un robot. Ainsi, si la cible est accessible, chaque robot saura en combien de co\^uts il pourra directement y acc\'eder. Le but est ensuite d'optimiser l'utilisation de ce nouveau plateau pond\'er\'e afin de faire int\'eragir les robots, et ainsi am\'eliorer la solution.
-\end{abstract}
+}
 \vfill
 \newpage
-
+\pagenumbering{arabic}
 \section{Notations}
 Les notations utilis\'ees dans ce document sont les suivantes :\\
 
 \begin{tabular}{lcl}
 $M_n$ & $\leftrightarrow$ & la matrice de dimension $n \times n$ repr\'esentant le plateau de jeu\\
+$R_c$ & $\leftrightarrow$ & le robot de couleur c, avec $c \in {red, blue, yellow, green}$\\
 $R_{c_{i,j}}$ & $\leftrightarrow$ & le robot de coordonn\'ees i  et j, avec $c \in {red, blue, yellow, green}$\\
+$R_{cible}$ & $\leftrightarrow$ & le robot qui doit atteindre la cible (``robot cibl\'e'')\\
 $C_{i,j}$ & $\leftrightarrow$ & la cible, de coordonn\'ees i et j\\
+$d(M_{i,j},R_c)$ & $\leftrightarrow$ & la distance minimal de $R_c$ \`a $M_{i,j}$, c'est \`a dire le nombre de coups minimal pour atteindre cette case\\
+
 \end{tabular}
 
 \section{G\'en\'eration de la matrice pond\'er\'ee}
@@ -59,14 +69,14 @@ Le but de cette partie est d'affecter un poids \`a toutes les cases accessibles 
 \hspace{-.1cm}g\'en\'eration $\leftarrow 0$\\
 \\
 \hspace{-.1cm}Pour i de 1 \`a (nombre de robots) faire\\
-  \begin{tabular*}{\textwidth}{|p{.5\textwidth}}
-  \hspace{-.1cm}Pour chaque direction autoris\'ee pour le robot faire\\
-    \begin{tabular}{|l}
-    Cr\'eer un clone\\
-    Propager(clone, g\'en\'eration)\\
-    \end{tabular}
-    \\Masquer robot \color{light-gray}{\textit{// Pour que le robot r\'eel ne soit pas consid\'er\'e comme un obstacle pendant l'exploration}}\\
-  \end{tabular*}
+\begin{tabular*}{\textwidth}{|p{.5\textwidth}}
+\hspace{-.1cm}Pour chaque direction disponible faire\\
+\begin{tabular}{|l}
+Cr\'eer un clone\\
+Propager(clone, g\'en\'eration)\\
+\end{tabular}
+\\Masquer robot \comment{Pour que le robot r\'eel ne soit pas consid\'er\'e comme un obstacle pendant l'exploration}
+\end{tabular*}
 \end{tabular}
 
 \subsection{Propagation}
@@ -77,22 +87,22 @@ Le but de cette partie est d'affecter un poids \`a toutes les cases accessibles 
 \begin{tabular}{|l}
 $case_{i,j} \leftarrow min(generation,case_{i,j})$
 \end{tabular}
-\\ \hspace{-.1cm}FinTq \color{light-gray}{\textit{// le robot est arr\^et\'e}}\\
-\color{black}\\
-\hspace{-.1cm}Si $case_{i,j} >$ g\'en\'eration\\
+\\\hspace{-.1cm}FinTq \comment{le robot est arr\^et\'e}
+\\
+\\\hspace{-.1cm}Si $case_{i,j} >$ g\'en\'eration\\
 \hspace{-.1cm}Alors\\
 \begin{tabular}{|l}
 $case_{i,j} \leftarrow$ g\'en\'eration\\
 D\'etruire le clone\\
 g\'en\'eration $\leftarrow$ g\'en\'eration + 1\\
 \\
-\hspace{-.1cm}Pour chaque direction autoris\'ee pour le clone faire\\
+\hspace{-.1cm}Pour chaque direction disponible faire\\
 \begin{tabular}{|l}
 Cr\'eer clone\\
 Propager(clone, g\'en\'eration)\\
 \end{tabular}
 \end{tabular}
-\\ \hspace{-.1cm}\color{light-gray}{\textit{// Sinon ne rien faire}}\\\color{black}
+\\\hspace{-.1cm}\comment{Sinon ne rien faire}
 \end{tabular}
 
 \subsection{Co\^ut et limites}
@@ -102,7 +112,7 @@ Dans le pire des cas, un robot peut initialement se d\'eplacer dans toutes les d
 \par Si la cible a \'et\'e atteinte par le robot cibl\'e, alors on sait qu'une solution a \'et\'e trouv\'ee, et on conna\^it son co\^ut. Toutefois, celle-ci n'est pas forc\'ement optimale, et il n'y a pas encore de moyen pour l'estimer.
 
 \newpage
-\section{Autre id\'ee de construction}
+\subsection{Autre id\'ee de construction}
 En remarquant que de nombreux chemins sont communs \`a l'ensemble des robots, la question se pose de savoir s'il est n\'ecessaire de parcourir tous les chemins possibles pour chacun d'entre eux. La figure \ref{fig:itineraire} montre que si le robot rouge construit sa carte en premier, les autres robots n'ont plus qu'\`a ajouter des bouts de chemins pour construire la leur.
 
 \begin{figure}[htbp]
@@ -116,5 +126,58 @@ On a le lemme suivant:\\
 \begin{description}
   \item[Lemme : ] lorsqu'un robot s'arrête sur une case atteignable \footnote{case où un robot peut s'arrêter} par un autre robot, il peut parcourir toute la carte de l'autre robot.
 \end{description}
+
+\section{Recherche d'une solution}
+Deux cas de figure peuvent se pr\'esenter :
+\begin{itemize}
+  \item[-] Soit le robot cibl\'e peut atteindre la cible; dans ce cas, il faut \'evaluer cette solution par rapport \`a un chemin utilisant d'autres robots;
+  \item[-] Soit il ne l'atteint pas, auquel cas il faut obligatoirement utiliser un ou plusieurs autres robots pour trouver une solution.
+\end{itemize}
+
+Nous allons commencer par examiner la deuxi\`eme situation. Lors de la g\'en\'eration de la premi\`ere carte, le robot cibl\'e ne peut pas atteindre la cible. Il est donc n\'ecessaire de manipuler un ou plusieurs autres robots. Pour commencer, nous allons tenter de trouver une case atteignable par le robot cibl\'e et un autre robot en partant de la cible. Si de telles cases sont d\'ecouvertes, celle qui est accessible le plus rapidement sera choisie.
+
+\subsection{Initialisation de la recherche \`a partir de la cible}
+\begin{tabular}{l}
+\hspace{-.1cm}g\'en\'eration $\leftarrow 0$\\
+\\
+\hspace{-.1cm}Pour chaque direction disponible faire\\
+  \begin{tabular}{|l}
+  Cr\'eer un clone\\
+  Explore(clone, g\'en\'eration)\\
+  \end{tabular}
+  \\Masquer robot
+\end{tabular}
+
+\subsection{Exploration}
+\begin{tabular*}{\textwidth}{p{.7\textwidth}}
+\hspace{-.1cm}$mem$ : tableau d'entiers\\
+\hspace{-.1cm}$choix \in M_{i,j} \times \mathbb{N}$\\
+\hspace{-.1cm}$i = 0$\\
+\\
+\hspace{-.1cm}Tant que le clone n'est pas bloqu\'e faire\\
+  \begin{tabular}{|l}
+    Si $(M_{i,j}$ atteignable par $R_{cible})$ et $(\exists R_c | M_{i,j}$ atteignable par $R_c)$\\
+    Alors $mem[i] \leftarrow (M_{i,j},d(M_{i,j},R_c))$\\
+    Avancer\\
+  \end{tabular}
+%\\$choix \leftarrow min(mem)[0]$ \comment{r\'ecup\'eration de la case o\`u se trouve la distance minimale}
+\end{tabular*}
+%\comment{Ici, choix correspond \`a la case o\`u $\left(R_{c_{i,j}} | c \neq couleur(R_c)\right)$ pourra venir bloquer $R_{cible}$}
+\begin{tabular*}{\textwidth}{p{.7\textwidth}}
+  \\
+  \hspace{-.1cm}Trier $mem$ par $d(M_{i,j},R_c)$ croissant.\\
+  \hspace{-.1cm}$tmp \leftarrow M_{i,j} + max \left( d(M_{i,j},R_c) \right)$\\
+  \\
+  \hspace{-.1cm}Pour i de 1 \`a $|mem|$ faire\\
+  \begin{tabular*}{\textwidth}{|p{.7\textwidth}}
+    Si $(M_{i,j} + d(M_{i,j},R_c)) < tmp$\\
+    Alors\\
+    \begin{tabular*}{\textwidth}{|p{.7\textwidth}}
+      $tmp \leftarrow min(tmp,M_{i,j} + d(M_{i,j},R_c)  + d(M_{i,j},C_{i,j}))$\\
+    \end{tabular*}
+  \end{tabular*}
+\end{tabular*}
+\\
+\comment{algorithme incomplet, il faut encore recommencer avec de nouvelles g\'en\'erations et chercher la condition d'arr\^et notamment}
 
 \end{document}

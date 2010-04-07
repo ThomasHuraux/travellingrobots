@@ -100,9 +100,11 @@
 \begin{frame}
   \vfill
   \begin{center}
-    temps : $O(3^n)$
+    temps : $O(3^n)$\\
+    n : nombre total de g\'en\'erations produites
     \vfill
-    m\'emoire : $O(l^2)$
+    m\'emoire : $O(l^2)$\\
+    l : taille d'un c\^ot\'e de la matrice
   \end{center}
   \vfill
 \end{frame}
@@ -128,6 +130,60 @@
     \caption{Cartographie simplifi\'ee}
   \end{figure}
 \end{frame}
+
+\section{Recherche de solution}
+\begin{frame}
+  \vfill
+  \centering Recherche de solution
+  \vfill
+\end{frame}
+
+\subsection{Recherche \`a partir de la cible}
+\begin{frame}
+\begin{tabular}{l}
+\hspace{-.1cm}g\'en\'eration $\leftarrow 0$\\
+\\
+\hspace{-.1cm}Pour chaque direction disponible faire\\
+  \begin{tabular}{|l}
+  Cr\'eer un clone\\
+  Explore(clone, g\'en\'eration)\\
+  \end{tabular}
+  \\Masquer robot
+\end{tabular} 
+\end{frame}
+
+\subsection{Exploration}
+\begin{frame}
+ \begin{tabular*}{\textwidth}{p{.7\textwidth}}
+\hspace{-.1cm}$mem$ : tableau d'entiers\\
+\hspace{-.1cm}$choix \in M_{i,j} \times \mathbb{N}$\\
+\hspace{-.1cm}$i = 0$\\
+\\
+\hspace{-.1cm}Tant que le clone n'est pas bloqu\'e faire\\
+  \begin{tabular}{|l}
+    Si $(M_{i,j}$ atteignable par $R_{cible})$ et $(\exists R_c | M_{i,j}$ atteignable par $R_c)$\\
+    Alors $mem[i] \leftarrow (M_{i,j},d(M_{i,j},R_c))$\\
+    Avancer\\
+  \end{tabular}
+%\\$choix \leftarrow min(mem)[0]$ \comment{r\'ecup\'eration de la case o\`u se trouve la distance minimale}
+\end{tabular*}
+%\comment{Ici, choix correspond \`a la case o\`u $\left(R_{c_{i,j}} | c \neq couleur(R_c)\right)$ pourra venir bloquer $R_{cible}$}
+\begin{tabular*}{\textwidth}{p{.7\textwidth}}
+  \\
+  \hspace{-.1cm}Trier $mem$ par $d(M_{i,j},R_c)$ croissant.\\
+  \hspace{-.1cm}$tmp \leftarrow M_{i,j} + max \left( d(M_{i,j},R_c) \right)$\\
+  \\
+  \hspace{-.1cm}Pour i de 1 \`a $|mem|$ faire\\
+  \begin{tabular*}{\textwidth}{|p{.7\textwidth}}
+    Si $(M_{i,j} + d(M_{i,j},R_c)) < tmp$\\
+    Alors\\
+    \begin{tabular*}{\textwidth}{|p{.7\textwidth}}
+      $tmp \leftarrow min(tmp,M_{i,j} + d(M_{i,j},R_c)  + d(M_{i,j},C_{i,j}))$\\
+    \end{tabular*}
+  \end{tabular*}
+\end{tabular*}
+\end{frame}
+
 
 
 \end{document}
