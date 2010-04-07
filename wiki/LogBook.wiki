@@ -41,6 +41,21 @@ Pour la prochaine fois:
   * Christophe -> algorithme génétique
 
 
+= 25 mars 2010 =
+
+== Quelques idées ==
+
+  * Algorithme génétique : formaliser l'atteignabilité.
+  * Heuristique pour A`*` : coût au but en partant de la cible OU distance "vol d'oiseau".
+
+== Piste ==
+
+  * Programmation génétique ([http://fr.wikipedia.org/wiki/Programmation_g%C3%A9n%C3%A9tique Description])
+
+
+||* PROCHAINE RENCONTRE LE JEUDI 8 AVRIL *||
+
+
 = Bibliographie =
   `[1]` Stuart & Russel. Articial Intelligence: A Modern Approach. Prentice Hall, 1995. http://aima.cs.berkeley.edu/index.html
 
