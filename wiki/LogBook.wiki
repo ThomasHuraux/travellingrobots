@@ -52,8 +52,21 @@ Pour la prochaine fois:
 
   * Programmation génétique ([http://fr.wikipedia.org/wiki/Programmation_g%C3%A9n%C3%A9tique Description])
 
+= 8 avril 2010 =
 
-||* PROCHAINE RENCONTRE LE JEUDI 8 AVRIL *||
+== Discussion ==
+
+  * Domaine de la planification("résolution de pb","Search"): explorer l'espace des versions
+  * Rappel sur la recherche en profondeur/largeur 
+  * Recherche avant/arrière
+  * Modélisation
+      * États : plateau + positions des robots
+      * Actions (avec des conditions) : changement d'état
+      * But : décrire l'état but
+  * Présentation du travail pour trouver une heuristique
+  * Il est nécessaire d'évaluer les solutions
+
+||* PROCHAINE RENCONTRE LE 29 AVRIL *||
 
 
 = Bibliographie =
