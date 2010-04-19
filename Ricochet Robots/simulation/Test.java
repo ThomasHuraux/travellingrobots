@@ -15,21 +15,28 @@ public class Test {
 		
 		Position target = new Position(9,2);
 		env.addTarget(null, target);
-		CountBot bot = new CountBot(env, target);
 		
+		CountBot bot1 = new CountBot(env, target);
+		int[][] tab = bot1.getProximity();
+		Count count1 = new Count(env,tab );
+		
+		//CountBot bot2 = new CountBot(env, env.getPositions().get(0));
+		//Count count2 = new Count(env, bot2.getProximity());
 		/**
 		 * Pour retrouver la matrice avec les distances a la cible
 		 * bot.getProximity()
 		 */
 		
 		//Simple view = new Simple(env);
-		Count count = new Count(env, bot.getProximity());
+		
+		
 		//FrequenceColor fq = new FrequenceColor(env);
 		
 		
 		JPanel all = new JPanel();
 		//all.add(view);
-		all.add(count);
+		all.add(count1);
+		//all.add(count2);
 		//all.add(fq);
 		
 		//view.setPreferredSize(new Dimension(40*env.getGrid().getSize(),40*env.getGrid().getSize()));
