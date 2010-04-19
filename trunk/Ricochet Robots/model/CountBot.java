@@ -19,8 +19,15 @@ public class CountBot extends Robot implements Ghost{
 		this.generation = 0;
 		lastMove = -1;
 		init(env);
+		Robot r = null;
+		if(! env.getGrid().getCell(target).isEmpty()){
+			r = env.getGrid().getCell(target).getRobot();
+			env.getGrid().getCell(target).clean();
+		}
 		env.addRobot(this,target);
 		proliferate(env);
+		if(r != null)
+			env.getGrid().getCell(target).fill(r);		
 	}
 	
 	private CountBot(int generation){

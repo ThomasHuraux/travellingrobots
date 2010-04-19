@@ -70,6 +70,10 @@ public class Grid {
 	    			if(DEBUG)System.out.println();
 			 }while(current != null);
 			 br.close();
+			 
+			 /////// 
+			 System.out.println("Import <<"+filename+">> (Size="+getSize()+")");
+			 
 			 return ret;
         } 
 		catch (IOException ex) {

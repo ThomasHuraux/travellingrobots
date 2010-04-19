@@ -4,10 +4,10 @@ package model;
 
 public class Cell {
 
-	protected boolean north;
-	protected boolean east;
-	protected boolean south;
-	protected boolean west;
+	public boolean north;
+	public boolean east;
+	public boolean south;
+	public boolean west;
 	protected int type;
 
 	protected Robot robot;
@@ -58,6 +58,15 @@ public class Cell {
 	
 	public Robot getRobot(){
 		return robot;
+	}
+	
+	public int getNbWall(){
+		int nb = 0;
+		if(! north) nb++;
+		if(! east) nb++;
+		if(! south) nb++;
+		if(! west) nb++;
+		return nb;
 	}
 
 	@Override

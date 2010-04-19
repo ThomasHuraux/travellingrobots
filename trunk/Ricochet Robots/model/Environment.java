@@ -67,6 +67,10 @@ public class Environment {
 			r.setId(positions.size());
 			positions.add(r.getId(),p);
 			c.fill(r);
+			
+			////////
+			System.out.println("Add new robot ("+p+")");
+			
 			return true;
 		}else
 			return false;
