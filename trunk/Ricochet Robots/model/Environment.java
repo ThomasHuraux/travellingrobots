@@ -58,7 +58,7 @@ public class Environment {
 		return positions.get(r.getId());
 	}
 	public boolean addRobotArbitrarly(Robot r){
-		return addRobot(r,new Position(random(getGrid()),random(getGrid())));
+		return addRobot(r,randomPosition());
 	}
 	
 	public boolean addRobot(Robot r, Position p){
@@ -85,6 +85,10 @@ public class Environment {
 	
 	public Position getTarget(){
 		return target;
+	}
+	
+	public Position randomPosition(){
+		return new Position(random(getGrid()),random(getGrid()));
 	}
 	
 	public static int random(Grid g){

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 public class AStar extends MotionPlanner{
 	
 	private int NbITER = 0;
+	private static final int MAXPRECALC = 15;
 	
 	private ArrayList<Node> open;
 	private ArrayList<Node> close;
@@ -75,26 +76,31 @@ public class AStar extends MotionPlanner{
 	public void preCalc(Environment e){
 		Position current = e.getTarget();
 		Cell c = e.getGrid().getCell(current);
-		if(c.north) expand(current,Movement.NORTH,1,e);
-		if(c.east) expand(current,Movement.EAST,1,e);
-		if(c.south) expand(current,Movement.SOUTH,1,e);
-		if(c.west) expand(current,Movement.WEST,1,e);
+		if(c.north && (!c.south || (c.south && !e.getGrid().getCell(new Position(current.getX(),current.getY()+1)).isEmpty())))
+			expand(current,Movement.NORTH,1,e);
+		if(c.east && (!c.west || (c.west && !e.getGrid().getCell(new Position(current.getX()-1,current.getY())).isEmpty())))
+			expand(current,Movement.EAST,1,e);
+		if(c.south && (!c.north || (c.north && !e.getGrid().getCell(new Position(current.getX(),current.getY()-1)).isEmpty())))
+			expand(current,Movement.SOUTH,1,e);
+		if(c.west && (!c.east || (c.east && !e.getGrid().getCell(new Position(current.getX()+1,current.getY())).isEmpty())))
+			expand(current,Movement.WEST,1,e);
+		System.out.println("Pre-calculation terminated ("+NbITER+" steps)");
 	}
 	
-	private void mark(Position p, int m, int g){
+	private boolean mark(Position p, int m, int g){
 		if(distToTarget[p.getX()][p.getY()]==0 || distToTarget[p.getX()][p.getY()] > g){
 			distToTarget[p.getX()][p.getY()] = g;
 			dirToTarget[p.getX()][p.getY()] = m;
-		}		
+			return true;
+		}
+		return false;
 	}
 	
 	private void expand(Position current,int movement, int generation,Environment e){
 		
 		NbITER++;
 		
-		if(generation > 15) return;
-		
-		System.out.println(current);
+		if(generation > MAXPRECALC) return;
 		
 		Cell cellC = e.getGrid().getCell(current);		
 		Position next;

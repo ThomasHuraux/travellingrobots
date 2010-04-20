@@ -25,7 +25,8 @@ public class TestAStar {
 		env.addRobot(yellow,new Position(5,13));
 		env.addRobot(blue,new Position(5,7));
 		
-		Position target = new Position(9,2);
+		//Position target = new Position(9,2);
+		Position target = env.randomPosition();
 		env.addTarget(red, target);
 		
 		//***********************************************
