@@ -9,10 +9,14 @@ public class Environment {
 	private Grid grid;
 	protected ArrayList<Position> positions;
 	protected Position target;
+	// tagged est le robot qui doit atteindre la cible
+	private Robot tagged;
+	private ArrayList<Robot> robots;
 	
 	public Environment(){
 		this.setGrid(new Grid("../RicochetRobots/grids/Standard.txt"));
 		positions = new ArrayList<Position>();
+		robots = new ArrayList<Robot>();
 	}
 	
 	public Environment(Grid grid,ArrayList<Robot> robots){
@@ -20,6 +24,7 @@ public class Environment {
 		for(Robot r : robots){
 			while(! addRobotArbitrarly(r));
 		}
+		this.robots = robots;
 	}
 	
 	public Cell modify(Robot r, int move){
@@ -57,11 +62,13 @@ public class Environment {
 	public Position getPosition(Robot r){
 		return positions.get(r.getId());
 	}
+	
 	public boolean addRobotArbitrarly(Robot r){
 		return addRobot(r,randomPosition());
 	}
 	
 	public boolean addRobot(Robot r, Position p){
+		robots.add(r);
 		Cell c = getGrid().getCell(p);
 		if( c.isEmpty() || r instanceof Ghost && c.getType()!=11){
 			r.setId(positions.size());
@@ -74,6 +81,14 @@ public class Environment {
 			return true;
 		}else
 			return false;
+	}
+	
+	public void setTaggedRobot(Robot tagged) {
+		this.tagged = tagged;
+	}
+	
+	public Robot getTaggedRobot() {
+		return this.tagged;
 	}
 	
 	public void addTarget(Robot r, Position p){
