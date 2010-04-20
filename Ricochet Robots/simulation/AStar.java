@@ -82,8 +82,10 @@ public class AStar extends MotionPlanner{
 	}
 	
 	private void mark(Position p, int m, int g){
-		if(distToTarget[p.getX()][p.getY()]==0 || distToTarget[p.getX()][p.getY()] > g)distToTarget[p.getX()][p.getY()] = g;
-		dirToTarget[p.getX()][p.getY()] = m;
+		if(distToTarget[p.getX()][p.getY()]==0 || distToTarget[p.getX()][p.getY()] > g){
+			distToTarget[p.getX()][p.getY()] = g;
+			dirToTarget[p.getX()][p.getY()] = m;
+		}		
 	}
 	
 	private void expand(Position current,int movement, int generation,Environment e){
@@ -105,10 +107,14 @@ public class AStar extends MotionPlanner{
 				if(cellC.north && e.getGrid().getCell(next).isEmpty())
 					expand(next,Movement.NORTH,generation,e);
 				
-				if(cellC.east && !cellC.west && e.getGrid().getCell(new Position(current.getX()+1,current.getY())).isEmpty())
+				if(cellC.east 
+						&& (!cellC.west || (cellC.west && !e.getGrid().getCell(new Position(current.getX()-1,current.getY())).isEmpty()))
+						&& e.getGrid().getCell(new Position(current.getX()+1,current.getY())).isEmpty())
 					expand(new Position(current.getX()+1,current.getY()),Movement.EAST,++generation,e);
 				
-				if(cellC.west && !cellC.east && e.getGrid().getCell(new Position(current.getX()-1,current.getY())).isEmpty())
+				if(cellC.west 
+						&& (!cellC.east || (cellC.east && !e.getGrid().getCell(new Position(current.getX()+1,current.getY())).isEmpty())) 
+						&& e.getGrid().getCell(new Position(current.getX()-1,current.getY())).isEmpty())
 					expand(new Position(current.getX()-1,current.getY()),Movement.WEST,++generation,e);
 				
 				break;
@@ -119,10 +125,14 @@ public class AStar extends MotionPlanner{
 				if(cellC.east && e.getGrid().getCell(next).isEmpty())
 					expand(next,Movement.EAST,generation,e);			
 				
-				if(cellC.north && !cellC.south && e.getGrid().getCell(new Position(current.getX(),current.getY()-1)).isEmpty())
+				if(cellC.north 
+						&& (!cellC.south || (cellC.south && !e.getGrid().getCell(new Position(current.getX(),current.getY()+1)).isEmpty())) 
+						&& e.getGrid().getCell(new Position(current.getX(),current.getY()-1)).isEmpty())
 					expand(new Position(current.getX(),current.getY()-1),Movement.NORTH,++generation,e);
 				
-				if(cellC.south && !cellC.north && e.getGrid().getCell(new Position(current.getX(),current.getY()+1)).isEmpty())
+				if(cellC.south 
+						&& (!cellC.north || (cellC.north && !e.getGrid().getCell(new Position(current.getX(),current.getY()-1)).isEmpty()))  
+						&& e.getGrid().getCell(new Position(current.getX(),current.getY()+1)).isEmpty())
 					expand(new Position(current.getX(),current.getY()+1),Movement.SOUTH,++generation,e);
 				
 				break;
@@ -133,10 +143,14 @@ public class AStar extends MotionPlanner{
 				if(cellC.south && e.getGrid().getCell(next).isEmpty())
 					expand(next,Movement.SOUTH,generation,e);
 				
-				if(cellC.east && !cellC.west && e.getGrid().getCell(new Position(current.getX()+1,current.getY())).isEmpty())
+				if(cellC.east 
+						&& (!cellC.west || (cellC.west && !e.getGrid().getCell(new Position(current.getX()-1,current.getY())).isEmpty()))
+						&& e.getGrid().getCell(new Position(current.getX()+1,current.getY())).isEmpty())
 					expand(new Position(current.getX()+1,current.getY()),Movement.EAST,++generation,e);
 				
-				if(cellC.west && !cellC.east && e.getGrid().getCell(new Position(current.getX()-1,current.getY())).isEmpty())
+				if(cellC.west 
+						&& (!cellC.east || (cellC.east && !e.getGrid().getCell(new Position(current.getX()+1,current.getY())).isEmpty())) 
+						&& e.getGrid().getCell(new Position(current.getX()-1,current.getY())).isEmpty())
 					expand(new Position(current.getX()-1,current.getY()),Movement.WEST,++generation,e);
 				
 				break;
@@ -147,11 +161,15 @@ public class AStar extends MotionPlanner{
 				if(cellC.west && e.getGrid().getCell(next).isEmpty())
 					expand(next,Movement.WEST,generation,e);
 				
-				if(cellC.north && !cellC.south && e.getGrid().getCell(new Position(current.getX(),current.getY()-1)).isEmpty())
-					expand(new Position(current.getX(),current.getY()-1),Movement.NORTH,generation++,e);
+				if(cellC.north 
+						&& (!cellC.south || (cellC.south && !e.getGrid().getCell(new Position(current.getX(),current.getY()+1)).isEmpty())) 
+						&& e.getGrid().getCell(new Position(current.getX(),current.getY()-1)).isEmpty())
+					expand(new Position(current.getX(),current.getY()-1),Movement.NORTH,++generation,e);
 				
-				if(cellC.south && !cellC.north && e.getGrid().getCell(new Position(current.getX(),current.getY()+1)).isEmpty())
-					expand(new Position(current.getX(),current.getY()+1),Movement.SOUTH,generation++,e);
+				if(cellC.south 
+						&& (!cellC.north || (cellC.north && !e.getGrid().getCell(new Position(current.getX(),current.getY()-1)).isEmpty()))  
+						&& e.getGrid().getCell(new Position(current.getX(),current.getY()+1)).isEmpty())
+					expand(new Position(current.getX(),current.getY()+1),Movement.SOUTH,++generation,e);
 				
 				break;
 		}

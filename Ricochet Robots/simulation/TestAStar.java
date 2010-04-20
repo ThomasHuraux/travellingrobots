@@ -36,17 +36,17 @@ public class TestAStar {
 		algo.preCalc(env);
 		
 		int[][] distToTarget = algo.getDistToTarget();
+		int[][] dirToTarget = algo.getDirToTarget();
 		
 		
 		//***********************************************
 		
-		
-		Simple view = new Simple(env);
-		Count count1 = new Count(env,distToTarget);
+		Count c = new Count(env,distToTarget);
+		Arrow a = new Arrow(env,dirToTarget);
 		
 		JPanel all = new JPanel();
-		all.add(view);
-		all.add(count1);
+		all.add(c);
+		all.add(a);
 		
 		JFrame frame = new JFrame("-Test-");		
 		frame.setContentPane(all);
