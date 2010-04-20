@@ -15,7 +15,7 @@ import model.Robot;
 public class Simple extends JPanel{
 
 	private static final long serialVersionUID = 1L;
-	private final static String IMGPATH = "../RicochetRobots/img/";
+	protected final static String IMGPATH = "../RicochetRobots/img/";
 	protected final static int CELLSIZE = 40;
 	
 
