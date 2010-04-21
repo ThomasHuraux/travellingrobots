@@ -11,7 +11,7 @@ public class Test {
 	public static void main(String[] args){
 		
 		Environment env = new Environment();
-		RandomMover rm = new RandomMover(100000,env);
+		//RandomMover rm = new RandomMover(100000,env);
 		
 		Position target = new Position(9,2);
 		env.addTarget(null, target);

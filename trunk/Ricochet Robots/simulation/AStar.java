@@ -38,8 +38,8 @@ public class AStar extends MotionPlanner{
 		e.addRobot(yellow,new Position(5,13));
 		e.addRobot(blue,new Position(5,7));
 		
-		//Position target = new Position(9,2);
-		Position target = new Position(9,8);
+		Position target = new Position(9,2);
+		//Position target = new Position(9,8);
 		//Position target = env.randomPosition();
 		e.addTarget(red, target);
 		
@@ -63,15 +63,22 @@ public class AStar extends MotionPlanner{
 	}
 
 	public Sequence search(Environment e){
-/*		init(e);
+		init(e);
 		while( !isFinal(e) && !open.isEmpty() ){
 			current = best(open);
 			addInClose(current);
 			addNewNodes(current);
 		}
 		if( isFinal(e) )
-	        return getSequence();*/
+	        return getSequence();
 		return null;
+	}
+
+	private boolean isFinal(Environment e) {
+		for(State s : e.getStates())
+			if(s.getPosition().compare(e.getTarget()) && s.getRobot()==e.getTagged())
+				return true;
+		return false;
 	}
 
 	private Sequence getSequence() {
@@ -79,8 +86,8 @@ public class AStar extends MotionPlanner{
 	}
 
 	private void addNewNodes(Environment current){
-/*		for(Robot r : robots){		
-			Environment re = (Environment) current.clone();
+		for(Robot r : robots){		
+			Environment re = current.clone();
 			r.moveEast(re);
 			addInOpen(re);
 			
@@ -95,7 +102,7 @@ public class AStar extends MotionPlanner{
 			Environment rs = current.clone();
 			r.moveSouth(rs);
 			addInOpen(rs);
-		}*/
+		}
 	}
 
 	private void addInClose(Environment current) {	
@@ -110,24 +117,20 @@ public class AStar extends MotionPlanner{
 	private Environment best(ArrayList<Environment> open) {
 		return null;
 	}
-
-/*	private boolean isFinal(Environment e){
-		return ( e.getGrid().getCell(e.getTarget())).isFillWithGoodOne();
-	}
 	
 	public void preCalc(Environment e){
 		Position current = e.getTarget();
 		Cell c = e.getGrid().getCell(current);
-		if(c.north && (!c.south || (c.south && !e.getGrid().getCell(new Position(current.getX(),current.getY()+1)).isEmpty())))
+		if(c.north && (!c.south || (c.south && !e.isEmpty(new Position(current.getX(),current.getY()+1)))))
 			expand(current,Movement.NORTH,1,e);
-		if(c.east && (!c.west || (c.west && !e.getGrid().getCell(new Position(current.getX()-1,current.getY())).isEmpty())))
+		if(c.east && (!c.west || (c.west && !e.isEmpty(new Position(current.getX()-1,current.getY())))))
 			expand(current,Movement.EAST,1,e);
-		if(c.south && (!c.north || (c.north && !e.getGrid().getCell(new Position(current.getX(),current.getY()-1)).isEmpty())))
+		if(c.south && (!c.north || (c.north && !e.isEmpty(new Position(current.getX(),current.getY()-1)))))
 			expand(current,Movement.SOUTH,1,e);
-		if(c.west && (!c.east || (c.east && !e.getGrid().getCell(new Position(current.getX()+1,current.getY())).isEmpty())))
+		if(c.west && (!c.east || (c.east && !e.isEmpty(new Position(current.getX()+1,current.getY())))))
 			expand(current,Movement.WEST,1,e);
 		System.out.println("Pre-calculation terminated ("+NbITER+" steps)");
-	}*/
+	}
 	
 	private boolean mark(Position p, int m, int g, Environment e){
 		if(distToTarget[p.getX()][p.getY()] > g){
@@ -141,7 +144,7 @@ public class AStar extends MotionPlanner{
 	
 	private void expand(Position current,int movement, int generation,Environment e){
 		
-/*		NbITER++;
+		NbITER++;
 		
 		if(generation > MAXPRECALC) return;
 		
@@ -153,17 +156,17 @@ public class AStar extends MotionPlanner{
 				mark(current,Movement.SOUTH,generation,e);
 				next = new Position(current.getX(),current.getY()-1);
 				
-				if(cellC.north && e.getGrid().getCell(next).isEmpty())
+				if(cellC.north && e.isEmpty(next))
 					expand(next,Movement.NORTH,generation,e);
 				
 				if(cellC.east 
-						&& (!cellC.west || (cellC.west && !e.getGrid().getCell(new Position(current.getX()-1,current.getY())).isEmpty()))
-						&& e.getGrid().getCell(new Position(current.getX()+1,current.getY())).isEmpty())
+						&& (!cellC.west || (cellC.west && !e.isEmpty(new Position(current.getX()-1,current.getY()))))
+						&& e.isEmpty(new Position(current.getX()+1,current.getY())))
 					expand(new Position(current.getX()+1,current.getY()),Movement.EAST,++generation,e);
 				
 				if(cellC.west 
-						&& (!cellC.east || (cellC.east && !e.getGrid().getCell(new Position(current.getX()+1,current.getY())).isEmpty())) 
-						&& e.getGrid().getCell(new Position(current.getX()-1,current.getY())).isEmpty())
+						&& (!cellC.east || (cellC.east && !e.isEmpty(new Position(current.getX()+1,current.getY())))) 
+						&& e.isEmpty(new Position(current.getX()-1,current.getY())))
 					expand(new Position(current.getX()-1,current.getY()),Movement.WEST,++generation,e);
 				
 				break;
@@ -171,17 +174,17 @@ public class AStar extends MotionPlanner{
 				mark(current,Movement.WEST,generation,e);
 				next = new Position(current.getX()+1,current.getY());
 				
-				if(cellC.east && e.getGrid().getCell(next).isEmpty())
+				if(cellC.east && e.isEmpty(next))
 					expand(next,Movement.EAST,generation,e);			
 				
 				if(cellC.north 
-						&& (!cellC.south || (cellC.south && !e.getGrid().getCell(new Position(current.getX(),current.getY()+1)).isEmpty())) 
-						&& e.getGrid().getCell(new Position(current.getX(),current.getY()-1)).isEmpty())
+						&& (!cellC.south || (cellC.south && !e.isEmpty(new Position(current.getX(),current.getY()+1)))) 
+						&& e.isEmpty(new Position(current.getX(),current.getY()-1)))
 					expand(new Position(current.getX(),current.getY()-1),Movement.NORTH,++generation,e);
 				
 				if(cellC.south 
-						&& (!cellC.north || (cellC.north && !e.getGrid().getCell(new Position(current.getX(),current.getY()-1)).isEmpty()))  
-						&& e.getGrid().getCell(new Position(current.getX(),current.getY()+1)).isEmpty())
+						&& (!cellC.north || (cellC.north && !e.isEmpty(new Position(current.getX(),current.getY()-1))))  
+						&& e.isEmpty(new Position(current.getX(),current.getY()+1)))
 					expand(new Position(current.getX(),current.getY()+1),Movement.SOUTH,++generation,e);
 				
 				break;
@@ -189,17 +192,17 @@ public class AStar extends MotionPlanner{
 				mark(current,Movement.NORTH,generation,e);
 				next = new Position(current.getX(),current.getY()+1);
 				
-				if(cellC.south && e.getGrid().getCell(next).isEmpty())
+				if(cellC.south && e.isEmpty(next))
 					expand(next,Movement.SOUTH,generation,e);
 				
 				if(cellC.east 
-						&& (!cellC.west || (cellC.west && !e.getGrid().getCell(new Position(current.getX()-1,current.getY())).isEmpty()))
-						&& e.getGrid().getCell(new Position(current.getX()+1,current.getY())).isEmpty())
+						&& (!cellC.west || (cellC.west && !e.isEmpty(new Position(current.getX()-1,current.getY()))))
+						&& e.isEmpty(new Position(current.getX()+1,current.getY())))
 					expand(new Position(current.getX()+1,current.getY()),Movement.EAST,++generation,e);
 				
 				if(cellC.west 
-						&& (!cellC.east || (cellC.east && !e.getGrid().getCell(new Position(current.getX()+1,current.getY())).isEmpty())) 
-						&& e.getGrid().getCell(new Position(current.getX()-1,current.getY())).isEmpty())
+						&& (!cellC.east || (cellC.east && !e.isEmpty(new Position(current.getX()+1,current.getY())))) 
+						&& e.isEmpty(new Position(current.getX()-1,current.getY())))
 					expand(new Position(current.getX()-1,current.getY()),Movement.WEST,++generation,e);
 				
 				break;
@@ -207,21 +210,21 @@ public class AStar extends MotionPlanner{
 				mark(current,Movement.EAST,generation,e);
 				next = new Position(current.getX()-1,current.getY());
 				
-				if(cellC.west && e.getGrid().getCell(next).isEmpty())
+				if(cellC.west && e.isEmpty(next))
 					expand(next,Movement.WEST,generation,e);
 				
 				if(cellC.north 
-						&& (!cellC.south || (cellC.south && !e.getGrid().getCell(new Position(current.getX(),current.getY()+1)).isEmpty())) 
-						&& e.getGrid().getCell(new Position(current.getX(),current.getY()-1)).isEmpty())
+						&& (!cellC.south || (cellC.south && !e.isEmpty(new Position(current.getX(),current.getY()+1)))) 
+						&& e.isEmpty(new Position(current.getX(),current.getY()-1)))
 					expand(new Position(current.getX(),current.getY()-1),Movement.NORTH,++generation,e);
 				
 				if(cellC.south 
-						&& (!cellC.north || (cellC.north && !e.getGrid().getCell(new Position(current.getX(),current.getY()-1)).isEmpty()))  
-						&& e.getGrid().getCell(new Position(current.getX(),current.getY()+1)).isEmpty())
+						&& (!cellC.north || (cellC.north && !e.isEmpty(new Position(current.getX(),current.getY()-1))))  
+						&& e.isEmpty(new Position(current.getX(),current.getY()+1)))
 					expand(new Position(current.getX(),current.getY()+1),Movement.SOUTH,++generation,e);
 				
 				break;
-		}*/
+		}
 	}
 	
 	private void distToWall(int move,Position pos,Environment e){
