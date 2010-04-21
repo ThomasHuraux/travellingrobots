@@ -8,9 +8,8 @@ import java.awt.Toolkit;
 
 import javax.swing.JPanel;
 
-import model.Environment;
-import model.Position;
-import model.Robot;
+import model.*;
+
 
 public class Simple extends JPanel{
 
@@ -46,15 +45,13 @@ public class Simple extends JPanel{
         	for(int y = 0; y<size; y++)
         		g.drawImage(cells[x][y],x*CELLSIZE,y*CELLSIZE,null);
 //        boolean firstGhost = true;
-        for(Position p : env.getPositions()){
-        	Robot r = env.getGrid().getCell(p).getRobot();
-        	if(r!=null){
-        		Color color = r.getColor();
-        		g.setColor(color);
-        		g.fillOval(p.getX()*CELLSIZE+10, p.getY()*CELLSIZE+10, 20, 20);
-        	} else {
-        		g.setColor(Color.LIGHT_GRAY);
-        		g.fillOval(p.getX()*CELLSIZE+10, p.getY()*CELLSIZE+10, 20, 20);
+        for(State s : env.getStates()){
+        	Robot r = s.getRobot();
+        	if(!(r instanceof Ghost)){
+	        	Position p = s.getPosition();
+	        	Color color = r.getColor();
+	        	g.setColor(color);
+	        	g.fillOval(p.getX()*CELLSIZE+10, p.getY()*CELLSIZE+10, 20, 20);
         	}
         }
         g.setColor(Color.DARK_GRAY);

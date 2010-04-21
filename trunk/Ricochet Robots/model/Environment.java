@@ -4,80 +4,81 @@ package model;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Environment {
+public class Environment implements Cloneable{
 	
-	private Grid grid;
-	protected ArrayList<Position> positions;
+	protected static Grid grid;
 	protected Position target;
-	// tagged est le robot qui doit atteindre la cible
+	
 	private Robot tagged;
-	private ArrayList<Robot> robots;
+	protected ArrayList<State> etats;
 	
 	public Environment(){
-		this.setGrid(new Grid("../RicochetRobots/grids/Standard.txt"));
-		positions = new ArrayList<Position>();
-		robots = new ArrayList<Robot>();
+		if(grid == null)
+			this.setGrid(new Grid("../RicochetRobots/grids/Standard.txt"));
+		etats = new ArrayList<State>();
 	}
 	
 	public Environment(Grid grid,ArrayList<Robot> robots){
-		this.setGrid(grid);
+		if(grid == null)
+			this.setGrid(grid);
 		for(Robot r : robots){
 			while(! addRobotArbitrarly(r));
 		}
-		this.robots = robots;
+	}
+	
+	public State getState(Robot r){
+		for(State s : etats)
+			if(s.robot.equals(r))
+				return s;
+		return null;
+	}
+	
+	public State getState(Position p){
+		for(State s : etats)
+			if(s.position.compare(p))
+				return s;
+		return null;
 	}
 	
 	public Cell modify(Robot r, int move){
-		Position pos = getPosition(r);
-		Position previous = pos;
-
-		Cell c = getGrid().getCell(pos);
+		State state = getState(r);
+		Cell c = getGrid().getCell(state.position);
+		Position pos = null;
 		switch(move){
 			case Movement.NORTH:
-				if(c.north) pos = new Position(pos.x,pos.y-1);
+				if(c.north) pos = new Position(state.position.x,state.position.y-1);
 				break;
 			case Movement.EAST:
-				if(c.east) pos = new Position(pos.x+1,pos.y);
+				if(c.east) pos = new Position(state.position.x+1,state.position.y);
 				break;
 			case Movement.SOUTH:
-				if(c.south) pos = new Position(pos.x,pos.y+1);
+				if(c.south) pos = new Position(state.position.x,state.position.y+1);
 				break;
 			case Movement.WEST:
-				if(c.west) pos = new Position(pos.x-1,pos.y);
+				if(c.west) pos = new Position(state.position.x-1,state.position.y);
 				break;
 		}
-		
-		if(!getGrid().getCell(pos).isEmpty())
+		if(pos==null || !isEmpty(pos))
 			return null;
 		
-		if(!(r instanceof Ghost)) {
-			getGrid().getCell(previous).clean();
-			getGrid().getCell(pos).fill(r);
-		}
-		
-		positions.set(r.getId(),pos);
-		return getGrid().getCell(pos);
-	}
-	
-	public Position getPosition(Robot r){
-		return positions.get(r.getId());
+		state.position = pos;		
+		return getGrid().getCell(state.position);
 	}
 	
 	public boolean addRobotArbitrarly(Robot r){
 		return addRobot(r,randomPosition());
 	}
 	
-	public boolean addRobot(Robot r, Position p){
-		robots.add(r);
-		Cell c = getGrid().getCell(p);
-		if( c.isEmpty() || r instanceof Ghost && c.getType()!=11){
-			r.setId(positions.size());
-			positions.add(r.getId(),p);
-			c.fill(r);
-			
-			////////
-			System.out.println("Add new robot ("+p+")");
-			
+	public boolean isEmpty(Position p){
+		for(State s : etats)
+			if(s.position.compare(p) && !(s.robot instanceof Ghost))
+					return false;
+		return true;
+	}
+	
+	public boolean addRobot(Robot r, Position p){			
+		if( isEmpty(p)&& grid.getCell(p).getType()!=11){
+			etats.add(new State(r,p));			
 			return true;
 		}else
 			return false;
@@ -93,9 +94,7 @@ public class Environment {
 	
 	public void addTarget(Robot r, Position p){
 		this.target = p;
-		Cell c = getGrid().getCell(p);
-		if (r != null)
-			c.mark(r.getId());
+		this.tagged = r;
 	}
 	
 	public Position getTarget(){
@@ -111,8 +110,8 @@ public class Environment {
 		return r.nextInt(g.getSize()-1);
 	}
 
-	public ArrayList<Position> getPositions() {
-		return positions;
+	public ArrayList<State> getStates() {
+		return etats;
 	}
 
 	public void setGrid(Grid grid) {

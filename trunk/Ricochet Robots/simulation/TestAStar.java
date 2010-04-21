@@ -15,28 +15,14 @@ public class TestAStar {
 		
 		Environment env = new Environment();
 		
-		Robot red = new Robot(Color.RED);
-		Robot green = new Robot(Color.GREEN);
-		Robot yellow = new Robot(Color.YELLOW);
-		Robot blue = new Robot(Color.BLUE);
-		
-		env.addRobot(red,new Position(14,0));
-		env.addRobot(green,new Position(0,11));
-		env.addRobot(yellow,new Position(5,13));
-		env.addRobot(blue,new Position(5,7));
-		
-		//Position target = new Position(9,2);
-		Position target = env.randomPosition();
-		env.addTarget(red, target);
-		
 		//***********************************************
 		
 		
 		AStar algo = new AStar();
 		algo.init(env);
-		algo.preCalc(env);
+		//algo.preCalc(env);
 		
-		int[][] distToTarget = algo.getDistToTarget();
+		int[][] distToTarget = algo.getHeuristic();
 		int[][] dirToTarget = algo.getDirToTarget();
 		
 		

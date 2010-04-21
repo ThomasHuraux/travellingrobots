@@ -1,7 +1,5 @@
 package model;
 
-
-
 public class Cell {
 
 	public boolean north;
@@ -9,9 +7,6 @@ public class Cell {
 	public boolean south;
 	public boolean west;
 	protected int type;
-
-	protected Robot robot;
-	protected int mark;
 	
 	public Cell(boolean noMaze){
 		accessible(noMaze);
@@ -22,23 +17,6 @@ public class Cell {
 		this.east = east;
 		this.south = south;
 		this.west = west;
-	}
-	
-	public boolean isEmpty(){
-		return robot==null;
-	}
-	
-	public void fill(Robot robot){
-		if (!(robot instanceof Ghost))
-			this.robot = robot;
-	}
-	
-	public void mark(int mark){
-		this.mark = mark;
-	}
-	
-	public void clean(){
-		this.robot = null;
 	}
 	
 	private void accessible(boolean noMaze){
@@ -56,10 +34,6 @@ public class Cell {
 		this.type = type;
 	}
 	
-	public Robot getRobot(){
-		return robot;
-	}
-	
 	public int getNbWall(){
 		int nb = 0;
 		if(! north) nb++;
@@ -71,11 +45,8 @@ public class Cell {
 
 	@Override
 	public String toString() {
-		return "Cell [east=" + east + ", mark=" + mark + ", north=" + north
-				+ ", robot=" + robot + ", south=" + south + ", type=" + type
-				+ ", west=" + west + "]";
+		return "Cell [east=" + east + ", north=" + north + ", south=" + south
+				+ ", type=" + type + ", west=" + west + "]";
 	}
-	
-	
-	
+
 }
