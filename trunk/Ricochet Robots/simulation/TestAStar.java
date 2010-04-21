@@ -19,6 +19,7 @@ public class TestAStar {
 		AStar algo = new AStar();
 		algo.init(env);
 		//algo.preCalc(env);
+		algo.search(env);
 		
 		int[][] distToTarget = algo.getHeuristic();
 		int[][] dirToTarget = algo.getDirToTarget();
@@ -29,15 +30,15 @@ public class TestAStar {
 		//Count c = new Count(env,distToTarget);
 		//Arrow a = new Arrow(env,dirToTarget);
 		
-		Environment clone = env.clone();
-		clone.getStates().get(0).getRobot().moveSouth(clone);
+		//Environment clone = env.clone();
+		//clone.getStates().get(0).getRobot().moveSouth(clone);
 		
-		Simple c = new Simple(env);
-		Simple a = new Simple(clone);
+		//Simple c = new Simple(env);
+		Simple a = new Simple(env);
 		
 		JPanel all = new JPanel();
-		all.add(c);
 		all.add(a);
+		//all.add(a);
 		
 		JFrame frame = new JFrame("-Test-");		
 		frame.setContentPane(all);

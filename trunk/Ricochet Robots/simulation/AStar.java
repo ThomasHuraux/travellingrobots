@@ -9,6 +9,7 @@ public class AStar extends MotionPlanner{
 	
 	private int NbITER = 0;
 	private static final int MAXPRECALC = 15;
+	private static final int MAXNOPRECALC = 100;
 	
 	private ArrayList<Environment> open;
 	private ArrayList<Environment> close;
@@ -25,6 +26,19 @@ public class AStar extends MotionPlanner{
 	ArrayList<Robot> robots = new ArrayList<Robot>();
 	
 	private Environment current;
+	
+	public void initPreCalc(Environment e){
+		int size = e.getGrid().getSize();
+		heuristic = new int[size][size];
+		distToTarget = new int[size][size];
+		for(int x = 0;x<size;x++)	
+			for(int y = 0;y<size;y++){
+				heuristic[x][y] = MAXNOPRECALC;
+				distToTarget[x][y] = MAXNOPRECALC;
+			}
+		
+		dirToTarget = new int[size][size];
+	}
 	
 	public void init(Environment e){
 		
@@ -46,16 +60,8 @@ public class AStar extends MotionPlanner{
 		open = new ArrayList<Environment>();
 		close = new ArrayList<Environment>();
 		
-		int size = e.getGrid().getSize();
-		heuristic = new int[size][size];
-		distToTarget = new int[size][size];
-		for(int x = 0;x<size;x++)	
-			for(int y = 0;y<size;y++){
-				heuristic[x][y] = Integer.MAX_VALUE;
-				distToTarget[x][y] = Integer.MAX_VALUE;
-			}
-		
-		dirToTarget = new int[size][size];		
+		initPreCalc(e);
+				
 		current = e;	
 		addInOpen(e);
 		addInClose(e);
@@ -63,20 +69,19 @@ public class AStar extends MotionPlanner{
 	}
 
 	public Sequence search(Environment e){
-		init(e);
-		while( !isFinal(e) && !open.isEmpty() ){
+		while( !isFinal(current) && !open.isEmpty() ){
 			current = best(open);
 			addInClose(current);
 			addNewNodes(current);
 		}
-		if( isFinal(e) )
+		if( isFinal(current) )
 	        return getSequence();
 		return null;
 	}
 
 	private boolean isFinal(Environment e) {
 		for(State s : e.getStates())
-			if(s.getPosition().compare(e.getTarget()) && s.getRobot()==e.getTagged())
+			if(s.getRobot()==e.getTagged() && s.getPosition().compare(e.getTarget()))
 				return true;
 		return false;
 	}
@@ -85,23 +90,37 @@ public class AStar extends MotionPlanner{
 		return null;
 	}
 
-	private void addNewNodes(Environment current){
+	private void addNewNodes(Environment e){		
 		for(Robot r : robots){		
+			System.out.println("ADD NEW NODES FOR "+r.getId());
+			
 			Environment re = current.clone();
-			r.moveEast(re);
-			addInOpen(re);
+			if(re.modify(r,Movement.EAST) != null){
+				r.moveEast(re);			
+				addInOpen(re);
+				System.out.println("\tEAST");
+			}
 			
 			Environment rw = current.clone();
-			r.moveWest(rw);
-			addInOpen(rw);
+			if(rw.modify(r,Movement.WEST) != null){
+				r.moveWest(rw);
+				addInOpen(rw);
+				System.out.println("\tWEST");
+			}
 			
 			Environment rn = current.clone();
-			r.moveNorth(rn);
-			addInOpen(rn);
+			if(rn.modify(r,Movement.NORTH) != null){
+				r.moveNorth(rn);
+				addInOpen(rn);
+				System.out.println("\tNORTH");
+			}
 			
 			Environment rs = current.clone();
-			r.moveSouth(rs);
-			addInOpen(rs);
+			if(rs.modify(r,Movement.SOUTH) != null){
+				r.moveSouth(rs);
+				addInOpen(rs);
+				System.out.println("\tSOUTH");
+			}			
 		}
 	}
 
@@ -115,12 +134,39 @@ public class AStar extends MotionPlanner{
 	}
 
 	private Environment best(ArrayList<Environment> open) {
-		return null;
+		
+		int idMin = 0;
+		int valMin = MAXNOPRECALC;
+		int hMax = 0;
+		
+		int id = 0;
+		
+		for(Environment e : open){
+			preCalc(e);
+			System.out.println("Pre-calculation terminated ("+NbITER+" steps)");
+			for(State s : e.getEtats()){
+				if(s.getRobot()==e.getTagged()){
+					if(distToTarget[s.getPosition().getX()][s.getPosition().getY()] < valMin){
+						valMin = distToTarget[s.getPosition().getX()][s.getPosition().getY()];
+						idMin = id;
+						break;
+					}
+					if(NbITER > hMax){
+						hMax = NbITER;
+						idMin = id;
+					}
+					NbITER = 0;
+				}
+			}
+			id++;
+		}
+		return open.get(idMin);
 	}
 	
 	public void preCalc(Environment e){
 		Position current = e.getTarget();
 		Cell c = e.getGrid().getCell(current);
+		initPreCalc(e);
 		if(c.north && (!c.south || (c.south && !e.isEmpty(new Position(current.getX(),current.getY()+1)))))
 			expand(current,Movement.NORTH,1,e);
 		if(c.east && (!c.west || (c.west && !e.isEmpty(new Position(current.getX()-1,current.getY())))))
@@ -129,7 +175,6 @@ public class AStar extends MotionPlanner{
 			expand(current,Movement.SOUTH,1,e);
 		if(c.west && (!c.east || (c.east && !e.isEmpty(new Position(current.getX()+1,current.getY())))))
 			expand(current,Movement.WEST,1,e);
-		System.out.println("Pre-calculation terminated ("+NbITER+" steps)");
 	}
 	
 	private boolean mark(Position p, int m, int g, Environment e){
