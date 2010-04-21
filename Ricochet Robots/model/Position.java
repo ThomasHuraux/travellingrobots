@@ -26,6 +26,10 @@ public class Position {
 		this.y = y;
 	}
 
+	public boolean compare(Position p){
+		return (p.x == x)&&(p.y == y);
+	}
+	
 	@Override
 	public String toString() {
 		return "Position [x=" + x + ", y=" + y + "]";

@@ -52,7 +52,7 @@ public class RandomMover {
 			public void run(){
 				for(int i = 0; i<nbStep; i++){
 					Robot moveOne = step();
-					c.increase(env.getPosition(moveOne));
+					c.increase((env.getState(moveOne)).getPosition());
 					v.update(env);
 					try {
 						sleep(STEPTIME);

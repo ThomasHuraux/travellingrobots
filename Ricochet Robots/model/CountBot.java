@@ -19,15 +19,15 @@ public class CountBot extends Robot implements Ghost{
 		this.generation = 0;
 		lastMove = -1;
 		init(env);
-		Robot r = null;
-		if(! env.getGrid().getCell(target).isEmpty()){
-			r = env.getGrid().getCell(target).getRobot();
-			env.getGrid().getCell(target).clean();
+		State s = null;
+		if(! env.isEmpty(target)){
+			s = env.getState(target);
+			env.getStates().remove(s);
 		}
-		env.addRobot(this,target);
+		env.getStates().add(new State(this,target));
 		proliferate(env);
-		if(r != null)
-			env.getGrid().getCell(target).fill(r);		
+		if(s != null)
+			env.getStates().add(s);		
 	}
 	
 	private CountBot(int generation){
@@ -45,7 +45,7 @@ public class CountBot extends Robot implements Ghost{
 	
 	private void proliferate(Environment env){
 		
-		Position pos = env.getPosition(this);
+		Position pos = env.getState(this).position;
 		Cell c = env.getGrid().getCell(pos);
 		
 		update(env);
@@ -59,10 +59,11 @@ public class CountBot extends Robot implements Ghost{
 		if(c.west && Movement.EAST != lastMove)
 			replicateOnWest(env,pos);
 		
+		env.getStates().remove(env.getState(this));
 	}
 	
 	private void update(Environment env){
-		Position pos = env.getPosition(this);
+		Position pos = env.getState(this).position;
 		int v = proximity[pos.getX()][pos.getY()];
 		if(v > generation)			
 			proximity[pos.getX()][pos.getY()] = generation;
@@ -129,7 +130,7 @@ public class CountBot extends Robot implements Ghost{
 	}
 	
 	private CountBot createBabyBot(Environment env,Position pos){
-		if(env.getGrid().getCell(pos).isEmpty()){
+		if(env.isEmpty(pos)){
 			CountBot baby = new CountBot(generation+1);
 			env.addRobot(baby,pos);
 			return baby; 
