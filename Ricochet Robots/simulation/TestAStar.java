@@ -1,7 +1,5 @@
 package simulation;
 
-import java.awt.Color;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -28,8 +26,14 @@ public class TestAStar {
 		
 		//***********************************************
 		
-		Count c = new Count(env,distToTarget);
-		Arrow a = new Arrow(env,dirToTarget);
+		//Count c = new Count(env,distToTarget);
+		//Arrow a = new Arrow(env,dirToTarget);
+		
+		Environment clone = env.clone();
+		clone.getStates().get(0).getRobot().moveSouth(clone);
+		
+		Simple c = new Simple(env);
+		Simple a = new Simple(clone);
 		
 		JPanel all = new JPanel();
 		all.add(c);

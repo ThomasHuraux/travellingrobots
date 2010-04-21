@@ -4,7 +4,7 @@ package model;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Environment implements Cloneable{
+public class Environment{
 	
 	protected static Grid grid;
 	protected Position target;
@@ -24,6 +24,17 @@ public class Environment implements Cloneable{
 		for(Robot r : robots){
 			while(! addRobotArbitrarly(r));
 		}
+	}
+	
+	public Environment clone() {
+		Environment e = new Environment();
+		e.setTarget(new Position(target.getX(),target.getY()));
+		e.setTaggedRobot(tagged);
+		ArrayList<State> listes = new ArrayList<State>();
+		for(State s : etats)
+			listes.add(new State(s.robot,new Position(s.position.getX(),s.position.getY())));
+		e.setEtats(listes);
+		return e;
 	}
 	
 	public State getState(Robot r){
@@ -114,12 +125,33 @@ public class Environment implements Cloneable{
 		return etats;
 	}
 
+	@SuppressWarnings("static-access")
 	public void setGrid(Grid grid) {
 		this.grid = grid;
 	}
 
 	public Grid getGrid() {
 		return grid;
+	}
+
+	public Robot getTagged() {
+		return tagged;
+	}
+
+	public void setTagged(Robot tagged) {
+		this.tagged = tagged;
+	}
+
+	public ArrayList<State> getEtats() {
+		return etats;
+	}
+
+	public void setEtats(ArrayList<State> etats) {
+		this.etats = etats;
+	}
+
+	public void setTarget(Position target) {
+		this.target = target;
 	}
 
 }
