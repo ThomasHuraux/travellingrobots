@@ -28,8 +28,7 @@ public class Environment{
 	
 	public Environment clone() {
 		Environment e = new Environment();
-		e.setTarget(new Position(target.getX(),target.getY()));
-		e.setTaggedRobot(tagged);
+		e.addTarget(tagged,new Position(target.getX(),target.getY()));
 		ArrayList<State> listes = new ArrayList<State>();
 		for(State s : etats)
 			listes.add(new State(s.robot,new Position(s.position.getX(),s.position.getY())));
