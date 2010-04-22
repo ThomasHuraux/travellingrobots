@@ -144,7 +144,7 @@ public class AStar extends MotionPlanner{
 		for(Environment e : open){
 			preCalc(e);
 			System.out.println("Pre-calculation terminated ("+NbITER+" steps)");
-			for(State s : e.getEtats()){
+			for(State s : e.getStates()){
 				if(s.getRobot()==e.getTagged()){
 					if(distToTarget[s.getPosition().getX()][s.getPosition().getY()] < valMin){
 						valMin = distToTarget[s.getPosition().getX()][s.getPosition().getY()];
