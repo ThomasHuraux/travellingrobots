@@ -10,12 +10,12 @@ public class Environment{
 	protected Position target;
 	
 	private Robot tagged;
-	protected ArrayList<State> etats;
+	protected ArrayList<State> states;
 	
 	public Environment(){
 		if(grid == null)
 			this.setGrid(new Grid("../RicochetRobots/grids/Standard.txt"));
-		etats = new ArrayList<State>();
+		states = new ArrayList<State>();
 	}
 	
 	public Environment(Grid grid,ArrayList<Robot> robots){
@@ -30,24 +30,10 @@ public class Environment{
 		Environment e = new Environment();
 		e.addTarget(tagged,new Position(target.getX(),target.getY()));
 		ArrayList<State> listes = new ArrayList<State>();
-		for(State s : etats)
+		for(State s : states)
 			listes.add(new State(s.robot,new Position(s.position.getX(),s.position.getY())));
-		e.setEtats(listes);
+		e.setStates(listes);
 		return e;
-	}
-	
-	public State getState(Robot r){
-		for(State s : etats)
-			if(s.robot.equals(r))
-				return s;
-		return null;
-	}
-	
-	public State getState(Position p){
-		for(State s : etats)
-			if(s.position.compare(p))
-				return s;
-		return null;
 	}
 	
 	public Cell modify(Robot r, int move){
@@ -75,42 +61,38 @@ public class Environment{
 		return getGrid().getCell(state.position);
 	}
 	
-	public boolean addRobotArbitrarly(Robot r){
-		return addRobot(r,randomPosition());
-	}
-	
-	public boolean isEmpty(Position p){
-		for(State s : etats)
-			if(s.position.compare(p) && !(s.robot instanceof Ghost))
-					return false;
-		return true;
-	}
-	
 	public boolean addRobot(Robot r, Position p){			
 		if( isEmpty(p)&& grid.getCell(p).getType()!=11){
-			etats.add(new State(r,p));			
+			states.add(new State(r,p));			
 			return true;
 		}else
 			return false;
 	}
 	
-	public void setTaggedRobot(Robot tagged) {
-		this.tagged = tagged;
+	public boolean addRobotArbitrarly(Robot r){
+		return addRobot(r,randomPosition());
+	}
+	
+	public boolean isEmpty(Position p){
+		for(State s : states)
+			if(s.position.compare(p) && !(s.robot instanceof Ghost))
+					return false;
+		return true;
 	}
 	
 	public Robot getTaggedRobot() {
 		return this.tagged;
 	}
 	
+	public void setTaggedRobot(Robot tagged) {
+		this.tagged = tagged;
+	}
+	
 	public void addTarget(Robot r, Position p){
 		this.target = p;
 		this.tagged = r;
 	}
-	
-	public Position getTarget(){
-		return target;
-	}
-	
+
 	public Position randomPosition(){
 		return new Position(random(getGrid()),random(getGrid()));
 	}
@@ -120,17 +102,13 @@ public class Environment{
 		return r.nextInt(g.getSize()-1);
 	}
 
-	public ArrayList<State> getStates() {
-		return etats;
+	public Grid getGrid() {
+		return grid;
 	}
-
+	
 	@SuppressWarnings("static-access")
 	public void setGrid(Grid grid) {
 		this.grid = grid;
-	}
-
-	public Grid getGrid() {
-		return grid;
 	}
 
 	public Robot getTagged() {
@@ -141,14 +119,32 @@ public class Environment{
 		this.tagged = tagged;
 	}
 
-	public ArrayList<State> getEtats() {
-		return etats;
+	public State getState(Robot r){
+		for(State s : states)
+			if(s.robot.equals(r))
+				return s;
+		return null;
+	}
+	
+	public State getState(Position p){
+		for(State s : states)
+			if(s.position.compare(p))
+				return s;
+		return null;
+	}
+	
+	public ArrayList<State> getStates() {
+		return states;
 	}
 
-	public void setEtats(ArrayList<State> etats) {
-		this.etats = etats;
+	public void setStates(ArrayList<State> etats) {
+		this.states = etats;
 	}
 
+	public Position getTarget(){
+		return target;
+	}
+	
 	public void setTarget(Position target) {
 		this.target = target;
 	}
