@@ -14,6 +14,8 @@ public class AStar extends MotionPlanner{
 	private ArrayList<Environment> open;
 	private ArrayList<Environment> close;
 	
+	private ArrayList<String> log;
+	
 	private int[][] heuristic;
 	private int[][] distToTarget;
 	private int[][] dirToTarget;
@@ -60,6 +62,8 @@ public class AStar extends MotionPlanner{
 		open = new ArrayList<Environment>();
 		close = new ArrayList<Environment>();
 		
+		log = new ArrayList<String>();
+		
 		initPreCalc(e);
 				
 		current = e;	
@@ -70,13 +74,18 @@ public class AStar extends MotionPlanner{
 
 	public Sequence search(Environment e){
 		while( !isFinal(current) && !open.isEmpty() ){
+			preCalc(current);
 			current = best(open);
 			addInClose(current);
 			addNewNodes(current);
 		}
-		if( isFinal(current) )
-	        return getSequence();
-		return null;
+		if( isFinal(current) ){
+			Sequence result = new Sequence();
+			result.addAll(close);
+			System.out.println("Target reached ("+NbITER+" steps) ["+close.size()+" nodes in list]");
+			return result;
+		}else return null;
+	
 	}
 
 	private boolean isFinal(Environment e) {
@@ -86,40 +95,37 @@ public class AStar extends MotionPlanner{
 		return false;
 	}
 
-	private Sequence getSequence() {
-		return null;
-	}
-
-	private void addNewNodes(Environment e){		
+	private void addNewNodes(Environment e){	
+		
 		for(Robot r : robots){		
-			System.out.println("ADD NEW NODES FOR "+r.getId());
+			//System.out.println("ADD NEW NODES FOR "+r.getColor());
 			
 			Environment re = current.clone();
 			if(re.modify(r,Movement.EAST) != null){
 				r.moveEast(re);			
 				addInOpen(re);
-				System.out.println("\tEAST");
+				//System.out.println("\tEAST");
 			}
 			
 			Environment rw = current.clone();
 			if(rw.modify(r,Movement.WEST) != null){
 				r.moveWest(rw);
 				addInOpen(rw);
-				System.out.println("\tWEST");
+				//System.out.println("\tWEST");
 			}
 			
 			Environment rn = current.clone();
 			if(rn.modify(r,Movement.NORTH) != null){
 				r.moveNorth(rn);
 				addInOpen(rn);
-				System.out.println("\tNORTH");
+				//System.out.println("\tNORTH");
 			}
 			
 			Environment rs = current.clone();
 			if(rs.modify(r,Movement.SOUTH) != null){
 				r.moveSouth(rs);
 				addInOpen(rs);
-				System.out.println("\tSOUTH");
+				//System.out.println("\tSOUTH");
 			}			
 		}
 	}
@@ -130,20 +136,24 @@ public class AStar extends MotionPlanner{
 	}
 	
 	private void addInOpen(Environment current) {
-		open.add(current);
+		String s = getStringRepresentation(current);
+		if(! log.contains(s)){
+			open.add(current);
+			log.add(s);
+		}
 	}
 
 	private Environment best(ArrayList<Environment> open) {
 		
 		int idMin = 0;
 		int valMin = MAXNOPRECALC;
-		int hMax = 0;
+		
+		int idMinH = 0;
+		int valMinH = MAXNOPRECALC;
 		
 		int id = 0;
 		
 		for(Environment e : open){
-			preCalc(e);
-			System.out.println("Pre-calculation terminated ("+NbITER+" steps)");
 			for(State s : e.getStates()){
 				if(s.getRobot()==e.getTagged()){
 					if(distToTarget[s.getPosition().getX()][s.getPosition().getY()] < valMin){
@@ -151,15 +161,21 @@ public class AStar extends MotionPlanner{
 						idMin = id;
 						break;
 					}
-					if(NbITER > hMax){
-						hMax = NbITER;
-						idMin = id;
+					if(heuristic[s.getPosition().getX()][s.getPosition().getY()] < valMinH){
+						valMinH = heuristic[s.getPosition().getX()][s.getPosition().getY()];
+						idMinH = id;
+						break;
 					}
-					NbITER = 0;
 				}
 			}
 			id++;
 		}
+		
+		if(valMin == MAXNOPRECALC)
+			idMin = idMinH;
+		
+		//System.out.println("Best choice ("+open.size()+" in open) : "+idMin+" (Heuristic="+valMin+") [Current cost : "+NbITER+"]");
+		
 		return open.get(idMin);
 	}
 	
@@ -317,55 +333,6 @@ public class AStar extends MotionPlanner{
 		return NbITER;
 	}
 
-	private void fillLine(Position pos1, Position pos2, int[][] tab, int num){
-		if(pos1.getX() == pos2.getX()){
-			if(pos1.getY() > pos2.getY())
-				for(int i = pos2.getY();i<pos1.getY();i++)
-					tab[pos1.getX()][i] = num;
-			else
-				for(int i = pos1.getY();i<pos2.getY();i++)
-					tab[pos1.getX()][i] = num;
-		}
-		if(pos1.getY() == pos2.getY()){
-			if(pos1.getX() > pos2.getX())
-				for(int i = pos2.getX();i<pos1.getX();i++)
-					tab[i][pos1.getY()] = num;
-			else
-				for(int i = pos1.getX();i<pos2.getX();i++)
-					tab[i][pos1.getY()] = num;
-		}
-	}
-	
-	private ArrayList<Position> getAccessible(Position p, int movement, Environment e){
-		Cell c = e.getGrid().getCell(p);
-		ArrayList<Position> pos = new ArrayList<Position>();
-		
-		Position next;
-		
-	/*	if(c.north && movement!=Movement.SOUTH){
-			next = new Position(p.getX(),p.getY()-1);
-			if(e.getGrid().getCell(next).isEmpty())
-				pos.add(next);
-		}
-		if(c.east && movement!=Movement.WEST){
-			next = new Position(p.getX()+1,p.getY());
-			if(e.getGrid().getCell(next).isEmpty())
-				pos.add(next);
-		}
-		if(c.south && movement!=Movement.NORTH){
-			next = new Position(p.getX(),p.getY()+1);
-			if(e.getGrid().getCell(next).isEmpty())
-				pos.add(next);
-		}
-		if(c.west && movement!=Movement.EAST){
-			next = new Position(p.getX()-1,p.getY());
-			if(e.getGrid().getCell(next).isEmpty())
-				pos.add(next);
-		}*/
-		
-		return pos;
-	}
-
 	public int[][] getHeuristic() {
 		return heuristic;
 	}
@@ -373,5 +340,12 @@ public class AStar extends MotionPlanner{
 	public int[][] getDirToTarget() {
 		return dirToTarget;
 	}	
+	
+	public static String getStringRepresentation(Environment e){
+		String r = new String();
+		for(State s : e.getStates())
+			r += s.getPosition().getX()+"."+s.getPosition().getY()+"_";
+		return r;
+	}
 	
 }
