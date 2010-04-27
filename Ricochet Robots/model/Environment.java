@@ -57,7 +57,7 @@ public class Environment{
 		if(pos==null || !isEmpty(pos))
 			return null;
 		
-		state.position = pos;		
+		state.position = pos;
 		return getGrid().getCell(state.position);
 	}
 	
