@@ -14,6 +14,8 @@ public class CorridorHeuristic implements Heuristic{
 	
 	private static final int MAXNOPRECALC = 100;
 	private static final int MAXPRECALC = 15;
+	
+	private Position previous;
 
 	public int NbITER = 0;
 	
@@ -53,12 +55,10 @@ public class CorridorHeuristic implements Heuristic{
 					if(distToTarget[s.getPosition().getX()][s.getPosition().getY()] < valMin){
 						valMin = distToTarget[s.getPosition().getX()][s.getPosition().getY()];
 						idMin = id;
-						break;
 					}
 					if(heuristic[s.getPosition().getX()][s.getPosition().getY()] < valMinH){
 						valMinH = heuristic[s.getPosition().getX()][s.getPosition().getY()];
 						idMinH = id;
-						break;
 					}
 				}
 			}
@@ -74,19 +74,23 @@ public class CorridorHeuristic implements Heuristic{
 	}
 	
 	public void preCalc(Environment e){
+		if(previous == null || previous.compare(e.getState(e.getTagged()).getPosition())){
+			
+			NbITER++;
+			
+			Position current = e.getTarget();
+			Cell c = e.getGrid().getCell(current);
+			if(c.north && (!c.south || (c.south && !e.isEmpty(new Position(current.getX(),current.getY()+1)))))
+				expand(current,Movement.NORTH,1,e);
+			if(c.east && (!c.west || (c.west && !e.isEmpty(new Position(current.getX()-1,current.getY())))))
+				expand(current,Movement.EAST,1,e);
+			if(c.south && (!c.north || (c.north && !e.isEmpty(new Position(current.getX(),current.getY()-1)))))
+				expand(current,Movement.SOUTH,1,e);
+			if(c.west && (!c.east || (c.east && !e.isEmpty(new Position(current.getX()+1,current.getY())))))
+				expand(current,Movement.WEST,1,e);
+		}
 		
-		NbITER++;
-		
-		Position current = e.getTarget();
-		Cell c = e.getGrid().getCell(current);
-		if(c.north && (!c.south || (c.south && !e.isEmpty(new Position(current.getX(),current.getY()+1)))))
-			expand(current,Movement.NORTH,1,e);
-		if(c.east && (!c.west || (c.west && !e.isEmpty(new Position(current.getX()-1,current.getY())))))
-			expand(current,Movement.EAST,1,e);
-		if(c.south && (!c.north || (c.north && !e.isEmpty(new Position(current.getX(),current.getY()-1)))))
-			expand(current,Movement.SOUTH,1,e);
-		if(c.west && (!c.east || (c.east && !e.isEmpty(new Position(current.getX()+1,current.getY())))))
-			expand(current,Movement.WEST,1,e);
+		previous = e.getState(e.getTagged()).getPosition();
 	}
 	
 	private boolean mark(Position p, int m, int g, Environment e){

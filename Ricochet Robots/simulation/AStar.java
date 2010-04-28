@@ -22,6 +22,8 @@ public class AStar extends MotionPlanner{
 	private Environment current;
 	private Heuristic heuristic;
 	
+	private float timelength;
+	
 	public AStar(Heuristic h){
 		heuristic = h;
 	}
@@ -95,6 +97,7 @@ public class AStar extends MotionPlanner{
 	public Sequence search(Environment e){
 		init(e);
 		System.out.println("Search ...");
+		long begin = System.currentTimeMillis();
 		while( !isFinal(current) && !open.isEmpty() ){
 			current = heuristic.best(current,open);
 			addInClose(current);
@@ -103,7 +106,9 @@ public class AStar extends MotionPlanner{
 		if( isFinal(current) ){
 			Sequence result = new Sequence();
 			result.addAll(close);
-			System.out.println("Target reached ("+heuristic.getNbITER()+" steps) ["+close.size()+" nodes in 'close' list]");
+			
+			timelength = ((float) (System.currentTimeMillis()-begin)) / 1000f;
+			System.out.println("Target reached ("+timelength+"ms) ["+close.size()+" nodes in 'close' list]");
 			return result;
 		}else return null;
 	
@@ -169,6 +174,10 @@ public class AStar extends MotionPlanner{
 		for(State s : e.getStates())
 			r += s.getPosition().getX()+"."+s.getPosition().getY()+"_";
 		return r;
+	}
+
+	public float getTimelength() {
+		return timelength;
 	}
 	
 }
