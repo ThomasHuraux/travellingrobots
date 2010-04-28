@@ -18,7 +18,7 @@ public class Count extends Simple{
 	public void paintComponent(Graphics g) {
         super.paintComponent(g);
 		int size = number[0].length;
-		g.setColor(Color.BLUE);
+		g.setColor(Color.BLACK);
 		for(int x = 0;x<size;x++)	
 			for(int y = 0;y<size;y++)
 				if(number[x][y] != Integer.MAX_VALUE)
