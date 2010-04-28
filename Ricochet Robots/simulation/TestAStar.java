@@ -25,7 +25,19 @@ public class TestAStar {
 		
 		
 		AStar algo = new AStar(CorridorHeuristic.DEFAULT);
-		steps = algo.search(current);
+		AStar brutF = new AStar(BruteForce.DEFAULT);
+		
+		float timeH = 0;
+		float timeBrut = 0;
+		
+		for(int i=0; i<25; i++){
+			steps = algo.search(current);
+			timeH += algo.getTimelength();
+			
+			steps = brutF.search(current);
+			timeBrut += brutF.getTimelength();
+		}
+		System.out.print("\n ==========\nBrutForce:"+timeBrut+"\nWith Heuristic:"+timeH+"ms");
 
 		all.setLayout(new BorderLayout());
 		all.add(a,BorderLayout.CENTER);
@@ -54,10 +66,10 @@ public class TestAStar {
 		all.add(buttons,BorderLayout.SOUTH);
 		
 		JFrame frame = new JFrame("-Test-");		
-		frame.setContentPane(all);
+		//frame.setContentPane(all);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setVisible(true);
-		frame.pack();
+		//frame.setVisible(true);
+		//frame.pack();
 		
 	}
 	
