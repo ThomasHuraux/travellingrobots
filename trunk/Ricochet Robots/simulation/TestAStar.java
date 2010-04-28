@@ -1,10 +1,10 @@
 package simulation;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
+
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -24,45 +24,34 @@ public class TestAStar {
 	public static void main(String[] args){
 		
 		
-		
-		//***********************************************
-		
-		
-		AStar algo = new AStar();
-		algo.init(current);
-		//algo.preCalc(current);
+		AStar algo = new AStar(CorridorHeuristic.DEFAULT);
 		steps = algo.search(current);
-		
-		int[][] distToTarget = algo.getHeuristic();
-		int[][] dirToTarget = algo.getDirToTarget();
-		
-		
-		//***********************************************
-		
-		//Count c = new Count(current,distToTarget);
-		//Arrow a = new Arrow(env,dirToTarget);
-		
-		//Environment clone = env.clone();
-		//clone.getStates().get(0).getRobot().moveSouth(clone);
-		
-		//Simple c = new Simple(env);
-		
-		
+
 		all.setLayout(new BorderLayout());
 		all.add(a,BorderLayout.CENTER);
-		//all.add(c);
 		
-		
+		JPanel buttons = new JPanel();
 		
 		final JButton next = new JButton("NEXT");
 		next.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-				if( ! next())
+				if( ! next(false))
 					next.setEnabled(false);
 			}
 		});
 		
-		all.add(next,BorderLayout.SOUTH);
+		final JButton finalN = new JButton("FINAL");
+		finalN.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				next(true);
+				next.setEnabled(false);
+			}
+		});
+		
+		buttons.add(next);
+		buttons.add(finalN);
+		
+		all.add(buttons,BorderLayout.SOUTH);
 		
 		JFrame frame = new JFrame("-Test-");		
 		frame.setContentPane(all);
@@ -72,10 +61,13 @@ public class TestAStar {
 		
 	}
 	
-	public static boolean next(){
+	public static boolean next(boolean wantFinal){
 		if(steps!=null && ! steps.isEmpty()){
 			//System.out.println(AStar.getStringRepresentation(current));
-			current = (Environment)steps.remove(0);
+			if(! wantFinal)
+				current = (Environment)steps.remove(0);
+			else
+				current = (Environment)steps.get(steps.size()-1);
 			all.remove(a);
 			a = new Simple(current);
 			all.add(a,BorderLayout.CENTER);
