@@ -30,10 +30,12 @@ public class TestAStar {
 		float timeH = 0;
 		float timeBrut = 0;
 		
-		for(int i=0; i<25; i++){
+		for(int i=0; i<10; i++){
+			current = new Environment();
 			steps = algo.search(current);
 			timeH += algo.getTimelength();
 			
+			current = new Environment();
 			steps = brutF.search(current);
 			timeBrut += brutF.getTimelength();
 		}
