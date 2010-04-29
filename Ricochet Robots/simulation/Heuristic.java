@@ -2,11 +2,9 @@ package simulation;
 
 import java.util.ArrayList;
 
-import model.Environment;
-
 public interface Heuristic {
 	
-	public Environment best(Environment current, ArrayList<Environment> open);
+	public Node best(Node current, ArrayList<Node> open);
 	public int getNbITER();
 
 }

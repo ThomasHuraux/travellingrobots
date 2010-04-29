@@ -8,8 +8,10 @@ import java.util.Random;
 
 public class AStar extends MotionPlanner{
 	
-	private ArrayList<Environment> open;
-	private ArrayList<Environment> close;
+	private static final float MAXTIME = 20;
+	
+	private ArrayList<Node> open;
+	private ArrayList<Node> close;
 	private ArrayList<String> log;
 	
 	Robot red = new Robot(Color.RED);
@@ -19,7 +21,7 @@ public class AStar extends MotionPlanner{
 		
 	ArrayList<Robot> robots = new ArrayList<Robot>();
 	
-	private Environment current;
+	private Node current;
 	private Heuristic heuristic;
 	
 	private float timelength;
@@ -83,31 +85,37 @@ public class AStar extends MotionPlanner{
 		//initDirectCase(e);
 		initRandomCase(e);
 		
-		open = new ArrayList<Environment>();
-		close = new ArrayList<Environment>();
+		open = new ArrayList<Node>();
+		close = new ArrayList<Node>();
 		
 		log = new ArrayList<String>();
 				
-		current = e;	
-		addInOpen(e);
-		addInClose(e);
-		addNewNodes(e);
+		current = new Node(e);	
+		addInOpen(current);
+		addInClose(current);
+		addNewNodes(current);
 	}
 
 	public Sequence search(Environment e){
 		init(e);
 		System.out.println("Search ...");
 		long begin = System.currentTimeMillis();
-		while( !isFinal(current) && !open.isEmpty() ){
+		while( !isFinal(current.getEnvironment()) && !open.isEmpty() ){
 			current = heuristic.best(current,open);
 			addInClose(current);
 			addNewNodes(current);
+			
+			timelength = ((float) (System.currentTimeMillis()-begin)) / 1000f;
+			if(timelength >= MAXTIME){
+				System.out.println("Too long !");
+				return null;
+			}
 		}
-		if( isFinal(current) ){
+		if( isFinal(current.getEnvironment()) ){
 			Sequence result = new Sequence();
 			result.addAll(close);
 			
-			timelength = ((float) (System.currentTimeMillis()-begin)) / 1000f;
+			
 			System.out.println("Target reached ("+timelength+"ms) ["+close.size()+" nodes in 'close' list]");
 			return result;
 		}else return null;
@@ -121,48 +129,48 @@ public class AStar extends MotionPlanner{
 		return false;
 	}
 
-	private void addNewNodes(Environment e){	
+	private void addNewNodes(Node e){	
 		
 		for(Robot r : robots){		
 			//System.out.println("ADD NEW NODES FOR "+r.getColor());
 			
-			Environment re = e.clone();
-			if(re.modify(r,Movement.EAST) != null){
-				r.moveEast(re);			
+			Node re = new Node(e,r,Movement.EAST);
+			if(re.getEnvironment().modify(r,Movement.EAST) != null){
+				r.moveEast(re.getEnvironment());			
 				addInOpen(re);
 				//System.out.println("\tEAST");
 			}
 			
-			Environment rw = e.clone();
-			if(rw.modify(r,Movement.WEST) != null){
-				r.moveWest(rw);
+			Node rw = new Node(e,r,Movement.WEST);
+			if(rw.getEnvironment().modify(r,Movement.WEST) != null){
+				r.moveWest(rw.getEnvironment());
 				addInOpen(rw);
 				//System.out.println("\tWEST");
 			}
 			
-			Environment rn = e.clone();
-			if(rn.modify(r,Movement.NORTH) != null){
-				r.moveNorth(rn);
+			Node rn = new Node(e,r,Movement.NORTH);
+			if(rn.getEnvironment().modify(r,Movement.NORTH) != null){
+				r.moveNorth(rn.getEnvironment());
 				addInOpen(rn);
 				//System.out.println("\tNORTH");
 			}
 			
-			Environment rs = e.clone();
-			if(rs.modify(r,Movement.SOUTH) != null){
-				r.moveSouth(rs);
+			Node rs = new Node(e,r,Movement.SOUTH);
+			if(rs.getEnvironment().modify(r,Movement.SOUTH) != null){
+				r.moveSouth(rs.getEnvironment());
 				addInOpen(rs);
 				//System.out.println("\tSOUTH");
 			}			
 		}
 	}
 
-	private void addInClose(Environment current) {	
+	private void addInClose(Node current) {	
 		close.add(current);
 		open.remove(current);
 	}
 	
-	private void addInOpen(Environment current) {
-		String s = getStringRepresentation(current);
+	private void addInOpen(Node current) {
+		String s = getStringRepresentation(current.getEnvironment());
 		if(! log.contains(s)){
 			open.add(current);
 			log.add(s);

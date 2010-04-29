@@ -2,14 +2,13 @@ package simulation;
 
 import java.util.ArrayList;
 
-import model.Environment;
 
 public class BruteForce implements Heuristic{
 	
 	public static final BruteForce DEFAULT = new BruteForce();
 
 	@Override
-	public Environment best(Environment current, ArrayList<Environment> open) {
+	public Node best(Node current, ArrayList<Node> open) {
 		return open.get(0);
 	}
 

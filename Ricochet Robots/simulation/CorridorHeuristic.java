@@ -33,9 +33,9 @@ public class CorridorHeuristic implements Heuristic{
 		dirToTarget = new int[size][size];
 	}
 
-	public Environment best(Environment current,ArrayList<Environment> open) {
+	public Node best(Node current,ArrayList<Node> open) {
 		
-		init(current.getGrid().getSize());
+		init(current.getEnvironment().getGrid().getSize());
 		
 		int idMin = 0;
 		int valMin = MAXNOPRECALC;
@@ -45,9 +45,10 @@ public class CorridorHeuristic implements Heuristic{
 		
 		int id = 0;
 		
-		preCalc(current);
+		preCalc(current.getEnvironment());
 		
-		for(Environment e : open){
+		for(Node n : open){
+			Environment e = n.getEnvironment();
 			for(State s : e.getStates()){
 				if(s.getRobot()==e.getTagged()){
 					if(distToTarget[s.getPosition().getX()][s.getPosition().getY()] < valMin){
