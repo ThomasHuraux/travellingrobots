@@ -23,24 +23,26 @@ public class TestAStar {
 
 	public static void main(String[] args){
 		
-		
-		AStar algo = new AStar(CorridorHeuristic.DEFAULT);
-		AStar brutF = new AStar(BruteForce.DEFAULT);
+		Heuristic h =  CorridorHeuristic.DEFAULT;
+		AStar algo = new AStar(h);
+		//AStar brutF = new AStar(BruteForce.DEFAULT);
 		
 		float timeH = 0;
 		float timeBrut = 0;
 		
-		for(int i=0; i<10; i++){
-			current = new Environment();
-			steps = algo.search(current);
-			timeH += algo.getTimelength();
-			
-			current = new Environment();
-			steps = brutF.search(current);
-			timeBrut += brutF.getTimelength();
-		}
-		System.out.print("\n ==========\nBrutForce:"+timeBrut+"\nWith Heuristic:"+timeH+"ms");
+//		for(int i=0; i<25; i++){
+//			current = new Environment();
+//			steps = algo.search(current);
+//			timeH += algo.getTimelength();
+//			
+///*			current = new Environment();
+//			steps = brutF.search(current);
+//			timeBrut += brutF.getTimelength();*/
+//		}
+//		System.out.print("\n ==========\nBrutForce:"+timeBrut+"\nWith Heuristic:"+timeH);
 
+		steps = algo.search(current);
+		
 		all.setLayout(new BorderLayout());
 		all.add(a,BorderLayout.CENTER);
 		
@@ -68,10 +70,10 @@ public class TestAStar {
 		all.add(buttons,BorderLayout.SOUTH);
 		
 		JFrame frame = new JFrame("-Test-");		
-		//frame.setContentPane(all);
+		frame.setContentPane(all);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		//frame.setVisible(true);
-		//frame.pack();
+		frame.setVisible(true);
+		frame.pack();
 		
 	}
 	
@@ -79,9 +81,9 @@ public class TestAStar {
 		if(steps!=null && ! steps.isEmpty()){
 			//System.out.println(AStar.getStringRepresentation(current));
 			if(! wantFinal)
-				current = (Environment)steps.remove(0);
+				current = ((Node)steps.remove(0)).getEnvironment();
 			else
-				current = (Environment)steps.get(steps.size()-1);
+				current = ((Node)steps.get(steps.size()-1)).getEnvironment();
 			all.remove(a);
 			a = new Simple(current);
 			all.add(a,BorderLayout.CENTER);

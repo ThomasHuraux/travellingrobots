@@ -18,4 +18,16 @@ public class BruteForce implements Heuristic{
 		return 0;
 	}
 
+	@Override
+	public void preCalc(Node current) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setHeuristic(Node e) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
