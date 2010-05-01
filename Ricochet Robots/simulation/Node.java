@@ -1,27 +1,31 @@
 package simulation;
 
 import model.Environment;
-import model.Robot;
 
 public class Node {
 	
-	protected Environment environment;
 	protected int cost;
-	protected Robot moveRobot;
-	protected int moveType;
+	protected int heuristic;
+	protected int distToTarget;
+	
+	protected Node previous;
+	
+	protected Environment environment;
+
 	
 	public Node(Environment environment){
 		this.environment = environment;
 		this.cost = 0;
-		this.moveRobot = null;
-		this.moveType = -1;
+		this.heuristic = 0;
+		this.previous = null;
+		this.distToTarget = -1;
 	}
 	
-	public Node(Node n, Robot moveRobot, int moveType) {
+	public Node(Node n) {
 		this.environment = n.getEnvironment().clone();
 		this.cost = n.getCost()+1;
-		this.moveRobot = moveRobot;
-		this.moveType = moveType;
+		this.distToTarget = -1;
+		this.previous = n;
 	}
 
 	public Environment getEnvironment() {
@@ -36,24 +40,31 @@ public class Node {
 		return cost;
 	}
 
-	public void setCost(int cost) {
-		this.cost = cost;
+	public int getHeuristic() {
+		return heuristic;
 	}
 
-	public Robot getMoveRobot() {
-		return moveRobot;
+	public void setHeuristic(int heuristic) {
+		this.heuristic = heuristic;
 	}
 
-	public void setMoveRobot(Robot moveRobot) {
-		this.moveRobot = moveRobot;
+	public Node getPrevious() {
+		return previous;
 	}
 
-	public int getMoveType() {
-		return moveType;
+	public int getDistToTarget() {
+		return distToTarget;
 	}
 
-	public void setMoveType(int moveType) {
-		this.moveType = moveType;
+	public void setDistToTarget(int distToTarget) {
+		this.distToTarget = distToTarget;
 	}
+
+	@Override
+	public String toString() {
+		return "Node [cost=" + cost + ", distToTarget=" + distToTarget
+				+ ", heuristic=" + heuristic + "]";
+	}
+
 	
 }

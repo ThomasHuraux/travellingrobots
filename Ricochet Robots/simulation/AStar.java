@@ -8,7 +8,7 @@ import java.util.Random;
 
 public class AStar extends MotionPlanner{
 	
-	private static final float MAXTIME = 20;
+	private static final float MAXTIME = 60;
 	
 	private ArrayList<Node> open;
 	private ArrayList<Node> close;
@@ -21,7 +21,7 @@ public class AStar extends MotionPlanner{
 		
 	ArrayList<Robot> robots = new ArrayList<Robot>();
 	
-	private Node current;
+	protected Node current;
 	private Heuristic heuristic;
 	
 	private float timelength;
@@ -91,7 +91,6 @@ public class AStar extends MotionPlanner{
 		log = new ArrayList<String>();
 				
 		current = new Node(e);	
-		addInOpen(current);
 		addInClose(current);
 		addNewNodes(current);
 	}
@@ -100,64 +99,73 @@ public class AStar extends MotionPlanner{
 		init(e);
 		System.out.println("Search ...");
 		long begin = System.currentTimeMillis();
-		while( !isFinal(current.getEnvironment()) && !open.isEmpty() ){
-			current = heuristic.best(current,open);
-			addInClose(current);
-			addNewNodes(current);
-			
-			timelength = ((float) (System.currentTimeMillis()-begin)) / 1000f;
-			if(timelength >= MAXTIME){
-				System.out.println("Too long !");
-				return null;
+		
+		try{
+			while( !isFinal(current.getEnvironment()) && !open.isEmpty() ){
+				current = heuristic.best(current,open);
+				addInClose(current);
+				addNewNodes(current);
+				
+				timelength = ((float) (System.currentTimeMillis()-begin)) / 1000f;
+				if(timelength >= MAXTIME){
+					System.out.println("Too long !");
+					return null;
+				}
 			}
+		}catch(Exception exception){
+			System.out.println("ERROR : ");
+			exception.printStackTrace();
 		}
+		
 		if( isFinal(current.getEnvironment()) ){
 			Sequence result = new Sequence();
 			result.addAll(close);
 			
-			
-			System.out.println("Target reached ("+timelength+"ms) ["+close.size()+" nodes in 'close' list]");
+			System.out.println("Target reached with "+heuristic.getClass().toString()+" [ timelength="+timelength+" ; movesNb="+current.getCost()+" ]");
 			return result;
 		}else return null;
 	
 	}
 
 	private boolean isFinal(Environment e) {
-		for(State s : e.getStates())
-			if(s.getRobot()==e.getTagged() && s.getPosition().compare(e.getTarget()))
-				return true;
-		return false;
+		return e.getState(e.getTagged()).getPosition().compare(e.getTarget());
 	}
 
 	private void addNewNodes(Node e){	
 		
+		heuristic.preCalc(e);
+		
 		for(Robot r : robots){		
 			//System.out.println("ADD NEW NODES FOR "+r.getColor());
 			
-			Node re = new Node(e,r,Movement.EAST);
+			Node re = new Node(e);
 			if(re.getEnvironment().modify(r,Movement.EAST) != null){
-				r.moveEast(re.getEnvironment());			
+				r.moveEast(re.getEnvironment());
+				heuristic.setHeuristic(re);
 				addInOpen(re);
 				//System.out.println("\tEAST");
 			}
 			
-			Node rw = new Node(e,r,Movement.WEST);
+			Node rw = new Node(e);
 			if(rw.getEnvironment().modify(r,Movement.WEST) != null){
 				r.moveWest(rw.getEnvironment());
+				heuristic.setHeuristic(rw);
 				addInOpen(rw);
 				//System.out.println("\tWEST");
 			}
 			
-			Node rn = new Node(e,r,Movement.NORTH);
+			Node rn = new Node(e);
 			if(rn.getEnvironment().modify(r,Movement.NORTH) != null){
 				r.moveNorth(rn.getEnvironment());
+				heuristic.setHeuristic(rn);
 				addInOpen(rn);
 				//System.out.println("\tNORTH");
 			}
 			
-			Node rs = new Node(e,r,Movement.SOUTH);
+			Node rs = new Node(e);
 			if(rs.getEnvironment().modify(r,Movement.SOUTH) != null){
 				r.moveSouth(rs.getEnvironment());
+				heuristic.setHeuristic(rs);
 				addInOpen(rs);
 				//System.out.println("\tSOUTH");
 			}			
@@ -169,10 +177,10 @@ public class AStar extends MotionPlanner{
 		open.remove(current);
 	}
 	
-	private void addInOpen(Node current) {
-		String s = getStringRepresentation(current.getEnvironment());
+	private void addInOpen(Node node) {
+		String s = getStringRepresentation(node.getEnvironment());
 		if(! log.contains(s)){
-			open.add(current);
+			open.add(node);
 			log.add(s);
 		}
 	}

@@ -6,13 +6,12 @@ import model.Cell;
 import model.Environment;
 import model.Movement;
 import model.Position;
-import model.State;
 
 public class CorridorHeuristic implements Heuristic{
 	
 	public static final CorridorHeuristic DEFAULT = new CorridorHeuristic();
 	
-	private static final int MAXNOPRECALC = 100;
+	private static final int MAXNOPRECALC = Integer.MAX_VALUE;
 	private static final int MAXPRECALC = 15;
 	
 	public int NbITER = 0;
@@ -22,20 +21,21 @@ public class CorridorHeuristic implements Heuristic{
 	int[][] dirToTarget;
 	
 	private void init(int size){
-		heuristic = new int[size][size];
-		distToTarget = new int[size][size];
+		
+		if(heuristic == null){
+			heuristic = new int[size][size];
+			distToTarget = new int[size][size];
+			dirToTarget = new int[size][size];
+		}
 		for(int x = 0;x<size;x++)	
 			for(int y = 0;y<size;y++){
 				heuristic[x][y] = MAXNOPRECALC;
 				distToTarget[x][y] = MAXNOPRECALC;
 			}
-		
-		dirToTarget = new int[size][size];
+
 	}
 
 	public Node best(Node current,ArrayList<Node> open) {
-		
-		init(current.getEnvironment().getGrid().getSize());
 		
 		int idMin = 0;
 		int valMin = MAXNOPRECALC;
@@ -43,37 +43,41 @@ public class CorridorHeuristic implements Heuristic{
 		int idMinH = 0;
 		int valMinH = MAXNOPRECALC;
 		
-		int id = 0;
-		
-		preCalc(current.getEnvironment());
-		
-		for(Node n : open){
-			Environment e = n.getEnvironment();
-			for(State s : e.getStates()){
-				if(s.getRobot()==e.getTagged()){
-					if(distToTarget[s.getPosition().getX()][s.getPosition().getY()] < valMin){
-						valMin = distToTarget[s.getPosition().getX()][s.getPosition().getY()];
-						idMin = id;
-					}
-					if(heuristic[s.getPosition().getX()][s.getPosition().getY()] < valMinH){
-						valMinH = heuristic[s.getPosition().getX()][s.getPosition().getY()];
-						idMinH = id;
-					}
-				}
+		for(int i = 0; i<open.size(); i++){
+			
+			Node n = open.get(i);
+			
+			// Prendre en compte le cout
+/*			int c_plus_h = n.getCost() + n.getHeuristic();
+			int c_plus_d = n.getCost() + n.getDistToTarget();*/
+			
+			// Juste avec l'heuristique
+			int c_plus_h = n.getHeuristic();
+			int c_plus_d = n.getDistToTarget();
+
+			if(c_plus_d < valMin){
+				valMin = c_plus_d ;
+				idMin = i;
 			}
-			id++;
+			if(c_plus_h < valMinH){
+				valMinH = c_plus_h;
+				idMinH = i;
+			}
 		}
-		
-		if(valMin == MAXNOPRECALC)
-			idMin = idMinH;
-		
-		//System.out.println("Best choice ("+open.size()+" in open) : "+idMin+" (Heuristic="+valMin+") [Current cost : "+NbITER+"]");
-		
-		return open.get(idMin);
+
+		Node choice;
+		if(valMin != MAXNOPRECALC){
+			choice = open.get(idMin);
+			open.clear();
+		}
+		else choice = open.get(idMinH);	
+	
+		return choice;
 	}
 	
-	public void preCalc(Environment e){
-		NbITER++;
+	public void preCalc(Node n){
+		Environment e = n.getEnvironment();
+		init(e.getGrid().getSize());
 			
 		Position current = e.getTarget();
 		Cell c = e.getGrid().getCell(current);
@@ -85,7 +89,12 @@ public class CorridorHeuristic implements Heuristic{
 			expand(current,Movement.SOUTH,1,e);
 		if(c.west && (!c.east || (c.east && !e.isEmpty(new Position(current.getX()+1,current.getY())))))
 			expand(current,Movement.WEST,1,e);
-
+	}
+	
+	public void setHeuristic(Node n){
+		Position posTaggedRobot = n.getEnvironment().getState(n.getEnvironment().getTagged()).getPosition();
+		n.setHeuristic(heuristic[posTaggedRobot.getX()][posTaggedRobot.getY()]);
+		n.setDistToTarget(distToTarget[posTaggedRobot.getX()][posTaggedRobot.getY()]);
 	}
 	
 	private boolean mark(Position p, int m, int g, Environment e){
