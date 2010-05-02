@@ -10,9 +10,10 @@ import model.Position;
 public class CorridorHeuristic implements Heuristic{
 	
 	public static final CorridorHeuristic DEFAULT = new CorridorHeuristic();
-	
+
 	private static final int MAXNOPRECALC = Integer.MAX_VALUE;
-	private static final int MAXPRECALC = 15;
+	public static int PRECALCDEPTH = 15;
+	public static double COSTIMPORTANCE = 0.0;
 	
 	public int NbITER = 0;
 	
@@ -47,13 +48,9 @@ public class CorridorHeuristic implements Heuristic{
 			
 			Node n = open.get(i);
 			
-			// Prendre en compte le cout
-/*			int c_plus_h = n.getCost() + n.getHeuristic();
-			int c_plus_d = n.getCost() + n.getDistToTarget();*/
-			
-			// Juste avec l'heuristique
-			int c_plus_h = n.getHeuristic();
-			int c_plus_d = n.getDistToTarget();
+			int c_plus_h = (int)(n.getCost()*COSTIMPORTANCE) + n.getHeuristic();
+			int c_plus_d = (int)(n.getCost()*COSTIMPORTANCE) + n.getDistToTarget();
+
 
 			if(c_plus_d < valMin){
 				valMin = c_plus_d ;
@@ -109,7 +106,7 @@ public class CorridorHeuristic implements Heuristic{
 	
 	private void expand(Position current,int movement, int generation,Environment e){
 		
-		if(generation > MAXPRECALC) return;
+		if(generation > PRECALCDEPTH) return;
 		
 		Cell cellC = e.getGrid().getCell(current);		
 		Position next;

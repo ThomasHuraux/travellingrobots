@@ -13,7 +13,11 @@ public class TestHeuristic {
 	Heuristic h;
 	AStar algo;
 	
-	public TestHeuristic(int NbTest, int HeuristicID, String export){
+	public TestHeuristic(int NbTest, int HeuristicID, int maxtime, int precalcDepth, double costImportance){
+		
+		AStar.MAXTIME = maxtime;
+		CorridorHeuristic.COSTIMPORTANCE = costImportance;
+		CorridorHeuristic.PRECALCDEPTH = precalcDepth;
 		
 		switch(HeuristicID){
 			case Heuristic.CorridorHeuristicID :
@@ -26,20 +30,23 @@ public class TestHeuristic {
 		
 		algo = new AStar(h);
 		
+		
 		try {
-            File f = new File(export+".txt");
+            File f = new File(NbTest+"_"+HeuristicID+"_"+AStar.MAXTIME+"_"+precalcDepth+"_"+costImportance+".txt");
             f.createNewFile();
             FileWriter fw = new FileWriter(f);
-            fw.write("TYPE\tMAXTIME\tSTEPS\tTIME\n");
     		System.out.println("== START TESTS ==");
+    		fw.write("NbTests="+NbTest+" HeuristicID="+HeuristicID+" MaxTime="+AStar.MAXTIME+" PrecalcDepth="+precalcDepth+" CostImportance="+costImportance+"\n");
+    	    fw.write("STEPS\tTIME\n");
     		for(int i=0; i<NbTest; i++){
+    			System.out.println(i+".");
     			current = new Environment();
     			steps = algo.search(current);
     			float timeH = algo.getTimelength();
     			if(steps == null)
-    				fw.write(HeuristicID+"\t"+AStar.MAXTIME+"\t-1\t"+AStar.MAXTIME+"\n");
+    				fw.write("-1\t"+AStar.MAXTIME+"\n");
     			else
-    				fw.write(HeuristicID+"\t"+AStar.MAXTIME+"\t"+algo.current.getCost()+"\t"+timeH+"\n");
+    				fw.write(algo.current.getCost()+"\t"+timeH+"\n");
     		}
     		System.out.println("== END TESTS ==");
             fw.flush();

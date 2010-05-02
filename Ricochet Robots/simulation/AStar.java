@@ -8,7 +8,7 @@ import java.util.Random;
 
 public class AStar extends MotionPlanner{
 	
-	public static final float MAXTIME = 30;
+	public static float MAXTIME = 30;
 	
 	private ArrayList<Node> open;
 	private ArrayList<Node> close;
