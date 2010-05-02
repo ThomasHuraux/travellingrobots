@@ -190,43 +190,95 @@ public class CorridorHeuristic implements Heuristic{
 		}
 	}
 	
+	public int distToWallEast(Position p,Environment e){
+		int count = 0;
+		Position current = p;
+		while(e.getGrid().getCell(current).east){
+			current = new Position(current.getX()+1,current.getY());
+			count++;
+			if(count > 3 || count==0)
+				return -1;
+		}
+		return count;
+	}
+	
+	public int distToWallSouth(Position p,Environment e){
+		int count = 0;
+		Position current = p;
+		while(e.getGrid().getCell(current).south){
+			current = new Position(current.getX(),current.getY()+1);
+			count++;
+			if(count > 3 || count==0)
+				return -1;
+		}
+		return count;
+	}
+	
+	public int distToWallWest(Position p,Environment e){
+		int count = 0;
+		Position current = p;
+		while(e.getGrid().getCell(current).west){
+			current = new Position(current.getX()-1,current.getY());
+			count++;
+			if(count > 3 || count==0)
+				return -1;
+		}
+		return count;
+	}
+	
+	public int distToWallNorth(Position p,Environment e){
+		int count = 0;
+		Position current = p;
+		while(e.getGrid().getCell(current).north){
+			current = new Position(current.getX(),current.getY()-1);
+			count++;
+			if(count > 3 || count==0)
+				return -1;
+		}
+		return count;
+	}
+	
 	private void distToWall(int move,Position pos,Environment e){
 		Position current = pos;
 		int h = distToTarget[pos.getX()][pos.getY()];
 		heuristic[current.getX()][current.getY()] = h;
-		int count;
+		int dist;
 		switch(move){
 			case Movement.NORTH:
 			case Movement.SOUTH:
-				count = 1;
-				while(e.getGrid().getCell(current).east){
-					current = new Position(current.getX()+1,current.getY());
-					if(heuristic[current.getX()][current.getY()] > h+count)
-						heuristic[current.getX()][current.getY()] = h+(++count);
-				}
-				count = 1;
+				dist = distToWallWest(pos,e);
+				if(dist != -1)
+					while(e.getGrid().getCell(current).east){
+						current = new Position(current.getX()+1,current.getY());
+						if(heuristic[current.getX()][current.getY()] > h+dist)
+							heuristic[current.getX()][current.getY()] = h+dist;
+					}
+				dist = distToWallEast(pos,e);
 				current = pos;
-				while(e.getGrid().getCell(current).west){
-					current = new Position(current.getX()-1,current.getY());
-					if(heuristic[current.getX()][current.getY()] > h+count)
-						heuristic[current.getX()][current.getY()] = h+(++count);
-				}
+				if(dist != -1)
+					while(e.getGrid().getCell(current).west){
+						current = new Position(current.getX()-1,current.getY());
+						if(heuristic[current.getX()][current.getY()] > h+dist)
+							heuristic[current.getX()][current.getY()] = h+dist;
+					}
 				break;
 			case Movement.EAST:
 			case Movement.WEST:
-				count = 1;
-				while(e.getGrid().getCell(current).north){
-					current = new Position(current.getX(),current.getY()-1);
-					if(heuristic[current.getX()][current.getY()] > h+count)
-						heuristic[current.getX()][current.getY()] = h+(++count);
-				}
-				count = 1;
+				dist = distToWallNorth(pos,e);
+				if(dist != -1)
+					while(e.getGrid().getCell(current).south){
+						current = new Position(current.getX(),current.getY()+1);
+						if(heuristic[current.getX()][current.getY()] > h+dist)
+							heuristic[current.getX()][current.getY()] = h+dist;
+					}
+				dist = distToWallSouth(pos,e);
 				current = pos;
-				while(e.getGrid().getCell(current).south){
-					current = new Position(current.getX(),current.getY()+1);
-					if(heuristic[current.getX()][current.getY()] > h+count)
-						heuristic[current.getX()][current.getY()] = h+(++count);
-				}
+				if(dist != -1)
+					while(e.getGrid().getCell(current).north){
+						current = new Position(current.getX(),current.getY()-1);
+						if(heuristic[current.getX()][current.getY()] > h+dist)
+							heuristic[current.getX()][current.getY()] = h+dist;
+					}
 				break;
 		}
 	}
@@ -242,6 +294,11 @@ public class CorridorHeuristic implements Heuristic{
 	
 	public int getNbITER() {
 		return NbITER;
+	}
+
+	@Override
+	public int getHeuristicID() {
+		return this.CorridorHeuristicID;
 	}
 
 }
