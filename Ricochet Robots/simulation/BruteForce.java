@@ -29,10 +29,6 @@ public class BruteForce implements Heuristic{
 		// TODO Auto-generated method stub
 		
 	}
-	
-	@Override
-	public int getHeuristicID() {
-		return this.BruteForceID;
-	}
+
 
 }

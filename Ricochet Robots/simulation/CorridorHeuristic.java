@@ -296,9 +296,4 @@ public class CorridorHeuristic implements Heuristic{
 		return NbITER;
 	}
 
-	@Override
-	public int getHeuristicID() {
-		return this.CorridorHeuristicID;
-	}
-
 }
