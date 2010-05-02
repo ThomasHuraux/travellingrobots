@@ -12,6 +12,5 @@ public interface Heuristic {
 	public Node best(Node current, ArrayList<Node> open);
 	public int getNbITER();
 	public void setHeuristic(Node e);
-	public int getHeuristicID();
 
 }
