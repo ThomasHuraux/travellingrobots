@@ -122,7 +122,8 @@ public class AStar extends MotionPlanner{
 			result.addAll(close);
 			
 			System.out.println("Target reached with "+heuristic.getClass().toString()+" [ timelength="+timelength+" ; movesNb="+current.getCost()+" ]");
-			return result;
+			
+			return result.organize();
 		}else return null;
 	
 	}
