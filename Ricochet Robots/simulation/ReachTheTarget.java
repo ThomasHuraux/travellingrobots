@@ -1,103 +1,40 @@
 package simulation;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Hashtable;
+import java.util.List;
 import model.CountBot;
 import model.Environment;
-import model.Robot;
-import model.State;
+import model.Position;
 
-public class ReachTheTarget extends MotionPlanner {
+public class ReachTheTarget implements Heuristic {
+	
+	static final ReachTheTarget DEFAULT = new ReachTheTarget();
 
-	/**
-	 * Une carte contient des cases.
-	 */
-	private class Map {
+	private int reachTheTarget(Node open) {
+		Environment env = open.getEnvironment();
+		Position init = open.getEnvironment().getStates().get(0).getPosition();
+		CountBot bot = new CountBot(env ,env.getStates().get(0).getPosition());
 		
-		/**
-		 * Une case contient des doublons <<Robot,poids>>
-		 */
-		private class Case {
-			private Hashtable<Robot,Integer> robots;
-
-			public Case(Collection<Robot> c) { 
-				for (Robot robot : c) 
-					this.robots.put(robot, 0);
-			}
+		int min = Integer.MAX_VALUE;
+		int tmp;
+		
+		List<Position> stops = new ArrayList<Position>();
+		CountBot botmp;
+		
+		for (int i = 1; i < 3; i++) {
+			stops.addAll((botmp = new CountBot(env, env.getStates().get(i).getPosition())).getStopListe());
+			stops = captureTheRoad(bot.getStopListe(), stops);
 			
-			public int getWeight(Robot robot) {
-				return this.robots.get(robot);
+			for (Position pos : stops) {
+				tmp = bot.getProximity()[init.getX()][init.getY()]
+				      + botmp.getProximity()[pos.getX()][pos.getY()];
+				
+				if (tmp < min)
+					min = tmp;
 			}
-			
-			public void setCase(Robot robot, int weight) {
-				this.robots.put(robot, weight);
-			}
 		}
 		
-		private Case[][] map;
-		
-		public Map(int dim, Collection<Robot> c) {
-			this.map = new Case[dim][dim];
-			
-			for (int i = 0; i < dim; i++)
-				for (int j = 0; j < dim; j++)
-					this.map[i][j] = new Case(c);
-		}
-		
-		public Case[][] getMap() {
-			return this.map;
-		}
-
-		public void setCase(int i, int j, Robot robot, int weight) {
-			this.map[i][j].setCase(robot, weight);
-		}
-		
-		public void setMap(int[][] map, Robot robot) {
-			for (int i = 0; i < map.length; i++)
-				for (int j = 0; j < map[0].length; j++)
-					this.setCase(i, j, robot, map[i][j]);
-		}
-	}
-
-	
-	private Hashtable<Robot,Sequence> sequences;
-	private Environment env;
-	private static ReachTheTarget instance = null;
-	private Map map;
-	
-	public ReachTheTarget() {}
-	
-	private ReachTheTarget(Environment env) {
-		this.sequences = new Hashtable<Robot, Sequence>();
-		this.env = env;
-		this.map = new Map(env.getGrid().getSize(), getRobotsFromEnvironment());
-	}
-
-	private ArrayList<Robot> getRobotsFromEnvironment() {
-		ArrayList<Robot> list = new ArrayList<Robot>();
-		for (State s : env.getStates()) {
-			list.add(s.getRobot());
-		}
-		return list;
-	}
-	
-	/**
-	 * Recherche de la cible a partir de chacun des robots.
-	 * La recherche s'effectue en avant, en laissant l'environnement
-	 * dans l'etat initial.
-	 * A la fin, le plateau est pondere avec le nombre de coups
-	 * minimum qu'un robot doit effectue pour l'atteindre.
-	 */
-	private void reachTheTarget() {
-		CountBot bot;
-		int[][] tab;
-		
-		for (State s : env.getStates()) {
-			bot = new CountBot(env, s.getPosition());
-			tab = bot.getProximity();
-			this.map.setMap(tab, s.getRobot());
-		}
+		return min;
 	}
 
 	/**
@@ -105,19 +42,63 @@ public class ReachTheTarget extends MotionPlanner {
 	 * il faut chercher quelle combinaison de coups
 	 * permet d'atteindre la cible de facon optimale.
 	 */
-	private void captureTheRoad() {
-		// TODO Auto-generated method stub
+	private List<Position> captureTheRoad(List<Position> l1, List<Position> l2) {
+		List<Position> liste = new ArrayList<Position>();
+		
+		for (Position p1 : l1)
+			for (Position p2 : l2)
+				if (p1.compare(p2))
+					liste.add(p1);
+		
+		return liste;
 	}
 	
 	@Override
-	public Sequence search(Environment env) {
-		if (instance == null)
-			instance = new ReachTheTarget(env);
+	public Node best(Node current, ArrayList<Node> open) {
+		Environment env = open.get(0).getEnvironment(); 
+		CountBot bot = new CountBot(env ,env.getStates().get(0).getPosition());
+		int min = bot.getProximity()[env.getTarget().getX()][env.getTarget().getY()];
+		int tmp;
+		Node best = current;
 		
-		instance.reachTheTarget();
-		instance.captureTheRoad();
+		for (Node n : open) {
+			bot = new CountBot(n.getEnvironment(),n.getEnvironment().getStates().get(0).getPosition());
+			if (min > bot.getProximity()[env.getTarget().getX()][env.getTarget().getY()]) {
+				min = bot.getProximity()[env.getTarget().getX()][env.getTarget().getY()];
+				env = n.getEnvironment();
+				best = n;
+			}
+		}
 		
-		return null;
+		if (min == Integer.MAX_VALUE) {
+			min = Integer.MAX_VALUE;
+
+			for (Node n : open)
+				if (min > (tmp = reachTheTarget(n))) {
+					min = tmp;
+					best = n;
+				}
+		}
+
+		return best;
+	}
+
+	@Override
+	public int getNbITER() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public void preCalc(Node current) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setHeuristic(Node e) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }
