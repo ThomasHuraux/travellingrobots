@@ -24,6 +24,12 @@ public class AStarTestForStats {
 		TestHeuristic th7 = new TestHeuristic(50,Heuristic.CorridorHeuristicID,30,10,0.15);
 		@SuppressWarnings("unused")
 		TestHeuristic th8 = new TestHeuristic(50,Heuristic.CorridorHeuristicID,30,20,0.5);
+		@SuppressWarnings("unused")
+		TestHeuristic th9 = new TestHeuristic(50,Heuristic.CorridorHeuristicID,30,5,0.60);
+		@SuppressWarnings("unused")
+		TestHeuristic th10 = new TestHeuristic(50,Heuristic.CorridorHeuristicID,30,5,0.8);
+		@SuppressWarnings("unused")
+		TestHeuristic th11 = new TestHeuristic(50,Heuristic.CorridorHeuristicID,30,20,0.01);
 	}
 
 }
