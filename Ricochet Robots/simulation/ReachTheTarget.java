@@ -58,29 +58,16 @@ public class ReachTheTarget implements Heuristic {
 
 		int min = Integer.MAX_VALUE;
 		int tmp;
-		Node best = open.get(0);
+		int minId = 0;
 
-		for (Node n : open) {
-			CountBot bot = new CountBot(n.getEnvironment(),n.getEnvironment().getState(n.getEnvironment().getTagged()).getPosition());
-			if (min > bot.getProximity()[n.getEnvironment().getTarget().getX()][n.getEnvironment().getTarget().getY()]) {
-				min = bot.getProximity()[n.getEnvironment().getTarget().getX()][n.getEnvironment().getTarget().getY()];
-				best = n;
+		for (int i=0;i<open.size();i++) {
+			if (min > (tmp = open.get(i).getHeuristic())){
+				min = tmp;
+				minId = i;
 			}
-			
 		}
 		
-		if (min == Integer.MAX_VALUE) {
-			min = Integer.MAX_VALUE;
-			System.out.println("min = Integer.MAXVALUE -> Start reachthetarget");
-
-			for (Node n : open)
-				if (min > (tmp = reachTheTarget(n))) {
-					min = tmp;
-					best = n;
-				}
-		}
-
-		return best;
+		return open.get(minId);
 	}
 
 	@Override
@@ -90,15 +77,15 @@ public class ReachTheTarget implements Heuristic {
 	}
 
 	@Override
-	public void preCalc(Node current) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void preCalc(Node n) {}
 
 	@Override
-	public void setHeuristic(Node e) {
-		// TODO Auto-generated method stub
-		
+	public void setHeuristic(Node n) {
+		CountBot bot = new CountBot(n.getEnvironment(),n.getEnvironment().getState(n.getEnvironment().getTagged()).getPosition());
+		int min = bot.getProximity()[n.getEnvironment().getTarget().getX()][n.getEnvironment().getTarget().getY()];
+		if (min == Integer.MAX_VALUE)
+			min = reachTheTarget(n);
+		n.setHeuristic(min);
 	}
 	
 }
