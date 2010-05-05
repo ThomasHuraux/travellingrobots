@@ -58,7 +58,7 @@ public class ReachTheTarget implements Heuristic {
 
 		int min = Integer.MAX_VALUE;
 		int tmp;
-		Node best = null;
+		Node best = open.get(0);
 
 		for (Node n : open) {
 			CountBot bot = new CountBot(n.getEnvironment(),n.getEnvironment().getState(n.getEnvironment().getTagged()).getPosition());
