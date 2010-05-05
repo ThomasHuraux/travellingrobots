@@ -55,23 +55,23 @@ public class ReachTheTarget implements Heuristic {
 	
 	@Override
 	public Node best(Node current, ArrayList<Node> open) {
-		Environment env = open.get(0).getEnvironment(); 
-		CountBot bot = new CountBot(env ,env.getStates().get(0).getPosition());
-		int min = bot.getProximity()[env.getTarget().getX()][env.getTarget().getY()];
+
+		int min = Integer.MAX_VALUE;
 		int tmp;
-		Node best = current;
-		
+		Node best = null;
+
 		for (Node n : open) {
-			bot = new CountBot(n.getEnvironment(),n.getEnvironment().getStates().get(0).getPosition());
-			if (min > bot.getProximity()[env.getTarget().getX()][env.getTarget().getY()]) {
-				min = bot.getProximity()[env.getTarget().getX()][env.getTarget().getY()];
-				env = n.getEnvironment();
+			CountBot bot = new CountBot(n.getEnvironment(),n.getEnvironment().getState(n.getEnvironment().getTagged()).getPosition());
+			if (min > bot.getProximity()[n.getEnvironment().getTarget().getX()][n.getEnvironment().getTarget().getY()]) {
+				min = bot.getProximity()[n.getEnvironment().getTarget().getX()][n.getEnvironment().getTarget().getY()];
 				best = n;
 			}
+			
 		}
 		
 		if (min == Integer.MAX_VALUE) {
 			min = Integer.MAX_VALUE;
+			System.out.println("min = Integer.MAXVALUE -> Start reachthetarget");
 
 			for (Node n : open)
 				if (min > (tmp = reachTheTarget(n))) {

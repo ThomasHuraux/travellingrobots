@@ -36,10 +36,8 @@ public class CountBot extends Robot implements Ghost{
 	
 	private CountBot(int generation, Environment env){
 		super();
+		this.stopListe = new ArrayList<Position>();
 		this.generation = generation;
-		
-		Position pos = env.getState(this).getPosition();
-		stopListe.add(pos);
 	}
 
 	private void init(Environment env){
@@ -57,6 +55,8 @@ public class CountBot extends Robot implements Ghost{
 		Cell c = env.getGrid().getCell(pos);
 		
 		update(env);
+		stopListe.add(pos);
+		
 		
 		// Lancement des Countbot.
 		if(c.north && Movement.SOUTH != lastMove)
