@@ -10,9 +10,9 @@ public class AStar extends MotionPlanner{
 	
 	public static float MAXTIME = 30;
 	
-	private ArrayList<Node> open;
-	private ArrayList<Node> close;
-	private ArrayList<String> log;
+	protected ArrayList<Node> open;
+	protected ArrayList<Node> close;
+	protected ArrayList<String> log;
 	
 	Robot red = new Robot(Color.RED);
 	Robot green = new Robot(Color.GREEN);
