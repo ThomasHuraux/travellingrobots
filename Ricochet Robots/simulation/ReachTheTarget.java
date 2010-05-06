@@ -12,29 +12,31 @@ public class ReachTheTarget implements Heuristic {
 
 	private int reachTheTarget(Node open) {
 		Environment env = open.getEnvironment();
-		Position init = open.getEnvironment().getStates().get(0).getPosition();
-		CountBot bot = new CountBot(env ,env.getStates().get(0).getPosition());
-		
-		int min = Integer.MAX_VALUE;
-		int tmp;
-		
-		List<Position> stops = new ArrayList<Position>();
-		CountBot botmp;
-		
-		for (int i = 1; i < 3; i++) {
-			stops.addAll((botmp = new CountBot(env, env.getStates().get(i).getPosition())).getStopListe());
-			stops = captureTheRoad(bot.getStopListe(), stops);
-			
-			for (Position pos : stops) {
-				tmp = bot.getProximity()[init.getX()][init.getY()]
-				      + botmp.getProximity()[pos.getX()][pos.getY()];
-				
-				if (tmp < min)
-					min = tmp;
-			}
-		}
-		
-		return min;
+        Position init = open.getEnvironment().getStates().get(0).getPosition();
+        CountBot bot = new CountBot(env ,env.getStates().get(0).getPosition());
+        
+        int min = Integer.MAX_VALUE;
+        int tmp;
+        
+        List<Position> stops = new ArrayList<Position>();
+        CountBot botmp;
+        
+        stops.addAll((botmp = new CountBot(env, env.getStates().get(1).getPosition())).getStopListe());
+        stops.addAll((botmp = new CountBot(env, env.getStates().get(2).getPosition())).getStopListe());
+        stops.addAll((botmp = new CountBot(env, env.getStates().get(3).getPosition())).getStopListe());
+        stops = captureTheRoad(bot.getStopListe(), stops);
+        
+        for (Position pos : stops) {
+                tmp = bot.getProximity()[init.getX()][init.getY()]
+                      + botmp.getProximity()[pos.getX()][pos.getY()];
+                
+                if (tmp < min)
+                        min = tmp;
+        }
+//        }
+        
+        return min;
+
 	}
 
 	/**
