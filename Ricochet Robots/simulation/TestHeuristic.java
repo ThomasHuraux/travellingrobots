@@ -8,6 +8,8 @@ import model.Environment;
 
 public class TestHeuristic {
 	
+	private static final String PATH = "tests/";
+	
 	Sequence steps = new Sequence();
 	Environment current = new Environment();
 	Heuristic h;
@@ -32,7 +34,7 @@ public class TestHeuristic {
 		
 		
 		try {
-            File f = new File(NbTest+"_"+HeuristicID+"_"+AStar.MAXTIME+"_"+precalcDepth+"_"+costImportance+".txt");
+            File f = new File(PATH+HeuristicID+"_"+NbTest+"_"+HeuristicID+"_"+AStar.MAXTIME+"_"+precalcDepth+"_"+costImportance+".txt");
             f.createNewFile();
             FileWriter fw = new FileWriter(f);
     		System.out.println("== START TESTS ==");
