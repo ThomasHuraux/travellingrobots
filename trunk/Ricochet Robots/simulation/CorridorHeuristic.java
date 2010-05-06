@@ -13,7 +13,7 @@ public class CorridorHeuristic implements Heuristic{
 
 	private static final int MAXNOPRECALC = Integer.MAX_VALUE;
 	public static int PRECALCDEPTH = 15;
-	public static double COSTIMPORTANCE = 0.0;
+	public static double COSTIMPORTANCE = 0.01;
 	
 	public int NbITER = 0;
 	
@@ -188,48 +188,48 @@ public class CorridorHeuristic implements Heuristic{
 	}
 	
 	public int distToWallEast(Position p,Environment e){
-		int count = 0;
+		int count = 1;
 		Position current = p;
 		while(e.getGrid().getCell(current).east){
 			current = new Position(current.getX()+1,current.getY());
 			count++;
-			if(count > 3 || count==0)
+			if(count > 3)
 				return -1;
 		}
 		return count;
 	}
 	
 	public int distToWallSouth(Position p,Environment e){
-		int count = 0;
+		int count = 1;
 		Position current = p;
 		while(e.getGrid().getCell(current).south){
 			current = new Position(current.getX(),current.getY()+1);
 			count++;
-			if(count > 3 || count==0)
+			if(count > 3)
 				return -1;
 		}
 		return count;
 	}
 	
 	public int distToWallWest(Position p,Environment e){
-		int count = 0;
+		int count = 1;
 		Position current = p;
 		while(e.getGrid().getCell(current).west){
 			current = new Position(current.getX()-1,current.getY());
 			count++;
-			if(count > 3 || count==0)
+			if(count > 3)
 				return -1;
 		}
 		return count;
 	}
 	
 	public int distToWallNorth(Position p,Environment e){
-		int count = 0;
+		int count = 1;
 		Position current = p;
 		while(e.getGrid().getCell(current).north){
 			current = new Position(current.getX(),current.getY()-1);
 			count++;
-			if(count > 3 || count==0)
+			if(count > 3)
 				return -1;
 		}
 		return count;
