@@ -20,8 +20,8 @@ public class TestReachTheTarget {
 	public static void main(String[] args) {
 		AStar algo = new AStar(ReachTheTarget.DEFAULT);
 		
-		steps = algo.search(current);
-		//TestHeuristic tests = new TestHeuristic(25,Heuristic.ReachTheTargetID,60,10,0.0);
+		//steps = algo.search(current);
+		TestHeuristic tests = new TestHeuristic(25,Heuristic.ReachTheTargetID,60,10,0.0);
 		
 		JFrame frame = new JFrame("-Test-");		
 		frame.setContentPane(new SolutionView(current,steps));
