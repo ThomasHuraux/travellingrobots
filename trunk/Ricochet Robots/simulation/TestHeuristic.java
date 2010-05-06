@@ -39,16 +39,23 @@ public class TestHeuristic {
             FileWriter fw = new FileWriter(f);
     		System.out.println("== START TESTS ==");
     		fw.write("NbTests="+NbTest+" HeuristicID="+HeuristicID+" MaxTime="+AStar.MAXTIME+" PrecalcDepth="+precalcDepth+" CostImportance="+costImportance+"\n");
-    	    fw.write("STEPS\tTIME\n");
+    	    fw.write("STEPS\tTIME\tR0\tR1\tR2\tR3\tTARGET\n");
     		for(int i=0; i<NbTest; i++){
     			System.out.println(i+".");
     			current = new Environment();
     			steps = algo.search(current);
     			float timeH = algo.getTimelength();
-    			if(steps == null)
-    				fw.write("-1\t"+AStar.MAXTIME+"\n");
-    			else
-    				fw.write(algo.current.getCost()+"\t"+timeH+"\n");
+    			if(steps == null){
+    				steps = new Sequence();
+    				steps.add(algo.close.get(0));
+    				fw.write("-1\t"+AStar.MAXTIME);
+    			}else
+    				fw.write(algo.current.getCost()+"\t"+timeH);
+    			fw.write("\t"+((Node)steps.get(0)).getEnvironment().getStates().get(0).getPosition().toString()+"\t");
+    			fw.write(((Node)steps.get(0)).getEnvironment().getStates().get(1).getPosition().toString()+"\t");
+    			fw.write(((Node)steps.get(0)).getEnvironment().getStates().get(2).getPosition().toString()+"\t");
+    			fw.write(((Node)steps.get(0)).getEnvironment().getStates().get(3).getPosition().toString()+"\t");
+    			fw.write(current.getTarget().toString()+"\n");
     		}
     		System.out.println("== END TESTS ==");
             fw.flush();
