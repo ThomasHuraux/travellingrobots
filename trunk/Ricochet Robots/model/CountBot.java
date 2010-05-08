@@ -1,80 +1,87 @@
 package model;
 
 import java.awt.Color;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class CountBot extends Robot implements Ghost{
-	
+
 	// The ghost robot who count proximity to target
-	
+
 	private static final int MAXPROXIMITY = Integer.MAX_VALUE;
-	private static final int MAXGENERATION = 10;
-	
+	private static int MAXGENERATION = 10;
+
 	private static int[][] proximity;
-	private List<Position> stopListe;
-	
+	private static Set<Position> stopListe;
+
 	private int generation;
 	private int lastMove;
-	
-	public CountBot(Environment env, Position target){
+
+	public CountBot(Environment env, Position target, int[][] prox){
 		super(Color.GRAY);
-		this.stopListe = new ArrayList<Position>();
+		stopListe = new HashSet<Position>();
 		this.generation = 0;
 		lastMove = -1;
-		init(env);
+		
+		if (prox == null)
+			init(env);
+		else
+			proximity = prox;
+		
 		State s = null;
+		
 		if(! env.isEmpty(target)){
 			s = env.getState(target);
 			env.getStates().remove(s);
 		}
+		
 		env.getStates().add(new State(this,target));
 		proliferate(env);
+		
 		if(s != null)
 			env.getStates().add(s);
 	}
-	
-	private CountBot(int generation, Environment env){
+
+	private CountBot(int generation, Environment env, Set<Position> stops){
 		super();
-		this.stopListe = new ArrayList<Position>();
 		this.generation = generation;
 	}
 
 	private void init(Environment env){
 		int size = env.getGrid().getSize();
 		proximity = new int[size][size];
-		for(int x = 0;x<size;x++)	
+		for(int x = 0;x<size;x++)       
 			for(int y = 0;y<size;y++) {
 				proximity[x][y] = MAXPROXIMITY;
 			}
 	}
-	
+
 	private void proliferate(Environment env){
-		
+
 		Position pos = env.getState(this).position;
 		Cell c = env.getGrid().getCell(pos);
-		
+
 		update(env);
-		stopListe.add(pos);
-		
-		
+
 		// Lancement des Countbot.
-		if(c.north && Movement.SOUTH != lastMove)
-			replicateOnNorth(env,pos);
-		if(c.east && Movement.WEST != lastMove)
-			replicateOnEast(env,pos);
-		if(c.south && Movement.NORTH != lastMove)
-			replicateOnSouth(env,pos);
-		if(c.west && Movement.EAST != lastMove)
-			replicateOnWest(env,pos);
-		
+		if (proximity[pos.getX()][pos.getY()] <= generation) {
+			if(c.north && Movement.SOUTH != lastMove)
+				replicateOnNorth(env,pos);
+			if(c.east && Movement.WEST != lastMove)
+				replicateOnEast(env,pos);
+			if(c.south && Movement.NORTH != lastMove)
+				replicateOnSouth(env,pos);
+			if(c.west && Movement.EAST != lastMove)
+				replicateOnWest(env,pos);
+		}
+
 		// Marquage des changements de direction.
-		if (!c.north && Movement.SOUTH == lastMove || !c.east && Movement.WEST == lastMove || !c.south && Movement.NORTH == lastMove || !c.west && Movement.EAST == lastMove)
-			stopListe.add(new Position(pos.getX(), pos.getY()));
-		
+		if (!c.north && Movement.NORTH == lastMove || !c.east && Movement.EAST == lastMove || !c.south && Movement.SOUTH == lastMove || !c.west && Movement.WEST == lastMove)
+			stopListe.add(pos);
+
 		env.getStates().remove(env.getState(this));
 	}
-	
+
 	private void update(Environment env){
 		Position pos = env.getState(this).position;
 		int v = proximity[pos.getX()][pos.getY()];
@@ -91,7 +98,7 @@ public class CountBot extends Robot implements Ghost{
 				baby.proliferate(env);
 		}
 	}
-	
+
 	private void replicateOnEast(Environment env, Position pos){
 		CountBot baby = createBabyBot(env,new Position(pos.getX()+1,pos.getY()));
 		if(baby != null){
@@ -101,7 +108,7 @@ public class CountBot extends Robot implements Ghost{
 				baby.proliferate(env);
 		}
 	}
-	
+
 	private void replicateOnSouth(Environment env, Position pos){
 		CountBot baby = createBabyBot(env,new Position(pos.getX(),pos.getY()+1));
 		if(baby != null){
@@ -111,7 +118,7 @@ public class CountBot extends Robot implements Ghost{
 				baby.proliferate(env);
 		}
 	}
-	
+
 	private void replicateOnWest(Environment env, Position pos){
 		CountBot baby = createBabyBot(env,new Position(pos.getX()-1,pos.getY()));
 		if(baby != null){
@@ -120,37 +127,37 @@ public class CountBot extends Robot implements Ghost{
 			if(generation < MAXGENERATION)
 				baby.proliferate(env);
 		}
-	}		
-	
+	}               
+
 	public void moveNorth(Environment env){
 		update(env);
 		super.moveNorth(env);
 	}
-	
+
 	public void moveEast(Environment env){
 		update(env);
 		super.moveEast(env);
 	}
-	
+
 	public void moveSouth(Environment env){
 		update(env);
 		super.moveSouth(env);
 	}
-	
+
 	public void moveWest(Environment env){
 		update(env);
-		super.moveWest(env);	
+		super.moveWest(env);    
 	}
-	
+
 	private CountBot createBabyBot(Environment env,Position pos){
 		if(env.isEmpty(pos)){
-			CountBot baby = new CountBot(generation+1, env);
+			CountBot baby = new CountBot(generation+1, env, stopListe);
 			env.addRobot(baby,pos);
 			return baby; 
 		}
-		return null;		
+		return null;            
 	}
-	
+
 	public int getLastMove() {
 		return lastMove;
 	}
@@ -163,7 +170,12 @@ public class CountBot extends Robot implements Ghost{
 		return proximity;
 	}
 
-	public List<Position> getStopListe() {
+	public Set<Position> getStopListe() {
 		return stopListe;
 	}
+
+	public static void setMAXGENERATION(int mAXGENERATION) {
+		MAXGENERATION = mAXGENERATION;
+	}
+
 }

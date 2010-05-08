@@ -31,6 +31,17 @@ public class Position {
 	}
 	
 	@Override
+	public boolean equals(Object p) {
+		Position pos = (Position) p;
+		return this.compare(pos);
+	}
+	
+	@Override
+	public int hashCode() {
+		return 2*x-3*y;
+	}
+	
+	@Override
 	public String toString() {
 		return "[x=" + x + ", y=" + y + "]";
 	}

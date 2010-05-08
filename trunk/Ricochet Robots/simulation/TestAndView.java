@@ -1,14 +1,13 @@
 package simulation;
 
 import javax.swing.JFrame;
-
 import view.SolutionView;
 
 public class TestAndView {
 	
-	public static void main(String[] args){
+	public static void main(String[] args) {
 		
-		TestHeuristic test = new TestHeuristic(100,Heuristic.CorridorHeuristicID,30,15,0.0);
+		TestHeuristic test = new TestHeuristic(100,Heuristic.ReachTheTargetID,60,15,0.0);
 	
 		JFrame solved = new JFrame("-Solved-");		
 		solved.setContentPane(new SolutionView(((Node)test.getSolved().get(0)).getEnvironment(),test.getSolved()));
@@ -22,5 +21,4 @@ public class TestAndView {
 		unsolved.setVisible(true);
 		unsolved.pack();
 	}
-
 }
