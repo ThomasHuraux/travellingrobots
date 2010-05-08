@@ -24,12 +24,16 @@ public class TestHeuristic {
 		AStar.MAXTIME = maxtime;
 		CorridorHeuristic.COSTIMPORTANCE = costImportance;
 		CorridorHeuristic.PRECALCDEPTH = precalcDepth;
+		ReachTheTarget.PRECALCDEPTH = precalcDepth;
 		
 
 		
 		switch(HeuristicID){
 			case Heuristic.CorridorHeuristicID :
 				h = CorridorHeuristic.DEFAULT;
+				break;
+			case Heuristic.ReachTheTargetID :
+				h = ReachTheTarget.DEFAULT;
 				break;
 			default:
 				h = BruteForce.DEFAULT;
@@ -40,7 +44,7 @@ public class TestHeuristic {
 		
 		
 		try {
-            File f = new File(PATH+HeuristicID+"_"+NbTest+"_"+HeuristicID+"_"+AStar.MAXTIME+"_"+precalcDepth+"_"+costImportance+".txt");
+            File f = new File(PATH+HeuristicID+"_"+NbTest+"_"+AStar.MAXTIME+"_"+precalcDepth+"_"+costImportance+".txt");
             f.createNewFile();
             FileWriter fw = new FileWriter(f);
     		System.out.println("== START TESTS ==");

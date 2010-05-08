@@ -1,5 +1,9 @@
 package simulation;
 
+import java.awt.Color;
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -11,44 +15,48 @@ public class Test {
 	public static void main(String[] args){
 		
 		Environment env = new Environment();
-		//RandomMover rm = new RandomMover(100000,env);
+		Robot red, blue, yellow, green;
+		env.addRobotArbitrarly(green = new Robot(Color.GREEN));
+		env.addRobotArbitrarly(blue = new Robot(Color.BLUE));
+		env.addRobotArbitrarly(yellow = new Robot(Color.YELLOW));
+		env.addRobotArbitrarly(red = new Robot(Color.RED));
+		env.setTagged(red);
 		
 		Position target = new Position(9,2);
-		env.addTarget(null, target);
+		env.addTarget(red, target);
 		
-		CountBot bot1 = new CountBot(env, target);
-		int[][] tab = bot1.getProximity();
+		Set<Position> stops = new HashSet<Position>();
+		int[][] tab = null;
+		CountBot bot1 = new CountBot(env,env.getState(env.getTagged()).getPosition(), tab);
+		stops.addAll(bot1.getStopListe());
+		tab = bot1.getProximity();
+		System.out.println("stopList " + stops.size());
+		
+		bot1 = new CountBot(env, env.getState(green).getPosition(), tab);
+		stops.addAll(bot1.getStopListe());
+		System.out.println("stopList " + stops.size());
+		tab =bot1.getProximity();
+		
+		bot1 = new CountBot(env, env.getState(yellow).getPosition(), tab);
+		stops.addAll(bot1.getStopListe());
+		System.out.println("stopList " + stops.size());
+		tab =bot1.getProximity();
+		
+		bot1 = new CountBot(env, env.getState(blue).getPosition(), tab);
+		stops.addAll(bot1.getStopListe());
+		System.out.println("stopList " + stops.size());
+		tab =bot1.getProximity();
+		
 		Count count1 = new Count(env,tab );
 		
-		//CountBot bot2 = new CountBot(env, env.getPositions().get(0));
-		//Count count2 = new Count(env, bot2.getProximity());
-		/**
-		 * Pour retrouver la matrice avec les distances a la cible
-		 * bot.getProximity()
-		 */
-		
-		//Simple view = new Simple(env);
-		
-		
-		//FrequenceColor fq = new FrequenceColor(env);
-		
-		
 		JPanel all = new JPanel();
-		//all.add(view);
 		all.add(count1);
-		//all.add(count2);
-		//all.add(fq);
-		
-		//view.setPreferredSize(new Dimension(40*env.getGrid().getSize(),40*env.getGrid().getSize()));
-		//fq.setPreferredSize(new Dimension(40*env.getGrid().getSize(),40*env.getGrid().getSize()));
 		
 		JFrame frame = new JFrame("-Test-");		
 		frame.setContentPane(all);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 		frame.pack();
-
-		//rm.start(view,fq);
 	}
 	
 }

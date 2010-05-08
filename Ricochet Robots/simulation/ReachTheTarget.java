@@ -1,63 +1,45 @@
 package simulation;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import model.CountBot;
 import model.Environment;
 import model.Position;
 
 public class ReachTheTarget implements Heuristic {
-	
+
 	static final ReachTheTarget DEFAULT = new ReachTheTarget();
+	public static int PRECALCDEPTH = 10;
 
-	private int reachTheTarget(Node open) {
-		Environment env = open.getEnvironment();
-        Position init = open.getEnvironment().getStates().get(0).getPosition();
-        CountBot bot = new CountBot(env ,env.getStates().get(0).getPosition());
-        
-        int min = Integer.MAX_VALUE;
-        int tmp;
-        
-        List<Position> stops = new ArrayList<Position>();
-        CountBot botmp;
-        
-        stops.addAll((botmp = new CountBot(env, env.getStates().get(1).getPosition())).getStopListe());
-        stops.addAll((botmp = new CountBot(env, env.getStates().get(2).getPosition())).getStopListe());
-        stops.addAll((botmp = new CountBot(env, env.getStates().get(3).getPosition())).getStopListe());
-        stops = captureTheRoad(bot.getStopListe(), stops);
-        
-        for (Position pos : stops) {
-                tmp = bot.getProximity()[init.getX()][init.getY()]
-                      + botmp.getProximity()[pos.getX()][pos.getY()];
-                
-                if (tmp < min)
-                        min = tmp;
-        }
-//        }
-        
-        return min;
+	private int reachTheTarget(Environment open, int[][] initProx, Set<Position> initStops) {
+		
+		int min = Integer.MAX_VALUE;
+		int tmp; int[][] prox = null;
+		Set<Position> stops = new HashSet<Position>();
+		CountBot botmp;
 
+		for (int i = 1; i < 4; i++) {
+			stops.addAll((botmp = new CountBot(open, open.getStates().get(1).getPosition(), prox)).getStopListe());
+			prox = botmp.getProximity();
+		}
+		
+		stops.retainAll(initStops);
+		
+		for (Position pos : stops) {
+			tmp = initProx[pos.getX()][pos.getY()]
+			      + prox[pos.getX()][pos.getY()];
+
+			if (tmp < min)
+				min = tmp;
+		}
+
+		return min;
 	}
 
-	/**
-	 * A partir de la carte engendree par reachTheTarget(),
-	 * il faut chercher quelle combinaison de coups
-	 * permet d'atteindre la cible de facon optimale.
-	 */
-	private List<Position> captureTheRoad(List<Position> l1, List<Position> l2) {
-		List<Position> liste = new ArrayList<Position>();
-		
-		for (Position p1 : l1)
-			for (Position p2 : l2)
-				if (p1.compare(p2))
-					liste.add(p1);
-		
-		return liste;
-	}
-	
 	@Override
 	public Node best(Node current, ArrayList<Node> open) {
-
+		System.gc();
 		int min = Integer.MAX_VALUE;
 		int tmp;
 		int minId = 0;
@@ -68,7 +50,7 @@ public class ReachTheTarget implements Heuristic {
 				minId = i;
 			}
 		}
-		
+
 		return open.get(minId);
 	}
 
@@ -79,15 +61,19 @@ public class ReachTheTarget implements Heuristic {
 	}
 
 	@Override
-	public void preCalc(Node n) {}
+	public void preCalc(Node n) {
+		CountBot.setMAXGENERATION(ReachTheTarget.PRECALCDEPTH);
+	}
 
 	@Override
 	public void setHeuristic(Node n) {
-		CountBot bot = new CountBot(n.getEnvironment(),n.getEnvironment().getState(n.getEnvironment().getTagged()).getPosition());
+		CountBot bot = new CountBot(n.getEnvironment(),n.getEnvironment().getState(n.getEnvironment().getTagged()).getPosition(), null);
+
 		int min = bot.getProximity()[n.getEnvironment().getTarget().getX()][n.getEnvironment().getTarget().getY()];
 		if (min == Integer.MAX_VALUE)
-			min = reachTheTarget(n);
+			min = reachTheTarget(n.getEnvironment(), bot.getProximity(), bot.getStopListe());
+
 		n.setHeuristic(min);
 	}
-	
+
 }
