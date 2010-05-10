@@ -1,0 +1,186 @@
+Flat profile of 2155.11 secs (160455 total ticks): main
+
+  Interpreted + native   Method                        
+  0.3%   445  +     0    java.util.ArrayList.access$100
+  0.2%   346  +     0    java.util.ArrayList.access$200
+  0.1%   165  +     0    simulation.AStar.search
+  0.0%     0  +    58    java.lang.System.currentTimeMillis
+  0.0%     0  +    30    sun.awt.X11.XlibWrapper.XGetWindowProperty
+  0.0%    23  +     0    java.util.ArrayList.contains
+  0.0%    13  +     0    java.util.ArrayList.<init>
+  0.0%     0  +    10    java.lang.Object.getClass
+  0.0%     9  +     0    simulation.AStar.addInClose
+  0.0%     6  +     0    java.lang.String.<init>
+  0.0%     6  +     0    java.util.HashMap.<init>
+  0.0%     6  +     0    simulation.AStar.addNewNodes
+  0.0%     5  +     0    simulation.ReachTheTarget.setHeuristic
+  0.0%     4  +     0    java.util.HashMap.resize
+  0.0%     3  +     0    java.util.Arrays.copyOfRange
+  0.0%     3  +     0    model.CountBot.<init>
+  0.0%     3  +     0    model.CountBot.proliferate
+  0.0%     0  +     2    java.lang.ClassLoader.findBootstrapClass
+  0.0%     0  +     2    java.lang.ClassLoader$NativeLibrary.load
+  0.0%     0  +     2    java.io.UnixFileSystem.getBooleanAttributes0
+  0.0%     0  +     2    sun.font.FontManager.getFontConfig
+  0.0%     0  +     2    sun.awt.X11.XlibWrapper.XGetGeometry
+  0.0%     2  +     0    model.Robot.moveNorth
+  0.0%     2  +     0    model.CountBot.update
+  0.0%     2  +     0    java.util.HashMap$HashIterator.<init>
+  0.7%  1087  +   115    Total interpreted (including elided)
+
+     Compiled + native   Method                        
+ 42.4%    14  + 68074    model.CountBot.<init>
+ 23.0%   479  + 36391    simulation.ReachTheTarget.reachTheTarget
+ 13.2% 21201  +     0    simulation.AStar.addInOpen
+  7.7% 11509  +   909    model.CountBot.proliferate
+  6.8% 10331  +   612    model.Environment.isEmpty
+  1.4%  2067  +   155    model.CountBot.createBabyBot
+  0.9%  1428  +    70    simulation.AStar.getStringRepresentation
+  0.9%  1236  +   227    model.Environment.modify
+  0.6%   900  +     7    java.util.AbstractCollection.retainAll
+  0.5%   866  +     0    model.Robot.move
+  0.4%   661  +    49    model.Environment.clone
+  0.3%   447  +    41    java.util.HashMap.put
+  0.3%   428  +     4    java.util.AbstractCollection.addAll
+  0.2%   248  +     0    simulation.AStar.search
+  0.1%   204  +     7    simulation.AStar.addNewNodes
+  0.1%   145  +    42    model.Environment.getState
+  0.1%   155  +     0    model.CountBot.move
+  0.1%     0  +   146    model.CountBot.update
+  0.1%    92  +     0    java.lang.Integer.getChars
+  0.0%     0  +    34    java.util.ArrayList.<init>
+  0.0%    12  +     5    simulation.ReachTheTarget.setHeuristic
+  0.0%     0  +    12    java.util.HashMap$KeySet.iterator
+  0.0%     9  +     0    model.Robot.moveSouth
+  0.0%     6  +     0    model.Robot.moveNorth
+  0.0%     6  +     0    model.Robot.moveWest
+ 99.2% 52449  + 106790   Total compiled (including elided)
+
+         Stub + native   Method                        
+  0.0%     0  +     2    java.lang.System.arraycopy
+  0.0%     0  +     2    Total stub
+
+  Thread-local ticks:
+  0.0%    10             Blocked (of total)
+  0.0%     2             Class loader
+
+
+Flat profile of 5.02 secs (487 total ticks): Image Fetcher 2
+
+  Interpreted + native   Method                        
+100.0%     1  +     0    sun.awt.image.InputStreamImageSource.doFetch
+100.0%     1  +     0    Total interpreted
+
+  Thread-local ticks:
+ 99.8%   486             Blocked (of total)
+
+
+Flat profile of 5.02 secs (487 total ticks): Image Fetcher 1
+
+  Interpreted + native   Method                        
+100.0%     1  +     0    sun.awt.image.ToolkitImage.addInfo
+100.0%     1  +     0    Total interpreted
+
+  Thread-local ticks:
+ 99.8%   486             Blocked (of total)
+
+
+Flat profile of 5.02 secs (487 total ticks): Image Fetcher 3
+
+  Interpreted + native   Method                        
+100.0%     1  +     0    sun.awt.image.ToolkitImage.addInfo
+100.0%     1  +     0    Total interpreted
+
+  Thread-local ticks:
+ 99.8%   486             Blocked (of total)
+
+
+Flat profile of 5.02 secs (487 total ticks): Image Fetcher 0
+
+  Interpreted + native   Method                        
+100.0%     1  +     0    sun.awt.image.InputStreamImageSource.doFetch
+100.0%     1  +     0    Total interpreted
+
+  Thread-local ticks:
+ 99.8%   486             Blocked (of total)
+
+
+Flat profile of 26.61 secs (2579 total ticks): DestroyJavaVM
+
+  Thread-local ticks:
+100.0%  2579             Blocked (of total)
+
+
+Flat profile of 27.03 secs (2620 total ticks): AWT-EventQueue-0
+
+  Interpreted + native   Method                        
+ 50.0%     0  +    34    sun.java2d.loops.DrawGlyphListLCD.DrawGlyphListLCD
+ 10.3%     0  +     7    sun.awt.X11.XInputMethod.openXIMNative
+  4.4%     0  +     3    java.lang.Object.hashCode
+  2.9%     0  +     2    sun.misc.Unsafe.compareAndSwapInt
+  2.9%     2  +     0    sun.java2d.x11.X11PMBlitLoops.nativeBlit
+  2.9%     2  +     0    sun.font.FontDesignMetrics.getMetrics
+  1.5%     0  +     1    sun.awt.X11.XlibWrapper.XFlush
+  1.5%     0  +     1    sun.misc.Unsafe.freeMemory
+  1.5%     0  +     1    sun.misc.Unsafe.getBoolean
+  1.5%     1  +     0    sun.awt.X11.XComponentPeer.createVolatileImage
+  1.5%     1  +     0    java.lang.reflect.Field.getBoolean
+  1.5%     1  +     0    java.lang.AbstractStringBuilder.<init>
+  1.5%     1  +     0    java.lang.StringBuilder.toString
+  1.5%     1  +     0    sun.reflect.UnsafeFieldAccessorImpl.ensureObj
+  1.5%     1  +     0    sun.java2d.x11.X11SurfaceDataProxy$Opaque.isSupportedOperation
+  1.5%     1  +     0    javax.swing.UIManager.maybeInitialize
+  1.5%     1  +     0    sun.awt.image.IntegerInterleavedRaster.<init>
+  1.5%     1  +     0    sun.reflect.GeneratedMethodAccessor6.invoke
+  1.5%     1  +     0    sun.awt.image.ImageFetcher.add
+  1.5%     1  +     0    java.awt.EventQueue.postEvent
+  1.5%     1  +     0    javax.swing.RepaintManager.addDirtyRegion0
+ 95.6%    16  +    49    Total interpreted
+
+         Stub + native   Method                        
+  2.9%     0  +     2    java.lang.Object.getClass
+  2.9%     0  +     2    Total stub
+
+  Thread-local ticks:
+ 97.4%  2552             Blocked (of total)
+  1.5%     1             Class loader
+
+
+Flat profile of 27.07 secs (2623 total ticks): AWT-Shutdown
+
+  Thread-local ticks:
+100.0%  2623             Blocked (of total)
+
+
+Flat profile of 27.37 secs (2645 total ticks): AWT-XAWT
+
+  Interpreted + native   Method                        
+ 99.5%     1  +  2561    sun.awt.X11.XToolkit.waitForEvents
+  0.1%     0  +     3    sun.misc.Unsafe.getInt
+  0.1%     0  +     2    sun.awt.X11.XlibWrapper.XSync
+  0.1%     2  +     0    java.awt.EventQueue.wakeup
+  0.0%     0  +     1    sun.misc.Unsafe.unpark
+  0.0%     0  +     1    sun.awt.X11.XlibWrapper.getScreenOfWindow
+  0.0%     0  +     1    sun.misc.Unsafe.getObject
+  0.0%     0  +     1    sun.awt.X11.XlibWrapper.XQueryTree
+  0.0%     1  +     0    sun.awt.X11GraphicsConfig.getSurfaceType
+  0.0%     1  +     0    sun.awt.PaintEventDispatcher.getPaintEventDispatcher
+100.0%     5  +  2570    Total interpreted
+
+  Thread-local ticks:
+  2.6%    70             Blocked (of total)
+
+
+Flat profile of 27.52 secs (2656 total ticks): Java2D Disposer
+
+  Thread-local ticks:
+100.0%  2656             Blocked (of total)
+
+
+Global summary of 2181.73 seconds:
+100.0% 164036            Received ticks
+  0.5%   857             Received GC ticks
+  0.1%    98             Compilation
+  0.1%   125             Other VM operations
+  0.0%     3             Class loader
+

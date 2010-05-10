@@ -1,14 +1,12 @@
 package simulation;
 
-import model.Environment;
-
 
 public class TestReachTheTarget {
 
-	static final int NBTESTS = 100;
+	static final int NBTESTS = 10;
 	
 	public static void main(String[] args) {
 
-		TestHeuristic tests = new TestHeuristic(NBTESTS,Heuristic.ReachTheTargetID,60,15,0.0);
+		TestHeuristic tests = new TestHeuristic(NBTESTS,Heuristic.ReachTheTargetID,30,10,0.0);
 	}
 }

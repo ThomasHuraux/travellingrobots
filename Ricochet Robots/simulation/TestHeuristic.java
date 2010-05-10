@@ -51,7 +51,7 @@ public class TestHeuristic {
     		fw.write("NbTests="+NbTest+" HeuristicID="+HeuristicID+" MaxTime="+AStar.MAXTIME+" PrecalcDepth="+precalcDepth+" CostImportance="+costImportance+"\n");
     	    fw.write("STEPS\tTIME\tR0\tR1\tR2\tR3\tTARGET\n");
     		for(int i=0; i<NbTest; i++){
-    			System.out.println(i+".");
+    			System.out.println(i+".\t");
     			current = new Environment();
     			steps = algo.search(current);
     			float timeH = algo.getTimelength();

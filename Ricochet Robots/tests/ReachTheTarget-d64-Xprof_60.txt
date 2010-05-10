@@ -1,0 +1,423 @@
+labedan@plugandplay:~/workspace/RicochetRobots$ java -d64 -Xprof simulation/TestAndView
+Import <<../RicochetRobots/grids/Standard.txt>> (Size=16)
+== START TESTS ==
+0.	Search ...
+Target reached with class simulation.ReachTheTarget [ timelength=0.972 ; movesNb=5 ]
+1.	Search ...
+Target reached with class simulation.ReachTheTarget [ timelength=4.81 ; movesNb=7 ]
+2.	Search ...
+Target reached with class simulation.ReachTheTarget [ timelength=4.398 ; movesNb=6 ]
+3.	Search ...
+Target reached with class simulation.ReachTheTarget [ timelength=0.127 ; movesNb=4 ]
+4.	Search ...
+Target reached with class simulation.ReachTheTarget [ timelength=2.373 ; movesNb=5 ]
+5.	Search ...
+Target reached with class simulation.ReachTheTarget [ timelength=0.004 ; movesNb=3 ]
+6.	Search ...
+Target reached with class simulation.ReachTheTarget [ timelength=0.165 ; movesNb=3 ]
+7.	Search ...
+Target reached with class simulation.ReachTheTarget [ timelength=0.165 ; movesNb=4 ]
+8.	Search ...
+Target reached with class simulation.ReachTheTarget [ timelength=32.385 ; movesNb=9 ]
+9.	Search ...
+Too long !
+10.	Search ...
+Too long !
+11.	Search ...
+Too long !
+12.	Search ...
+Too long !
+13.	Search ...
+Target reached with class simulation.ReachTheTarget [ timelength=0.085 ; movesNb=4 ]
+14.	Search ...
+Target reached with class simulation.ReachTheTarget [ timelength=0.329 ; movesNb=4 ]
+15.	Search ...
+Too long !
+16.	Search ...
+Target reached with class simulation.ReachTheTarget [ timelength=1.035 ; movesNb=4 ]
+17.	Search ...
+Target reached with class simulation.ReachTheTarget [ timelength=6.036 ; movesNb=5 ]
+18.	Search ...
+Target reached with class simulation.ReachTheTarget [ timelength=0.012 ; movesNb=3 ]
+19.	Search ...
+Too long !
+20.	Search ...
+Too long !
+21.	Search ...
+Target reached with class simulation.ReachTheTarget [ timelength=4.297 ; movesNb=5 ]
+22.	Search ...
+Target reached with class simulation.ReachTheTarget [ timelength=11.135 ; movesNb=6 ]
+23.	Search ...
+Target reached with class simulation.ReachTheTarget [ timelength=0.196 ; movesNb=3 ]
+24.	Search ...
+Too long !
+25.	Search ...
+Target reached with class simulation.ReachTheTarget [ timelength=0.012 ; movesNb=1 ]
+26.	Search ...
+Too long !
+27.	Search ...
+Too long !
+28.	Search ...
+Too long !
+29.	Search ...
+Target reached with class simulation.ReachTheTarget [ timelength=0.015 ; movesNb=2 ]
+30.	Search ...
+Target reached with class simulation.ReachTheTarget [ timelength=0.174 ; movesNb=3 ]
+31.	Search ...
+Too long !
+32.	Search ...
+Too long !
+33.	Search ...
+Too long !
+34.	Search ...
+Too long !
+35.	Search ...
+Target reached with class simulation.ReachTheTarget [ timelength=56.244 ; movesNb=6 ]
+36.	Search ...
+Target reached with class simulation.ReachTheTarget [ timelength=2.349 ; movesNb=4 ]
+37.	Search ...
+Target reached with class simulation.ReachTheTarget [ timelength=50.251 ; movesNb=7 ]
+38.	Search ...
+Too long !
+39.	Search ...
+Too long !
+40.	Search ...
+Too long !
+41.	Search ...
+Too long !
+42.	Search ...
+Too long !
+43.	Search ...
+Target reached with class simulation.ReachTheTarget [ timelength=28.987 ; movesNb=5 ]
+44.	Search ...
+Target reached with class simulation.ReachTheTarget [ timelength=0.021 ; movesNb=2 ]
+45.	Search ...
+Target reached with class simulation.ReachTheTarget [ timelength=0.283 ; movesNb=4 ]
+46.	Search ...
+Too long !
+47.	Search ...
+Too long !
+48.	Search ...
+Target reached with class simulation.ReachTheTarget [ timelength=0.044 ; movesNb=1 ]
+49.	Search ...
+Too long !
+50.	Search ...
+Target reached with class simulation.ReachTheTarget [ timelength=0.035 ; movesNb=2 ]
+51.	Search ...
+Target reached with class simulation.ReachTheTarget [ timelength=0.861 ; movesNb=3 ]
+52.	Search ...
+Too long !
+53.	Search ...
+Target reached with class simulation.ReachTheTarget [ timelength=23.07 ; movesNb=6 ]
+54.	Search ...
+Too long !
+55.	Search ...
+Target reached with class simulation.ReachTheTarget [ timelength=0.25 ; movesNb=3 ]
+56.	Search ...
+Too long !
+57.	Search ...
+Target reached with class simulation.ReachTheTarget [ timelength=0.008 ; movesNb=1 ]
+58.	Search ...
+Too long !
+59.	Search ...
+Too long !
+60.	Search ...
+Too long !
+61.	Search ...
+Too long !
+62.	Search ...
+Too long !
+63.	Search ...
+Too long !
+64.	Search ...
+Target reached with class simulation.ReachTheTarget [ timelength=31.712 ; movesNb=5 ]
+65.	Search ...
+Too long !
+66.	Search ...
+Target reached with class simulation.ReachTheTarget [ timelength=16.469 ; movesNb=5 ]
+67.	Search ...
+Target reached with class simulation.ReachTheTarget [ timelength=16.469 ; movesNb=0 ]
+68.	Search ...
+Target reached with class simulation.ReachTheTarget [ timelength=1.53 ; movesNb=4 ]
+69.	Search ...
+Target reached with class simulation.ReachTheTarget [ timelength=32.402 ; movesNb=6 ]
+70.	Search ...
+Too long !
+71.	Search ...
+Too long !
+72.	Search ...
+Target reached with class simulation.ReachTheTarget [ timelength=4.239 ; movesNb=4 ]
+73.	Search ...
+Too long !
+74.	Search ...
+Too long !
+75.	Search ...
+Target reached with class simulation.ReachTheTarget [ timelength=0.068 ; movesNb=3 ]
+76.	Search ...
+Too long !
+77.	Search ...
+Too long !
+78.	Search ...
+Too long !
+79.	Search ...
+Target reached with class simulation.ReachTheTarget [ timelength=0.023 ; movesNb=1 ]
+80.	Search ...
+Too long !
+81.	Search ...
+Target reached with class simulation.ReachTheTarget [ timelength=45.072 ; movesNb=5 ]
+82.	Search ...
+Too long !
+83.	Search ...
+Too long !
+84.	Search ...
+Too long !
+85.	Search ...
+Too long !
+86.	Search ...
+Too long !
+87.	Search ...
+Too long !
+88.	Search ...
+Too long !
+89.	Search ...
+Too long !
+90.	Search ...
+Too long !
+91.	Search ...
+Target reached with class simulation.ReachTheTarget [ timelength=0.452 ; movesNb=4 ]
+92.	Search ...
+Too long !
+93.	Search ...
+Target reached with class simulation.ReachTheTarget [ timelength=0.136 ; movesNb=3 ]
+94.	Search ...
+Target reached with class simulation.ReachTheTarget [ timelength=10.705 ; movesNb=5 ]
+95.	Search ...
+Too long !
+96.	Search ...
+Target reached with class simulation.ReachTheTarget [ timelength=1.465 ; movesNb=3 ]
+97.	Search ...
+Too long !
+98.	Search ...
+Target reached with class simulation.ReachTheTarget [ timelength=0.054 ; movesNb=1 ]
+99.	Search ...
+Too long !
+
+== END TESTS (54 unsolved) ==
+
+Flat profile of 0.02 secs (1 total ticks): process reaper
+
+  Interpreted + native   Method                        
+100.0%     0  +     1    java.lang.UNIXProcess.forkAndExec
+100.0%     0  +     1    Total interpreted
+
+
+Flat profile of 0.02 secs (2 total ticks): process reaper
+
+  Interpreted + native   Method                        
+100.0%     0  +     2    java.lang.UNIXProcess.waitForProcessExit
+100.0%     0  +     2    Total interpreted
+
+
+Flat profile of 0.03 secs (2 total ticks): process reaper
+
+  Interpreted + native   Method                        
+ 50.0%     0  +     1    java.lang.UNIXProcess.waitForProcessExit
+ 50.0%     0  +     1    java.lang.UNIXProcess.forkAndExec
+100.0%     0  +     2    Total interpreted
+
+
+Flat profile of 3627.66 secs (270839 total ticks): main
+
+  Interpreted + native   Method                        
+  0.1%   346  +     0    java.util.ArrayList.access$200
+  0.1%   189  +     0    java.util.ArrayList.access$100
+  0.0%   125  +     0    simulation.AStar.search
+  0.0%     0  +    58    java.lang.System.currentTimeMillis
+  0.0%    40  +     0    java.util.HashMap.resize
+  0.0%     0  +    29    sun.awt.X11.XlibWrapper.XGetGeometry
+  0.0%     0  +    18    java.lang.Object.getClass
+  0.0%    11  +     0    java.util.HashMap.<init>
+  0.0%     9  +     0    java.util.ArrayList.<init>
+  0.0%     8  +     0    simulation.AStar.addInClose
+  0.0%     8  +     0    simulation.AStar.addNewNodes
+  0.0%     5  +     0    java.util.ArrayList.contains
+  0.0%     4  +     0    java.lang.String.<init>
+  0.0%     4  +     0    java.util.Arrays.copyOfRange
+  0.0%     4  +     0    model.CountBot.proliferate
+  0.0%     0  +     3    java.lang.ClassLoader.findBootstrapClass
+  0.0%     3  +     0    java.lang.AbstractStringBuilder.<init>
+  0.0%     3  +     0    java.util.AbstractCollection.addAll
+  0.0%     3  +     0    simulation.ReachTheTarget.setHeuristic
+  0.0%     0  +     2    sun.font.FontManager.getFontConfig
+  0.0%     0  +     2    java.io.UnixFileSystem.canonicalize0
+  0.0%     2  +     0    simulation.AStar.addInOpen
+  0.0%     2  +     0    java.util.HashMap.addEntry
+  0.0%     2  +     0    model.CountBot.<init>
+  0.0%     0  +     1    sun.awt.X11.XlibWrapper.XAllocWMHints
+  0.3%   814  +   119    Total interpreted (including elided)
+
+     Compiled + native   Method                        
+ 43.0%    15  + 116309   model.CountBot.<init>
+ 22.7%   672  + 60769    simulation.ReachTheTarget.reachTheTarget
+ 17.9% 48365  +     0    simulation.AStar.addInOpen
+  6.5% 16215  +  1519    model.CountBot.proliferate
+  4.1%  9627  +  1431    model.Environment.isEmpty
+  1.2%  3009  +   338    model.CountBot.createBabyBot
+  0.8%  1646  +   507    model.Environment.modify
+  0.8%  1876  +   159    simulation.AStar.getStringRepresentation
+  0.4%  1059  +   134    model.Environment.clone
+  0.4%  1180  +     0    model.Robot.move
+  0.4%  1143  +    14    java.util.AbstractCollection.retainAll
+  0.4%     0  +  1081    model.CountBot.update
+  0.2%   566  +   100    java.util.HashMap.put
+  0.2%   545  +    12    java.util.AbstractCollection.addAll
+  0.1%   379  +     0    simulation.AStar.search
+  0.1%   324  +    11    simulation.AStar.addNewNodes
+  0.1%   197  +     0    model.CountBot.move
+  0.1%   107  +    84    model.Environment.getState
+  0.1%   182  +     0    java.util.HashMap.removeEntryForKey
+  0.0%   107  +     0    java.lang.Integer.getChars
+  0.0%     0  +    66    java.util.ArrayList.<init>
+  0.0%     0  +    28    java.util.HashMap$KeySet.iterator
+  0.0%     8  +    14    simulation.ReachTheTarget.setHeuristic
+  0.0%    15  +     0    model.Robot.moveNorth
+  0.0%    12  +     0    model.Robot.moveWest
+ 99.7% 87268  + 182588   Total compiled (including elided)
+
+         Stub + native   Method                        
+  0.0%     0  +     5    java.lang.System.arraycopy
+  0.0%     0  +     1    java.lang.Object.getClass
+  0.0%     0  +     6    Total stub
+
+  Thread-local ticks:
+  0.0%    39             Blocked (of total)
+  0.0%     5             Class loader
+
+
+Flat profile of 5.02 secs (483 total ticks): Image Fetcher 2
+
+  Interpreted + native   Method                        
+100.0%     1  +     0    sun.awt.image.ToolkitImage.addInfo
+100.0%     1  +     0    Total interpreted
+
+  Thread-local ticks:
+ 99.8%   482             Blocked (of total)
+
+
+Flat profile of 5.02 secs (483 total ticks): Image Fetcher 1
+
+  Interpreted + native   Method                        
+100.0%     1  +     0    sun.awt.image.ImageRepresentation.setPixels
+100.0%     1  +     0    Total interpreted
+
+  Thread-local ticks:
+ 99.8%   482             Blocked (of total)
+
+
+Flat profile of 5.02 secs (483 total ticks): Image Fetcher 0
+
+  Interpreted + native   Method                        
+100.0%     1  +     0    sun.awt.image.ToolkitImage.addInfo
+100.0%     1  +     0    Total interpreted
+
+  Thread-local ticks:
+ 99.8%   482             Blocked (of total)
+
+
+Flat profile of 5.02 secs (483 total ticks): Image Fetcher 3
+
+  Interpreted + native   Method                        
+100.0%     1  +     0    sun.awt.image.InputStreamImageSource.doFetch
+100.0%     1  +     0    Total interpreted
+
+  Thread-local ticks:
+ 99.8%   482             Blocked (of total)
+
+Flat profile of 1495.30 secs (144514 total ticks): DestroyJavaVM
+
+  Thread-local ticks:
+100.0% 144514            Blocked (of total)
+
+
+Flat profile of 1495.99 secs (144581 total ticks): AWT-EventQueue-0
+
+  Interpreted + native   Method                        
+ 20.6%     0  +     7    sun.awt.X11.XInputMethod.openXIMNative
+ 11.8%     0  +     4    sun.java2d.loops.DrawGlyphListLCD.DrawGlyphListLCD
+  5.9%     0  +     2    java.lang.System.currentTimeMillis
+  5.9%     2  +     0    sun.awt.AWTAutoShutdown.notifyThreadBusy
+  2.9%     0  +     1    java.lang.Object.notifyAll
+  2.9%     0  +     1    sun.awt.X11InputMethod.turnoffStatusWindow
+  2.9%     0  +     1    java.lang.Class.isAssignableFrom
+  2.9%     0  +     1    sun.awt.X11.XInputMethod.createXICNative
+  2.9%     1  +     0    java.util.concurrent.ConcurrentHashMap$Segment.newArray
+  2.9%     0  +     1    sun.java2d.x11.XSurfaceData.XSetClip
+  2.9%     0  +     1    sun.awt.X11.XlibWrapper.XChangeWindowAttributes
+  2.9%     1  +     0    java.lang.AbstractStringBuilder.expandCapacity
+  2.9%     1  +     0    java.awt.EventQueue.setCurrentEventAndMostRecentTimeImpl
+  2.9%     1  +     0    sun.awt.X11.XKeyboardFocusManagerPeer.simulateMotifRequestFocus
+  2.9%     1  +     0    sun.swing.CachedPainter.paint0
+  2.9%     1  +     0    java.awt.Component.dispatchEventImpl
+ 79.4%     8  +    19    Total interpreted
+
+         Stub + native   Method                        
+  8.8%     0  +     3    java.lang.Object.getClass
+  2.9%     0  +     1    java.lang.Thread.currentThread
+ 11.8%     0  +     4    Total stub
+
+  Thread-local ticks:
+100.0% 144547            Blocked (of total)
+  8.8%     3             Class loader
+
+
+Flat profile of 1496.02 secs (144583 total ticks): AWT-Shutdown
+
+  Thread-local ticks:
+100.0% 144583            Blocked (of total)
+
+
+Flat profile of 1496.37 secs (144610 total ticks): AWT-XAWT
+
+  Interpreted + native   Method                        
+100.0%     0  + 144510   sun.awt.X11.XToolkit.waitForEvents
+  0.0%     0  +    32    sun.awt.X11.XlibWrapper.XGetWindowProperty
+  0.0%     0  +     6    sun.awt.X11.XlibWrapper.XFilterEvent
+  0.0%     0  +     4    sun.awt.X11.XlibWrapper.XEventsQueued
+  0.0%     0  +     2    sun.awt.X11.XlibWrapper.XSync
+  0.0%     0  +     1    java.lang.Thread.yield
+  0.0%     0  +     1    java.lang.Thread.currentThread
+  0.0%     0  +     1    sun.misc.Unsafe.unpark
+  0.0%     0  +     1    sun.misc.Unsafe.getLong
+  0.0%     1  +     0    java.util.concurrent.locks.AbstractOwnableSynchronizer.setExclusiveOwnerThread
+  0.0%     0  +     1    sun.misc.Unsafe.compareAndSwapInt
+  0.0%     1  +     0    java.lang.Long.<init>
+  0.0%     0  +     1    sun.awt.X11.XlibWrapper.XQueryTree
+  0.0%     1  +     0    java.util.Collections$SynchronizedMap.get
+  0.0%     1  +     0    java.awt.EventQueue.wakeup
+  0.0%     1  +     0    java.util.concurrent.locks.ReentrantLock$Sync.nonfairTryAcquire
+  0.0%     1  +     0    sun.awt.X11.XKeysym.<clinit>
+100.0%     6  + 144560   Total interpreted
+
+         Stub + native   Method                        
+  0.0%     0  +     1    java.lang.Thread.currentThread
+  0.0%     0  +     1    sun.misc.Unsafe.compareAndSwapInt
+  0.0%     0  +     2    Total stub
+
+  Thread-local ticks:
+  0.0%    39             Blocked (of total)
+  0.0%     3             Class loader
+
+
+Flat profile of 1496.57 secs (144622 total ticks): Java2D Disposer
+
+  Thread-local ticks:
+100.0% 144622            Blocked (of total)
+
+
+Global summary of 5122.96 seconds:
+100.0% 417692            Received ticks
+  0.5%  2004             Received GC ticks
+  0.0%    90             Compilation
+  0.1%   281             Other VM operations
+  0.0%    11             Class loader
+

@@ -9,7 +9,7 @@ public class CountBot extends Robot implements Ghost{
 	// The ghost robot who count proximity to target
 
 	private static final int MAXPROXIMITY = Integer.MAX_VALUE;
-	private static int MAXGENERATION = 10;
+//	private static int MAXGENERATION = 10;
 
 	private static int[][] proximity;
 	private static Set<Position> stopListe;
@@ -56,7 +56,7 @@ public class CountBot extends Robot implements Ghost{
 			}
 	}
 
-	private void proliferate(Environment env){
+	private synchronized void proliferate(Environment env){
 
 		Position pos = env.getState(this).position;
 		Cell c = env.getGrid().getCell(pos);
@@ -64,17 +64,10 @@ public class CountBot extends Robot implements Ghost{
 		update(env);
 
 		// Lancement des Countbot.
-		if (proximity[pos.getX()][pos.getY()] <= generation) {
-			if(c.north && Movement.SOUTH != lastMove)
-				replicateOnNorth(env,pos);
-			if(c.east && Movement.WEST != lastMove)
-				replicateOnEast(env,pos);
-			if(c.south && Movement.NORTH != lastMove)
-				replicateOnSouth(env,pos);
-			if(c.west && Movement.EAST != lastMove)
-				replicateOnWest(env,pos);
-		}
-
+		for (int i = 1; i < 5; i++)
+			if (c.getWall(i) && i != lastMove)
+				replicateOnDirection(i,env,pos);
+		
 		// Marquage des changements de direction.
 		if (!c.north && Movement.NORTH == lastMove || !c.east && Movement.EAST == lastMove || !c.south && Movement.SOUTH == lastMove || !c.west && Movement.WEST == lastMove)
 			stopListe.add(pos);
@@ -89,68 +82,31 @@ public class CountBot extends Robot implements Ghost{
 			proximity[pos.getX()][pos.getY()] = generation;
 	}
 
-	private void replicateOnNorth(Environment env, Position pos){
-		CountBot baby = createBabyBot(env,new Position(pos.getX(),pos.getY()-1));
+	private void replicateOnDirection(int i, Environment env, Position pos) {
+		Position p = null;
+		
+		switch (i) {
+		case 1 : p = new Position(pos.getX(),pos.getY()-1); break;
+		case 2 : p = new Position(pos.getX()+1,pos.getY()); break;
+		case 3 : p = new Position(pos.getX(),pos.getY()+1); break;
+		default : p = new Position(pos.getX()-1,pos.getY()); break;
+		}
+		
+		CountBot baby = createBabyBot(env,p);
 		if(baby != null){
-			baby.moveNorth(env);
+			baby.move(i, env);
 			baby.setLastMove(Movement.NORTH);
-			if(generation < MAXGENERATION)
-				baby.proliferate(env);
+			baby.proliferate(env);
 		}
-	}
-
-	private void replicateOnEast(Environment env, Position pos){
-		CountBot baby = createBabyBot(env,new Position(pos.getX()+1,pos.getY()));
-		if(baby != null){
-			baby.moveEast(env);
-			baby.setLastMove(Movement.EAST);
-			if(generation < MAXGENERATION)
-				baby.proliferate(env);
-		}
-	}
-
-	private void replicateOnSouth(Environment env, Position pos){
-		CountBot baby = createBabyBot(env,new Position(pos.getX(),pos.getY()+1));
-		if(baby != null){
-			baby.moveSouth(env);
-			baby.setLastMove(Movement.SOUTH);
-			if(generation < MAXGENERATION)
-				baby.proliferate(env);
-		}
-	}
-
-	private void replicateOnWest(Environment env, Position pos){
-		CountBot baby = createBabyBot(env,new Position(pos.getX()-1,pos.getY()));
-		if(baby != null){
-			baby.moveWest(env);
-			baby.setLastMove(Movement.WEST);
-			if(generation < MAXGENERATION)
-				baby.proliferate(env);
-		}
-	}               
-
-	public void moveNorth(Environment env){
+	}         
+	
+	public void move(int i, Environment env) {
 		update(env);
-		super.moveNorth(env);
-	}
-
-	public void moveEast(Environment env){
-		update(env);
-		super.moveEast(env);
-	}
-
-	public void moveSouth(Environment env){
-		update(env);
-		super.moveSouth(env);
-	}
-
-	public void moveWest(Environment env){
-		update(env);
-		super.moveWest(env);    
+		super.move(i, env);
 	}
 
 	private CountBot createBabyBot(Environment env,Position pos){
-		if(env.isEmpty(pos)){
+		if(env.isEmpty(pos) && (generation+1) < proximity[pos.getX()][pos.getY()]){
 			CountBot baby = new CountBot(generation+1, env, stopListe);
 			env.addRobot(baby,pos);
 			return baby; 
@@ -174,8 +130,8 @@ public class CountBot extends Robot implements Ghost{
 		return stopListe;
 	}
 
-	public static void setMAXGENERATION(int mAXGENERATION) {
-		MAXGENERATION = mAXGENERATION;
-	}
+//	public static void setMAXGENERATION(int mAXGENERATION) {
+//		MAXGENERATION = mAXGENERATION;
+//	}
 
 }
