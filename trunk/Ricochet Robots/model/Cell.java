@@ -19,6 +19,15 @@ public class Cell {
 		this.west = west;
 	}
 	
+	public boolean getWall(int i) {
+		switch (i) {
+		case 1 : return north;
+		case 2 : return east;
+		case 3 : return south;
+		default : return west;
+		}
+	}
+	
 	private void accessible(boolean noMaze){
 		this.north =
 		this.east =

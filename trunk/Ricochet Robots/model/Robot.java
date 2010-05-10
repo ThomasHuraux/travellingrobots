@@ -21,6 +21,11 @@ public class Robot implements Movable{
 		nextId++;
 	}
 		
+	public void move(int i, Environment env) {
+		Cell c = env.modify(this,i);
+		if(c!=null && c.getWall(i))move(i, env);
+	}
+	
 	public void moveNorth(Environment env){
 		Cell c = env.modify(this,Movement.NORTH);
 		if(c!=null && c.north)moveNorth(env);

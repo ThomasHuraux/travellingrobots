@@ -39,7 +39,7 @@ public class ReachTheTarget implements Heuristic {
 
 	@Override
 	public Node best(Node current, ArrayList<Node> open) {
-		System.gc();
+
 		int min = Integer.MAX_VALUE;
 		int tmp;
 		int minId = 0;
@@ -62,7 +62,7 @@ public class ReachTheTarget implements Heuristic {
 
 	@Override
 	public void preCalc(Node n) {
-		CountBot.setMAXGENERATION(ReachTheTarget.PRECALCDEPTH);
+//		CountBot.setMAXGENERATION(ReachTheTarget.PRECALCDEPTH);
 	}
 
 	@Override
