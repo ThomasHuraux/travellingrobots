@@ -56,7 +56,7 @@ public class CountBot extends Robot implements Ghost{
 			}
 	}
 
-	private synchronized void proliferate(Environment env){
+	private void proliferate(Environment env){
 
 		Position pos = env.getState(this).position;
 		Cell c = env.getGrid().getCell(pos);
