@@ -1,0 +1,19 @@
+#Sujet proposé dans le cadre d'une initiation à la recherche.
+
+# Problématique de recherche #
+
+Planification de trajectoires complexes dans un environnement qui peut n'être
+que partiellement connu. Ce sujet est aussi une initiation à l'utilisation d'algorithme
+de recherche heuristique avec une application dans le cadre des jeux.
+
+
+# Sujet #
+
+Le but du stage est de réaliser une Intelligence Articielle pour résoudre les problèmes des "Robots Voyageurs" (voir http://www.ricochetrobots.com/RR.html pour y "jouer" en ligne).
+Dans un premier temps, il s'agira d'implémenter une méthode de recherche de type A étoile. La première difficulté sera alors de valider la ou les heuristiques utilisées.
+Dans un deuxième temps, l'environnement sera compliqué par l'ajout d'éléments apportant des incertitudes sur l'état du monde. Les algorithmes de planications "classiques" et déterministes seront alors comparés à d'autres méthodes comme par exemple : planication probabilistes, algorithmes génétiques, méthodes de monte-carlo. Chaque membre du bînome pourra s'attacher à la mise en oeuvre d'une de ces méthodes.
+
+# Bibliographie #
+
+Articial Intelligence: A Modern Approach. Stuart & Russel, Prentice Hall,
+1995. Chap. 3.5 - Informed (Heuristic) Search Strategies.

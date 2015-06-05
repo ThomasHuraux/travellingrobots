@@ -1,0 +1,75 @@
+# 3 mars 2010 #
+
+## Rencontre ##
+
+  * support: jeu Ricochet Robots (ou Randolph's Robots ou Rasender Roboter)
+  * A`*` est-il adapté à la résolution de ce problème ?
+  * autres système(s) de résolution ?
+
+## Recherche ##
+
+**Documentation :**
+
+> [LogBook#Bibliographie](LogBook#Bibliographie.md) `[2]` Article étudiant certains algorithmes de résolution (parcours en largeur et en profondeur). Le problème est vu d'un point de vue cognition (étude sur une population).
+
+> [LogBook#Bibliographie](LogBook#Bibliographie.md) `[3]` Article analysant la complexité du problème ! NP-Complet.
+
+**Recherche**
+  * A`*` n'est pas bon: utilise une pondération des distances -> pas de sens ici.
+  * Apprentissage de la carte, que connaissent les robots ?
+  * Algorithme génétique -> construire une solution par "mixage" de solutions.
+  * Arbres de décision -> lourd.
+
+
+# 11 mars 2010 #
+
+## Rencontre ##
+
+  * A`*`: la pondération pourrait se faire par rapport au nombre de coût. longueur = g + h(s) où h est l'heuristique : quelle heuristique ?
+  * Algorithme génétique: "fitness function" : attribuer une valeur à chaque solution pour pouvoir les comparer.
+  * Apprentissage: quelles bases au départ, et comment généraliser ?
+  * Recherche dirigée (ou heuristique) ! propriétés de l'heuristique pour qu'elle soit utile ?
+  * Force brute: pouvoir comparer l'efficacité avec d'autres solutions.
+
+Pour la prochaine fois:
+
+  * Thomas -> A`*`
+  * Jeremy -> bruteforce
+  * Christophe -> algorithme génétique
+
+
+# 25 mars 2010 #
+
+## Quelques idées ##
+
+  * Algorithme génétique : formaliser l'atteignabilité.
+  * Heuristique pour A`*` : coût au but en partant de la cible OU distance "vol d'oiseau".
+
+## Piste ##
+
+  * Programmation génétique ([Description](http://fr.wikipedia.org/wiki/Programmation_g%C3%A9n%C3%A9tique))
+
+# 8 avril 2010 #
+
+## Discussion ##
+
+  * Domaine de la planification("résolution de pb","Search"): explorer l'espace des versions
+  * Rappel sur la recherche en profondeur/largeur
+  * Recherche avant/arrière
+  * Modélisation
+    * États : plateau + positions des robots
+    * Actions (avec des conditions) : changement d'état
+    * But : décrire l'état but
+  * Présentation du travail pour trouver une heuristique
+  * Il est nécessaire d'évaluer les solutions
+
+|**PROCHAINE RENCONTRE LE 29 AVRIL**|
+|:----------------------------------|
+
+
+# Bibliographie #
+> `[1]` Stuart & Russel. Articial Intelligence: A Modern Approach. Prentice Hall, 1995. http://aima.cs.berkeley.edu/index.html
+
+> `[2]` Nicolas Butko, Katharina A. Lehmann, and Veronica Ramenzoni. Ricochet robots - a case study for human complex problem. http://www-pr.informatik.uni-tuebingen.de/mitarbeiter/katharinazweig/downloads/ButkoLehmannRamenzoni.pdf
+
+> `[3]` Birgit Engels and Tom Kamphans. On the complexity of randolph's robot game. http://web.informatik.uni-bonn.de/I/publications/ek-rrgin-05.pdf
